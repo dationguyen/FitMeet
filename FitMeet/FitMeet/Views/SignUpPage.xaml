@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
+             xmlns:converters="clr-namespace:FitMeet.Converters;assembly=FitMeet"
+             xmlns:behaviors="clr-namespace:FitMeet.Behaviors;assembly=FitMeet"
+             x:Class="FitMeet.Views.SignUpPage"
+             mvvm:ViewModelLocator.AutowireViewModel="True"
+             Title="Sign Up" NavigationPage.BarBackgroundColor="Red">
+	<ContentPage.Content>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="3*" />
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="12*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Image Grid.ColumnSpan="3" Source="fitmeet_logo.png"></Image>
+
+			<StackLayout Grid.Row="1" Grid.Column="1">
+				<Grid>
+					<Entry Placeholder="E-mail">
+						<Entry.Behaviors>
+							<behaviors:EmailValidatorBehavior x:Name="emailValidator" />
+						</Entry.Behaviors>
+					</Entry>
+					<Label Text="✓" HorizontalOptions="End" 
+					       Margin="0,0,6,0"
+					       FontSize="28"
+					       TextColor="{Binding  Source={x:Reference emailValidator},
+												Path=IsValid,
+												Converter={converters:BoolToColorConverter}}" 
+					       VerticalOptions="Center"></Label>
+				</Grid>
+				<Grid>
+					<Entry x:Name="entPassword" Placeholder="New Password" IsPassword="True" TextChanged="EntPassword_OnTextChanged" >
+						<Entry.Behaviors>
+							<behaviors:PasswordValidatorBehavior x:Name="passwordValidator" />
+						</Entry.Behaviors>
+					</Entry>
+					<Label Text="✓" 
+					       HorizontalOptions="End" 
+					       Margin="0,0,6,0"
+					       FontSize="28"
+					       TextColor="{Binding  Source={x:Reference passwordValidator},
+												Path=IsValid,
+												Converter={converters:BoolToColorConverter}}" 
+					       VerticalOptions="Center"></Label>
+				</Grid>
+				<Grid>
+					<Entry x:Name="entRePassword" Placeholder="Retype New Password" IsPassword="True">
+						<Entry.Behaviors>
+							<behaviors:ConfirmPasswordBehavior CompareToEntry="{Binding Source={x:Reference entPassword}}" x:Name="confirmPasswordValidator" />
+						</Entry.Behaviors>
+					</Entry>
+					<Label Text="✓" HorizontalOptions="End" 
+					       Margin="0,0,6,0"
+					       FontSize="28"
+					       TextColor="{Binding  Source={x:Reference confirmPasswordValidator},
+												Path=IsValid,
+												Converter={converters:BoolToColorConverter}}" 
+					       VerticalOptions="Center"></Label>
+				</Grid>
+				
+				
+
+				<StackLayout Orientation="Vertical">
+					<controls:CheckBox Text="Sign up for emails to learn about lastest news, activities and special offers from Fitmeet." 
+					                   Checked="True" Margin="0,8,0,0" />
+					<controls:CheckBox Text="I Understand that by connecting my accounts, Fitmeet may access my basic information from Facebook, and I will be able to share my Fitmeet activity to Facebook" 
+					                   Checked="True" Margin="0,8,0,0" />
+				</StackLayout>
+				<Button BackgroundColor="#4cbea0" Margin="0,20,0,0" TextColor="White" HeightRequest="50" Text="Build profile"></Button>
+			</StackLayout>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

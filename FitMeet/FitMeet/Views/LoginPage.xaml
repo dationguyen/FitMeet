@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             mvvm:ViewModelLocator.AutowireViewModel="True"
+             x:Class="FitMeet.Views.LoginPage"
+             NavigationPage.HasNavigationBar="False">
+	
+    <ContentPage.Content>
+		<Grid >
+			<Grid.RowDefinitions>
+				<RowDefinition Height="6.5*"></RowDefinition>
+				<RowDefinition Height="5*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Label Text="{Binding Title}"></Label>
+			<Image x:Name="imgBackground"
+				Grid.RowSpan="2" Source ="login_background.png"
+				Aspect="AspectFill">
+			</Image>
+			<Grid Grid.Row="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="10*"></ColumnDefinition>
+					<ColumnDefinition Width="70*"></ColumnDefinition>
+					<ColumnDefinition Width="10*"></ColumnDefinition>
+				</Grid.ColumnDefinitions>
+				<StackLayout Grid.Column="1" >
+					<Label Text="By signing up yo agree to our terms of condition"
+					       TextColor="White" HorizontalOptions="Center" 
+					       FontSize="10" HeightRequest="25"></Label>
+					<Button BackgroundColor="#4cbea0" TextColor="White" HeightRequest="60" 
+					        Text="Signup with Facebook"
+					        Command="{Binding NavigateCommand}" 
+					        CommandParameter="app:///MainPage/NavigationPage/MainTabbedPage" />
+					<Grid Margin="0,10,0,0">
+						<StackLayout HorizontalOptions="Start">
+							<StackLayout.GestureRecognizers>
+								<TapGestureRecognizer Command="{Binding NavigateCommand}" 
+								                      CommandParameter="SignUpPage" NumberOfTapsRequired="1"/>
+							</StackLayout.GestureRecognizers>
+							<Label Text="Signup" FontSize="15" TextColor="White"></Label>
+							<Label Text="without facebook" Margin="0,-6,0,0"  FontSize="10" TextColor="White"></Label>
+						</StackLayout>
+
+						<StackLayout HorizontalOptions="End">
+							<StackLayout.GestureRecognizers>
+								<TapGestureRecognizer Command="{Binding NavigateCommand}" 
+								                      CommandParameter="ManualLoginPage" NumberOfTapsRequired="1"/>
+							</StackLayout.GestureRecognizers>
+							<Label Text="Log in" FontSize="15" TextColor="White" HorizontalOptions="End"></Label>
+							<Label Text="Already have an account" Margin="0,-6,0,0"  FontSize="10" TextColor="White" HorizontalOptions="End"></Label>
+						</StackLayout>
+					</Grid>
+				</StackLayout>
+			</Grid>
+			
+		</Grid>
+    </ContentPage.Content>
+</ContentPage>

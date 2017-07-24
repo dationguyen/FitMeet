@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitMeet.Views.PrivacyPolicyPage" Title="Privacy Policy">
+    <ContentPage.Content>
+        <StackLayout Margin="40,0">
+			<Image Source="fitmeet_logo.png"></Image>
+			<Label Text="Privacy Policy" HorizontalOptions="Center" TextColor="#4cbea0"></Label>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

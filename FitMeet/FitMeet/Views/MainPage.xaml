@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:FitMeet.Views;assembly=FitMeet"
+            xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+            prism:ViewModelLocator.AutowireViewModel="True"
+            x:Class="FitMeet.Views.MainPage" >
+	<!--Pages can be added as references or inline-->
+
+	<MasterDetailPage.Master >
+		<ContentPage  Padding="0,20,0,0"
+		              Title=" "
+		              Icon ="hamburger_icon.png"
+		              BackgroundColor="#e8e8e8">
+			<StackLayout >
+				<Button Text="Settings" Margin="0,20" 
+				        BackgroundColor="White" TextColor="#5a5a5a"
+				        Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/MainTabbedPage/SettingPage"/>
+				<Button Text="Privacy Policy" 
+				        BackgroundColor="White" TextColor="#5a5a5a"
+				        Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/MainTabbedPage/PrivacyPolicyPage"/>
+				<Button Text="Rate Fitmeet" 
+				        BackgroundColor="White" TextColor="#5a5a5a"
+				        Command="{Binding NavigateCommand}" CommandParameter="SettingsPage"/>
+				<Button Text="About Fitmeet" 
+				        BackgroundColor="White" TextColor="#5a5a5a"
+				        Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/MainTabbedPage/AboutPage"/>
+				<Button Text="Log out" Margin="0,20" 
+				        BackgroundColor="White" TextColor="#5a5a5a"
+				        Command="{Binding NavigateCommand}" CommandParameter="app:///NavigationPage/LoginPage"/>
+			</StackLayout>
+		</ContentPage>
+	</MasterDetailPage.Master>
+	
+</MasterDetailPage>
