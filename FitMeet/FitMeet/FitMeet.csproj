@@ -41,6 +41,8 @@
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Converters\BoolToColorConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IRestApiService.cs" />
+    <Compile Include="Services\RestApiService.cs" />
     <Compile Include="ViewModels\BaseNavigationPageViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\MainTabbedPageViewModel.cs" />

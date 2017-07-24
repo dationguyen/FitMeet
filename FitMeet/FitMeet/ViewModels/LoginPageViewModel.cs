@@ -1,11 +1,15 @@
-﻿using Prism.Navigation;
+﻿using FitMeet.Services;
+using Prism.Navigation;
 
 namespace FitMeet.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
     {
-        public LoginPageViewModel(INavigationService navigationService) : base(navigationService)
+        private IRestApiService _restApiService;
+
+        public LoginPageViewModel(INavigationService navigationService, IRestApiService restApiServices) : base(navigationService)
         {
+            _restApiService = restApiServices;
         }
     }
 }

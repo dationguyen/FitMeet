@@ -10,7 +10,7 @@ namespace FitMeet.Views
         public PrivacyPolicyPage()
         {
             InitializeComponent();
-            NavigationPage.SetBackButtonTitle(this, "Back");
+           
         }
     }
 }

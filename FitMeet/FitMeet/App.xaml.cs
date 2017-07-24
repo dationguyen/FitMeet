@@ -1,4 +1,6 @@
-﻿using FitMeet.Views;
+﻿using FitMeet.Services;
+using FitMeet.Views;
+using Microsoft.Practices.Unity;
 using Prism.Unity;
 using Xamarin.Forms;
 
@@ -24,6 +26,8 @@ namespace FitMeet
 
         protected override void RegisterTypes()
         {
+
+            //navigate registration
             Container.RegisterTypeForNavigation<NavigationPage>();
             Container.RegisterTypeForNavigation<BaseNavigationPage>();
             Container.RegisterTypeForNavigation<MainTabbedPage>();
@@ -37,6 +41,10 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<AboutPage>();
             Container.RegisterTypeForNavigation<MePage>();
             Container.RegisterTypeForNavigation<ManualLoginPage>();
+
+            //Services registration
+            Container.RegisterType<IRestApiService, RestApiService>(new ContainerControlledLifetimeManager());
+
         }
     }
 }
