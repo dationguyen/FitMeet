@@ -37,7 +37,10 @@ namespace FitMeet.Services
 
         public async Task<T> ApiPost<T>(string requestUri, Dictionary<string, string> param)
         {
-            var encodedContent = new FormUrlEncodedContent(param);
+            
+            if (param == null) param = new Dictionary<string, string>();
+            
+            var  encodedContent = new FormUrlEncodedContent(param);
 
             T result;
             try

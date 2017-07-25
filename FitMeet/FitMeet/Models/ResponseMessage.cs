@@ -1,5 +1,4 @@
-﻿using FitMeet.Converters;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace FitMeet.Models
@@ -31,8 +30,7 @@ namespace FitMeet.Models
         public string Banner { get; set; }
 
         [JsonProperty("response")]
-        [JsonConverter(typeof(SingleOrArrayJsonConverter<>))]
-        public List<T> Response { get; set; }
+        public T Response { get; set; }
     }
 
 
