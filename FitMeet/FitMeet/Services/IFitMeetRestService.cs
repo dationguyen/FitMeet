@@ -1,6 +1,6 @@
 ﻿namespace FitMeet.Services
 {
-    public interface IRestApiService
+    public interface IFitMeetRestService
     {
     }
 }

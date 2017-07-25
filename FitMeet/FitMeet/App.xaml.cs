@@ -43,7 +43,7 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<ManualLoginPage>();
 
             //Services registration
-            Container.RegisterType<IRestApiService, RestApiService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IFitMeetRestService, FitMeetRestService>(new ContainerControlledLifetimeManager());
 
         }
     }
