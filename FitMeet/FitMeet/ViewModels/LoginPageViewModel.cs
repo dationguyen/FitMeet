@@ -5,11 +5,9 @@ namespace FitMeet.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
     {
-        private IFitMeetRestService _fitMeetRestService;
-
-        public LoginPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestServices) : base(navigationService)
+        public LoginPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestServices) : base(navigationService, fitMeetRestServices)
         {
-            _fitMeetRestService = fitMeetRestServices;
+          
         }
     }
 }

@@ -4,9 +4,42 @@
              x:Class="FitMeet.Views.NewsPage"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True" Title="{Binding Title}">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
-        </StackLayout>
-    </ContentPage.Content>
+	<ContentPage.Content>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Image Source="{Binding LogoImageSource}" HeightRequest="100" ></Image>
+			<ListView Grid.Row="1" ItemsSource="{Binding NewsListItemsSource}" 
+			          ItemTapped="ListView_OnItemTapped"
+			          SeparatorVisibility="None" HasUnevenRows="True" RowHeight="-1" SelectedItem="{Binding NewsListSelectedItem,Mode=TwoWay}">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<StackLayout  Padding="0,10,0,0" >
+								<Grid Margin="30,0">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*"></ColumnDefinition>
+										<ColumnDefinition Width="30"></ColumnDefinition>
+									</Grid.ColumnDefinitions>
+									<StackLayout >
+										<Label Text="{Binding Title}" FontSize="15"></Label>
+										<Label Text="{Binding Created}" FontSize="12" ></Label>
+									</StackLayout>
+
+									<Image Source="arrow.png" 
+									       Grid.Column="1" HeightRequest="16"
+									       VerticalOptions="Center" HorizontalOptions="End"></Image>
+								</Grid>
+								
+								<Grid HeightRequest="1" BackgroundColor="#e8e8e8" Margin="0,10,0,0"></Grid>
+							</StackLayout>
+						</ViewCell>
+
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+		</Grid>
+	</ContentPage.Content>
 </ContentPage>

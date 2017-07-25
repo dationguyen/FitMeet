@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using FitMeet.Services;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 
@@ -6,7 +7,9 @@ namespace FitMeet.ViewModels
 {
     public class ViewModelBase : BindableBase, INavigationAware
     {
+        //instances
         protected readonly INavigationService _navigationService;
+        protected readonly IFitMeetRestService _fitMeetRestService;
 
         private string _title;
         public string Title
@@ -18,8 +21,9 @@ namespace FitMeet.ViewModels
         public DelegateCommand<string> NavigateCommand { get; set; }
         public DelegateCommand<string> NavigateModalCommand { get; set; }
 
-        public ViewModelBase(INavigationService navigationService)
+        public ViewModelBase(INavigationService navigationService, IFitMeetRestService fitMeetRestService)
         {
+            _fitMeetRestService = fitMeetRestService;
             _navigationService = navigationService;
             NavigateCommand = new DelegateCommand<string>(Navigate);
             NavigateModalCommand = new DelegateCommand<string>(NavigateModal);
@@ -32,9 +36,9 @@ namespace FitMeet.ViewModels
             await _navigationService.NavigateAsync(path, null, true, false);
         }
 
-        private async void Navigate(string path)
+        protected async void Navigate(string path)
         {
-            await _navigationService.NavigateAsync(path);
+            await _navigationService.NavigateAsync(path, null, false, false);
         }
 
         public virtual void OnNavigatedFrom(NavigationParameters parameters)

@@ -1,19 +1,13 @@
-﻿using Prism.Navigation;
+﻿using FitMeet.Services;
+using Prism.Navigation;
 
 namespace FitMeet.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        public MainPageViewModel(INavigationService navigationService) : base(navigationService)
+        public MainPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestServices) : base(navigationService, fitMeetRestServices)
         {
         }
-
-
-
-        public override void OnNavigatedTo(NavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
-
-        }
+     
     }
 }

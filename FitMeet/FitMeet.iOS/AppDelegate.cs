@@ -26,7 +26,8 @@ namespace FitMeet.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App(new iOSInitializer()));
-
+            UITabBar.Appearance.SelectedImageTintColor =
+                new UIColor(red: 0.30f, green: 0.75f, blue: 0.63f, alpha: 1.0f);
             return base.FinishedLaunching(app, options);
         }
     }

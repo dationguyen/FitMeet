@@ -29,7 +29,6 @@ namespace FitMeet
 
             //navigate registration
             Container.RegisterTypeForNavigation<NavigationPage>();
-            Container.RegisterTypeForNavigation<BaseNavigationPage>();
             Container.RegisterTypeForNavigation<MainTabbedPage>();
             Container.RegisterTypeForNavigation<MainPage>();
             Container.RegisterTypeForNavigation<LoginPage>();
@@ -40,6 +39,7 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<PrivacyPolicyPage>();
             Container.RegisterTypeForNavigation<AboutPage>();
             Container.RegisterTypeForNavigation<MePage>();
+            Container.RegisterTypeForNavigation<NewsPage>();
             Container.RegisterTypeForNavigation<ManualLoginPage>();
 
             //Services registration
