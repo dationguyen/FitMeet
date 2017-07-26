@@ -2,11 +2,57 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMeet.Views.SearchPage"
+             xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True" Title="{Binding Title}" >
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Member Page!" />
-        </StackLayout>
-    </ContentPage.Content>
+	<ContentPage.Content>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<StackLayout>
+				<Entry HeightRequest="48" 
+		               Margin="30,20,30,0" VerticalOptions="Center" 
+		               Placeholder="Search Suburb or Postcode"
+		               
+		               HorizontalOptions="Fill" ></Entry>
+				<Grid HeightRequest="200" BackgroundColor="Aquamarine" IsVisible="False"></Grid>
+			</StackLayout>
+			<Grid Grid.Row="1" BackgroundColor="Aqua" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="Fill">
+				<ListView  ItemsSource="{Binding ResultListItemsSource}"
+				          SeparatorVisibility="None" HasUnevenRows="True" RowHeight="-1" >
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<StackLayout  Padding="0,10,0,0" >
+									<Grid Margin="30,0">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="80" ></ColumnDefinition>
+											<ColumnDefinition Width="*" ></ColumnDefinition>
+										</Grid.ColumnDefinitions>
+										<Image Source="{Binding MemberPhoto}" WidthRequest="60" HeightRequest="60" HorizontalOptions="Start" Aspect="AspectFill" ></Image>
+										<StackLayout Grid.Column="1" >
+											<StackLayout Orientation="Horizontal">
+												<Label Text="{Binding FullName}" FontSize="15" />
+												<Image Source="{Binding GenderLogoUrl}" Margin="10,-1,0,0" HeightRequest="14"></Image>
+											</StackLayout>
+											<StackLayout Orientation="Horizontal">
+												<Label Text="{Binding Distance}" FontSize="Micro" />
+												<controls:ActivitiesPanel ItemSource="{Binding Skills}" Margin="10,0" HeightRequest="14" Orientation="Horizontal"></controls:ActivitiesPanel>
+											</StackLayout>
+										</StackLayout>
+
+									</Grid>
+
+									<Grid HeightRequest="1" BackgroundColor="#e8e8e8" Margin="0,10,0,0"></Grid>
+								</StackLayout>
+							</ViewCell>
+
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</Grid>
+		</Grid>
+	</ContentPage.Content>
 </ContentPage>

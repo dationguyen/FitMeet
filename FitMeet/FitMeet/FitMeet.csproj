@@ -40,8 +40,10 @@
     <Compile Include="Behaviors\EmailValidatorBehavior.cs" />
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\HtmlLabel.cs" />
+    <Compile Include="Controls\ActivitiesPanel.cs" />
     <Compile Include="Converters\BoolToColorConverter.cs" />
     <Compile Include="Converters\SingleOrArrayJsonConverter.cs" />
+    <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\NewsDetail.cs" />
     <Compile Include="Models\NewsInfomation.cs" />
     <Compile Include="Models\ResponseMessage.cs" />

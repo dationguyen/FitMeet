@@ -13,10 +13,22 @@ namespace FitMeet.Services
         private const string getNewsUri = "News/index.json";
         private const string getPageUri = "contentpages/getpage.json";
         private const string getNewsDetailUri = "News/view.json";
+        private const string getMemberUri = " /users/index/page:1.json";
 
         public FitMeetRestService()
         {
             this.httpClient = new HttpClient() { BaseAddress = new Uri(baseUri) };
+        }
+
+        public async Task<ResponseMessage<List<Member>>> GetMembersAsync()
+        {
+            var param = new Dictionary<string, string>
+            {
+                { "token", "4fmr0pw0kee6h3kccbli" },
+                { "lat", "-33.8704391" },
+                { "lng", "151.1921796" }
+            };
+            return await ApiPost<ResponseMessage<List<Member>>>(getMemberUri, param);
         }
 
         /// <summary>
