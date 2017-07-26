@@ -33,7 +33,7 @@
 					</Entry.Behaviors>
 				</Entry>
 
-				<Button BackgroundColor="#4cbea0" Margin="0,20,0,0" TextColor="White" HeightRequest="50" Text="Login"></Button>
+				<Button BackgroundColor="{StaticResource MainColor}" Margin="0,20,0,0" TextColor="White" HeightRequest="50" Text="Login"></Button>
 				<Grid>
 					<Button HorizontalOptions="Start" Text="Back to Sign Up" FontSize="12" TextColor="#7e7e7e"></Button>
 					<Button HorizontalOptions="End" Text="Forgot Password?"  FontSize="12" TextColor="#7e7e7e"></Button>

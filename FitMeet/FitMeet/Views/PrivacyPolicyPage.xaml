@@ -1,20 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FitMeet.Views.PrivacyPolicyPage" Title="Privacy Policy">
+             xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
+             x:Class="FitMeet.Views.PrivacyPolicyPage" 
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True" Title="Privacy Policy">
 	<ContentPage.Content>
 		<ScrollView>
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"></RowDefinition>
-					<RowDefinition Height="2000"></RowDefinition>
-				</Grid.RowDefinitions>
-				<StackLayout Grid.Row="0" Margin="20,0">
-					<Image Source="fitmeet_logo.png"></Image>
-					<Label Text="Privacy Policy" HorizontalOptions="Center" TextColor="#4cbea0"></Label>
-				</StackLayout>
-				<WebView Grid.Row="1"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" x:Name="webView"></WebView>
-			</Grid>
+			<StackLayout  Padding="20,0">
+				<Image Source="fitmeet_logo.png"></Image>
+				<Label Text="{Binding DataSource.PageTitle}" HorizontalOptions="Center" 
+					       Margin="0,-10,0,20"
+					       TextColor="{StaticResource MainColor}"></Label>
+				<controls:HtmlLabel Grid.Row="1" Text="{Binding DataSource.PageDescp}" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ></controls:HtmlLabel>
+			</StackLayout>
 		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

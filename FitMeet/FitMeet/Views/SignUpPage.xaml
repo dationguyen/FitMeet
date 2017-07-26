@@ -74,7 +74,7 @@
 					<controls:CheckBox Text="I Understand that by connecting my accounts, Fitmeet may access my basic information from Facebook, and I will be able to share my Fitmeet activity to Facebook" 
 					                   Checked="True" Margin="0,8,0,0" />
 				</StackLayout>
-				<Button BackgroundColor="#4cbea0" Margin="0,20,0,0" TextColor="White" HeightRequest="50" Text="Build profile"></Button>
+				<Button BackgroundColor="{StaticResource MainColor}" Margin="0,20,0,0" TextColor="White" HeightRequest="50" Text="Build profile"></Button>
 			</StackLayout>
 		</Grid>
 	</ContentPage.Content>

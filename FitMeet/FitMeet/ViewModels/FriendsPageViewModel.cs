@@ -1,10 +1,11 @@
-﻿using Prism.Navigation;
+﻿using FitMeet.Services;
+using Prism.Navigation;
 
 namespace FitMeet.ViewModels
 {
     public class FriendsPageViewModel : ViewModelBase
     {
-        public FriendsPageViewModel(INavigationService navigationService) : base(navigationService)
+        public FriendsPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestServices) : base(navigationService, fitMeetRestServices)
         {
             Title = "Friends";
         }

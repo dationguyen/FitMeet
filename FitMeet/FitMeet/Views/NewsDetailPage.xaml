@@ -3,11 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMeet.Views.NewsDetailPage"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
              prism:ViewModelLocator.AutowireViewModel="True" 
              Title="News" >
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
-        </StackLayout>
+       <ScrollView HorizontalOptions="Fill" VerticalOptions="Fill">
+	       <StackLayout Padding="20,10">
+				<Label Text="{Binding DataSource.Title}" TextColor="{StaticResource MainColor}"></Label>
+				<Label Text="{Binding  DataSource.Created}" FontSize="Micro"></Label>
+				<controls:HtmlLabel Text="{Binding DataSource.Description}" ></controls:HtmlLabel>
+		   </StackLayout>
+	   </ScrollView>
     </ContentPage.Content>
 </ContentPage>

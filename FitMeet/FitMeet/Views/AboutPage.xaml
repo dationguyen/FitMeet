@@ -1,33 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FitMeet.Views.AboutPage" Title="About Fitmeet">
-	<ContentPage.Resources>
-		<ResourceDictionary>
-			<Style TargetType="Label">
-				<Setter Property="FontSize" Value="12" />
-			</Style>
-		</ResourceDictionary>
-	</ContentPage.Resources>
+             x:Class="FitMeet.Views.AboutPage" Title="About Fitmeet" 
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
+             prism:ViewModelLocator.AutowireViewModel="True" >
 	<ContentPage.Content>
-		<Grid>
-			<StackLayout Margin="24,0">
+		<ScrollView>
+			<StackLayout  Padding="20,0">
 				<Image Source="fitmeet_logo.png"></Image>
-				<Label Text="About Fitmeet" HorizontalOptions="Center" FontSize="16" Margin="0,-10,0,0" TextColor="#4cbea0"></Label>
-
-				<Label Text="Vision" FontAttributes ="Bold" Margin="0,10,0,0"></Label>
-				<Label Text="Our Vision is to make the world a fitter, healthier, happier place."></Label>
-
-				<Label Text="Mission" FontAttributes ="Bold" Margin="0,10,0,0"></Label>
-				<Label Text="Our mission is to create the largest online social media platform for fitness in the world, and make something really cool for the fitness community."></Label>
-
-				<Label Text="Values" FontAttributes ="Bold" Margin="0,10,0,0"></Label>
-				<Label Text="Community - Our community is at the forefront of everything we do"></Label>
-				<Label Text="Value - Fit Meet truly wants to bring value to our community, our clients and our partners." Margin="0,10,0,0"></Label>
-				<Label Text="Innovation - We will strive to lead the market with our innovative and creative actions." Margin="0,10,0,0"></Label>
-				<Label Text="Health - Our goal is to spread the happiness created by leading a healthy lifestyle." Margin="0,10,0,0"></Label>
+				<Label Text="{Binding DataSource.PageTitle}" HorizontalOptions="Center" 
+					       Margin="0,-10,0,20"
+					       TextColor="{StaticResource MainColor}"></Label>
+				<controls:HtmlLabel Grid.Row="1" Text="{Binding DataSource.PageDescp}"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ></controls:HtmlLabel>
 			</StackLayout>
-			<Label Text="Version - 2.1.8" VerticalOptions="End" HorizontalOptions="Center" TextColor="#4cbea0"></Label>
-		</Grid>
+		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

@@ -27,7 +27,7 @@
 					<Label Text="By signing up yo agree to our terms of condition"
 					       TextColor="White" HorizontalOptions="Center" 
 					       FontSize="10" HeightRequest="25"></Label>
-					<Button BackgroundColor="#4cbea0" TextColor="White" HeightRequest="60" 
+					<Button BackgroundColor="{StaticResource MainColor}" TextColor="White" HeightRequest="60" 
 					        Text="Signup with Facebook"
 					        Command="{Binding NavigateCommand}" 
 					        CommandParameter="app:///MainPage/NavigationPage/MainTabbedPage" />

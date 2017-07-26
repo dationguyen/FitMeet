@@ -35,15 +35,14 @@ namespace FitMeet.ViewModels
                 SetProperty(ref _newsListSelectedItem, value);
                 if (value != null)
                 {
-                    Navigate("PrivacyPolicyPage");
-
+                    Navigate("NewsDetailPage?id=" + ((NewsInfomation)value).Id);
                 }
 
             }
         }
 
 
-        public NewsPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestService) : base(navigationService,fitMeetRestService)
+        public NewsPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestService) : base(navigationService, fitMeetRestService)
         {
             Title = "News";
         }

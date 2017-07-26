@@ -25,7 +25,7 @@
 									</Grid.ColumnDefinitions>
 									<StackLayout >
 										<Label Text="{Binding Title}" FontSize="15"></Label>
-										<Label Text="{Binding Created}" FontSize="12" ></Label>
+										<Label Text="{Binding Created}" FontSize="Micro" ></Label>
 									</StackLayout>
 
 									<Image Source="arrow.png" 

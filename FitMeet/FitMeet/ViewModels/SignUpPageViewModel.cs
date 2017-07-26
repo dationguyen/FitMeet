@@ -1,16 +1,14 @@
-﻿using Prism.Mvvm;
+﻿using FitMeet.Services;
 using Prism.Navigation;
-using Prism.Commands;
-using Prism.Modularity;
 
 namespace FitMeet.ViewModels
 {
     public class SignUpPageViewModel : ViewModelBase
     {
-        public SignUpPageViewModel(INavigationService navigationService) : base(navigationService)
+        public SignUpPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestServices) : base(navigationService, fitMeetRestServices)
         {
         }
 
-       
+
     }
 }

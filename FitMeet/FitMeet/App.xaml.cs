@@ -40,6 +40,7 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<AboutPage>();
             Container.RegisterTypeForNavigation<MePage>();
             Container.RegisterTypeForNavigation<NewsPage>();
+            Container.RegisterTypeForNavigation<NewsDetailPage>();
             Container.RegisterTypeForNavigation<ManualLoginPage>();
 
             //Services registration

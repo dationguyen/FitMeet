@@ -1,10 +1,11 @@
-﻿using Prism.Navigation;
+﻿using FitMeet.Services;
+using Prism.Navigation;
 
 namespace FitMeet.ViewModels
 {
     public class SearchPageViewModel : ViewModelBase
     {
-        public SearchPageViewModel(INavigationService navigationService) : base(navigationService)
+        public SearchPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestServices) : base(navigationService, fitMeetRestServices)
         {
             Title = "Search";
         }

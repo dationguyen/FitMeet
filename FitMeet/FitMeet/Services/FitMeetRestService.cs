@@ -11,19 +11,44 @@ namespace FitMeet.Services
     {
         private const string baseUri = "http://52.64.164.241/";
         private const string getNewsUri = "News/index.json";
+        private const string getPageUri = "contentpages/getpage.json";
+        private const string getNewsDetailUri = "News/view.json";
 
         public FitMeetRestService()
         {
             this.httpClient = new HttpClient() { BaseAddress = new Uri(baseUri) };
         }
 
+        /// <summary>
+        /// Get the list of news
+        /// </summary>
+        /// <returns></returns>
         public async Task<ResponseMessage<List<NewsInfomation>>> GetNewsAsync()
         {
             var param = new Dictionary<string, string>
             {
-                { "token", "7r8r2hi14bhfvk31g3zj" }
+                { "token", "4fmr0pw0kee6h3kccbli" }
             };
             return await ApiPost<ResponseMessage<List<NewsInfomation>>>(getNewsUri, param);
+        }
+
+        public async Task<ResponseMessage<NewsDetail>> GetNewsDetailAsync(string id)
+        {
+            var param = new Dictionary<string, string>
+            {
+                { "token", "4fmr0pw0kee6h3kccbli" },
+                { "id", id }
+            };
+            return await ApiPost<ResponseMessage<NewsDetail>>(getNewsDetailUri, param);
+        }
+
+        public async Task<ResponseMessage<WebPageInfo>> GetPageDetailAsync(string pageName)
+        {
+            var param = new Dictionary<string, string>
+            {
+                { "slug", pageName }
+            };
+            return await ApiPost<ResponseMessage<WebPageInfo>>(getPageUri, param);
         }
     }
 }
