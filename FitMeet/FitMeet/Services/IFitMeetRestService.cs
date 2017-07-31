@@ -28,7 +28,7 @@ namespace FitMeet.Services
         /// Get the news detail
         /// </summary>
         /// <returns></returns>
-        Task<ResponseMessage<List<Member>>> GetMembersAsync();
+        Task<ResponseMessage<List<Member>>> GetMembersAsync(int page);
 
     }
 }

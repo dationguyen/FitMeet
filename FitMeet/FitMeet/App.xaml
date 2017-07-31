@@ -22,6 +22,21 @@
 			    <x:String>#5a5a5a</x:String>
 		    </x:Arguments>
 	    </Color>
+	    <Color x:FactoryMethod="FromHex" x:Key="PlaceHolderColor">
+		    <x:Arguments>
+			    <x:String>#7e7e7e</x:String>
+		    </x:Arguments>
+	    </Color>
+	    <Color x:FactoryMethod="FromHex" x:Key="NavBackgroundColor">
+		    <x:Arguments>
+			    <x:String>#f5f5f5</x:String>
+		    </x:Arguments>
+	    </Color>
+	    <Color x:FactoryMethod="FromHex" x:Key="BorderColor">
+		    <x:Arguments>
+			    <x:String>#e8e8e8</x:String>
+		    </x:Arguments>
+	    </Color>
 	    
       <!-- Styles -->
       <Style TargetType="NavigationPage">
@@ -34,16 +49,16 @@
         <Setter Property="Margin" Value="0,6"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
-        <Setter Property="PlaceholderColor" Value="#7e7e7e"/>
+        <Setter Property="PlaceholderColor" Value="{StaticResource PlaceHolderColor}"/>
       </Style>
 
       <Style TargetType="Label">
-        <Setter Property="TextColor" Value="#5a5a5a"/>
+        <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
         <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
       </Style>
 
       <Style TargetType="controls:HtmlLabel">
-	      <Setter Property="TextColor" Value="#5a5a5a"/>
+	      <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
 	      <Setter Property="FontSize" Value="Small"/>
 	      <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
       </Style>

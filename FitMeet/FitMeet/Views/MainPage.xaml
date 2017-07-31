@@ -1,33 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:local="clr-namespace:FitMeet.Views;assembly=FitMeet"
-            xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-            prism:ViewModelLocator.AutowireViewModel="True"
-            x:Class="FitMeet.Views.MainPage" >
+				  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+				  xmlns:local="clr-namespace:FitMeet.Views;assembly=FitMeet"
+				  xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+				  prism:ViewModelLocator.AutowireViewModel="True"
+                  xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
+                  x:Class="FitMeet.Views.MainPage" >
 	<!--Pages can be added as references or inline-->
 
 	<MasterDetailPage.Master >
 		<ContentPage  Padding="0,20,0,0"
-		              Title=" "
+		              Title=" " 
 		              Icon ="hamburger_icon.png"
-		              BackgroundColor="#e8e8e8">
-			<StackLayout >
-				<Button Text="Settings" Margin="0,20" 
-				        BackgroundColor="White" TextColor="#5a5a5a"
-				        Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/MainTabbedPage/SettingPage"/>
-				<Button Text="Privacy Policy" 
-				        BackgroundColor="White" TextColor="#5a5a5a"
-				        Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/MainTabbedPage/PrivacyPolicyPage"/>
-				<Button Text="Rate Fitmeet" 
-				        BackgroundColor="White" TextColor="#5a5a5a"
-				        Command="{Binding NavigateCommand}" CommandParameter="SettingsPage"/>
-				<Button Text="About Fitmeet" 
-				        BackgroundColor="White" TextColor="#5a5a5a"
-				        Command="{Binding NavigateCommand}" CommandParameter="NavigationPage/MainTabbedPage/AboutPage"/>
-				<Button Text="Log out" Margin="0,20" 
-				        BackgroundColor="White" TextColor="#5a5a5a"
-				        Command="{Binding NavigateCommand}" CommandParameter="app:///NavigationPage/LoginPage"/>
+		              BackgroundColor="{StaticResource NavBackgroundColor}">
+			<StackLayout Spacing="0" >
+				<StackLayout.Resources>
+					<ResourceDictionary>
+						<Style TargetType="controls:ExtendedButton">
+							<Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
+							<Setter Property="BackgroundColor" Value="White"/>
+							<Setter Property="BorderColor" Value="{StaticResource BorderColor}"/>
+							<Setter Property="BorderWidth" Value="1"/>
+							<Setter Property="Margin" Value="0"/>
+							<Setter Property="Padding" Value="20,0"/>
+							<Setter Property="BorderRadius" Value="0"/>
+							<Setter Property="HorizontalContentAlignment" Value="Start"/>
+						</Style>
+					</ResourceDictionary>
+				</StackLayout.Resources>
+				<controls:ExtendedButton Text="Settings" Margin="0,30" 
+				        Command="{Binding NavigateCommand}" 
+				        CommandParameter="SettingPage"/>
+				<controls:ExtendedButton  Text="Privacy Policy" 
+				        Command="{Binding NavigateCommand}"
+				        CommandParameter="NavigationPage/MainTabbedPage/PrivacyPolicyPage"/>
+				<controls:ExtendedButton  Text="Rate Fitmeet" 
+				        Command="{Binding NavigateCommand}"
+				        CommandParameter="SettingsPage"/>
+				<controls:ExtendedButton  Text="About Fitmeet" 
+				        Command="{Binding NavigateCommand}" 
+				        CommandParameter="NavigationPage/MainTabbedPage/AboutPage"/>
+				<controls:ExtendedButton  Text="Log out" Margin="0,30" 
+				        Command="{Binding NavigateCommand}" 
+				        CommandParameter="app:///NavigationPage/LoginPage"/>
 			</StackLayout>
 		</ContentPage>
 	</MasterDetailPage.Master>

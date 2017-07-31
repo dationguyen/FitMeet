@@ -4,6 +4,7 @@
              x:Class="FitMeet.Views.SearchPage"
              xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:b="clr-namespace:FitMeet.Behaviors;assembly=FitMeet"
              prism:ViewModelLocator.AutowireViewModel="True" Title="{Binding Title}" >
 	<ContentPage.Content>
 		<Grid>
@@ -12,16 +13,29 @@
 				<RowDefinition Height="*"></RowDefinition>
 			</Grid.RowDefinitions>
 			<StackLayout>
-				<Entry HeightRequest="48" 
-		               Margin="30,20,30,0" VerticalOptions="Center" 
-		               Placeholder="Search Suburb or Postcode"
-		               
-		               HorizontalOptions="Fill" ></Entry>
-				<Grid HeightRequest="200" BackgroundColor="Aquamarine" IsVisible="False"></Grid>
+				<Grid Padding="30,20,30,0">
+					<controls:CustomSearchEntry HeightRequest="48" 
+					                            VerticalOptions="Center" 
+					                            Placeholder="Search Suburb or Postcode"		               
+					                            HorizontalOptions="Fill" ></controls:CustomSearchEntry>
+					<Button Image="{Binding FilterImageSource}"
+					        Command="{Binding FilterCommand}"
+					        HeightRequest="20" 
+					        HorizontalOptions="End" 
+					        VerticalOptions="Center"></Button>
+				</Grid>
+				<Grid HeightRequest="1" Margin="0,20,0,0" BackgroundColor="{StaticResource BorderColor}" ></Grid>
 			</StackLayout>
-			<Grid Grid.Row="1" BackgroundColor="Aqua" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="Fill">
-				<ListView  ItemsSource="{Binding ResultListItemsSource}"
-				          SeparatorVisibility="None" HasUnevenRows="True" RowHeight="-1" >
+			<Grid Grid.Row="1" Margin="0,10,0,0"
+			      HorizontalOptions="Fill" VerticalOptions="Fill">
+				<ListView  ItemsSource="{Binding ResultListItemsSource}" 
+				           SeparatorVisibility="None" HasUnevenRows="True" RowHeight="-1" 
+				           IsPullToRefreshEnabled="True"
+				           RefreshCommand="{Binding RefreshCommand}"
+				           IsRefreshing="{Binding IsRefreshing}">
+					<ListView.Behaviors>
+						<b:ItemAppearingBehavior Command="{Binding ItemAppearingCommand}" />
+					</ListView.Behaviors>
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<ViewCell>
@@ -45,7 +59,7 @@
 
 									</Grid>
 
-									<Grid HeightRequest="1" BackgroundColor="#e8e8e8" Margin="0,10,0,0"></Grid>
+									<Grid HeightRequest="1" BackgroundColor="{StaticResource BorderColor}" Margin="0,10,0,0"></Grid>
 								</StackLayout>
 							</ViewCell>
 

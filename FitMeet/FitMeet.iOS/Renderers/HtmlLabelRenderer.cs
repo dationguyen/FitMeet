@@ -1,5 +1,5 @@
 ﻿using FitMeet.Controls;
-using FitMeet.iOS;
+using FitMeet.iOS.Renderers;
 using Foundation;
 using System;
 using System.ComponentModel;
@@ -7,7 +7,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(HtmlLabel), typeof(HtmlLabelRenderer))]
-namespace FitMeet.iOS
+namespace FitMeet.iOS.Renderers
 {
     public class HtmlLabelRenderer : LabelRenderer
     {
@@ -21,8 +21,7 @@ namespace FitMeet.iOS
                 var nsError = new NSError();
                 attr.DocumentType = NSDocumentType.HTML;
 
-                nfloat r, g, b, a;
-                Control.TextColor.GetRGBA(out r, out g, out b, out a);
+                Control.TextColor.GetRGBA(out nfloat r, out nfloat g, out nfloat b, out nfloat a);
                 var textColor = string.Format("#{0:X2}{1:X2}{2:X2}", (int)(r * 255.0), (int)(g * 255.0), (int)(b * 255.0));
 
                 var font = Control.Font;
@@ -48,8 +47,8 @@ namespace FitMeet.iOS
                     var nsError = new NSError();
                     attr.DocumentType = NSDocumentType.HTML;
 
-                    nfloat r, g, b, a;
-                    Control.TextColor.GetRGBA(out r, out g, out b, out a);
+
+                    Control.TextColor.GetRGBA(out nfloat r, out nfloat g, out nfloat b, out nfloat a);
                     var textColor = string.Format("#{0:X2}{1:X2}{2:X2}", (int)(r * 255.0), (int)(g * 255.0), (int)(b * 255.0));
 
                     var font = Control.Font;
