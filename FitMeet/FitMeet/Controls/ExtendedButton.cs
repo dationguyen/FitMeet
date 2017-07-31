@@ -7,23 +7,20 @@ namespace FitMeet.Controls
         /// <summary>
         /// Bindable property for button content vertical alignment.
         /// </summary>
-        public static BindableProperty VerticalContentAlignmentProperty =
-            BindableProperty.Create<ExtendedButton, TextAlignment>(
-                p => p.VerticalContentAlignment, TextAlignment.Center);
+        public static readonly BindableProperty VerticalContentAlignmentProperty =
+            BindableProperty.Create(nameof(VerticalContentAlignment), typeof(TextAlignment), typeof(ExtendedButton), TextAlignment.Center);
 
         /// <summary>
         /// Bindable property for button content horizontal alignment.
         /// </summary>
-        public static BindableProperty HorizontalContentAlignmentProperty =
-            BindableProperty.Create<ExtendedButton, TextAlignment>(
-                p => p.HorizontalContentAlignment, TextAlignment.Center);
+        public static readonly BindableProperty HorizontalContentAlignmentProperty =
+            BindableProperty.Create(nameof(HorizontalContentAlignment), typeof(TextAlignment), typeof(ExtendedButton), TextAlignment.Center);
 
         /// <summary>
         /// Bindable property for button content padding.
         /// </summary>
-        public static BindableProperty PaddingProperty =
-            BindableProperty.Create<ExtendedButton, Thickness>(
-                p => p.Padding, new Thickness(8));
+        public static readonly BindableProperty PaddingProperty =
+            BindableProperty.Create(nameof(Padding), typeof(Thickness), typeof(ExtendedButton), new Thickness(8));
 
 
         /// <summary>

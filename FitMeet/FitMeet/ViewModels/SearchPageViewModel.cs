@@ -20,7 +20,7 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return hasFilter ? "filter-enabled.png" : "filter-disabled.png";
+                return hasFilter ? "filter_enabled.png" : "filter_disabled.png";
             }
         }
 
@@ -63,10 +63,11 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return new DelegateCommand(() =>
+                return new DelegateCommand(async () =>
                 {
                     hasFilter = !hasFilter;
                     RaisePropertyChanged("FilterImageSource");
+                    await _navigationService.NavigateAsync("AdvanceFilterPopup");
                 });
             }
         }

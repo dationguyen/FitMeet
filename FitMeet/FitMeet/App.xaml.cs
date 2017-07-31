@@ -2,6 +2,7 @@
 using FitMeet.Views;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
 
@@ -26,7 +27,7 @@ namespace FitMeet
 
         protected override void RegisterTypes()
         {
-
+            Container.RegisterInstance(PopupNavigation.Instance);
             //navigate registration
             Container.RegisterTypeForNavigation<NavigationPage>();
             Container.RegisterTypeForNavigation<MainTabbedPage>();
@@ -42,10 +43,11 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<NewsPage>();
             Container.RegisterTypeForNavigation<NewsDetailPage>();
             Container.RegisterTypeForNavigation<ManualLoginPage>();
+            Container.RegisterTypeForNavigation<AdvanceFilterPopup>();
 
             //Services registration
             Container.RegisterType<IFitMeetRestService, FitMeetRestService>(new ContainerControlledLifetimeManager());
-
+            Container.RegisterPopupNavigationService();
         }
     }
 }
