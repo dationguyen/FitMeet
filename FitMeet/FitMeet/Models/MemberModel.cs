@@ -37,7 +37,7 @@ namespace FitMeet.Models
                 string url = "";
                 if (Gender != null)
                 {
-                    if (Gender == "Male")
+                    if (Gender.ToLower() == "male")
                         url = "male.png";
                     else
                     {
@@ -85,10 +85,10 @@ namespace FitMeet.Models
         public int CountSkill { get; set; }
 
         [JsonProperty("skill")]
-        public List<Skill> Skills { get; set; }
+        public List<SkillModel> Skills { get; set; }
     }
 
-    public class Skill
+    public class SkillModel
     {
         [JsonProperty("levelTitle")]
         public string LevelTitle { get; set; }
@@ -100,10 +100,10 @@ namespace FitMeet.Models
         public int CountActivity { get; set; }
 
         [JsonProperty("activity")]
-        public Activity[] Activities { get; set; }
+        public ActivityModel[] Activities { get; set; }
     }
 
-    public class Activity
+    public class ActivityModel
     {
         [JsonProperty("activityUserId")]
         public string ActivityUserId { get; set; }

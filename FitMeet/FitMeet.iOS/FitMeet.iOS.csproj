@@ -88,12 +88,17 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\GridCollectionView.cs" />
+    <Compile Include="Controls\GridDataSource.cs" />
+    <Compile Include="Controls\GridViewCell.cs" />
     <Compile Include="Extensions\AlignmentExtensions.cs" />
     <Compile Include="Renderers\CustomSearchEntryRenderer.cs" />
     <Compile Include="Renderers\ExtendedButtonRenderer.cs" />
+    <Compile Include="Renderers\GridViewRenderer.cs" />
     <Compile Include="Renderers\HtmlLabelRenderer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\ToggeButtonRenderer.cs" />
     <None Include="app.config" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist">
@@ -142,6 +147,9 @@
     </Reference>
     <Reference Include="Prism.Forms, Version=6.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Prism.Forms.6.3.0\lib\Xamarin.iOS1.0\Prism.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Plugin.Popups.Unity, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.Plugin.Popups.Unity.2.0.0-pre1\lib\portable45-net45+win8+wp8+wpa81\Prism.Plugin.Popups.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Prism.Unity.Forms, Version=6.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Prism.Unity.Forms.6.3.0\lib\Xamarin.iOS1.0\Prism.Unity.Forms.dll</HintPath>

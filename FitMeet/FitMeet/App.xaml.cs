@@ -47,6 +47,8 @@ namespace FitMeet
 
             //Services registration
             Container.RegisterType<IFitMeetRestService, FitMeetRestService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IActivityService, ActivityService>(new ContainerControlledLifetimeManager());
+
             Container.RegisterPopupNavigationService();
         }
     }

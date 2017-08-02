@@ -1,26 +1,35 @@
 ﻿using FitMeet.Controls;
+using FitMeet.EventAggregator;
 using FitMeet.Models;
 using FitMeet.Services;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Navigation;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FitMeet.ViewModels
 {
     public class SearchPageViewModel : ViewModelBase
     {
-        private SpeedObservableCollection<Member> resultListItemsSource;
+        private IEventAggregator _eventAggregator;
+
+
+        private SpeedObservableCollection<Member> _resultListItemsSource;
         private bool _isLoading;
         private int _pageCount = 1;
         private int _curentPage = 0;
         private bool _isRefreshing = false;
-        private bool hasFilter = false;
+        private bool _hasFilter = false;
+
+        private UpdateFilterEventArgs _updateFilterEventArgs;
 
         public string FilterImageSource
         {
             get
             {
-                return hasFilter ? "filter_enabled.png" : "filter_disabled.png";
+                return _hasFilter ? "filter_enabled.png" : "filter_disabled.png";
             }
         }
 
@@ -51,12 +60,17 @@ namespace FitMeet.ViewModels
             {
                 return new DelegateCommand(() =>
                 {
-                    ResultListItemsSource.Clear();
-                    _curentPage = 0;
-                    _pageCount = 1;
-                    LoadItems();
+                    ReloadItems();
                 });
             }
+        }
+
+        private void ReloadItems()
+        {
+            ResultListItemsSource.Clear();
+            _curentPage = 0;
+            _pageCount = 1;
+            LoadItems();
         }
 
         public DelegateCommand FilterCommand
@@ -65,9 +79,11 @@ namespace FitMeet.ViewModels
             {
                 return new DelegateCommand(async () =>
                 {
-                    hasFilter = !hasFilter;
-                    RaisePropertyChanged("FilterImageSource");
-                    await _navigationService.NavigateAsync("AdvanceFilterPopup");
+                    var param = new NavigationParameters
+                    {
+                        { "agr", _updateFilterEventArgs }
+                    };
+                    await _navigationService.NavigateAsync("AdvanceFilterPopup", param);
                 });
             }
         }
@@ -76,14 +92,39 @@ namespace FitMeet.ViewModels
 
         public SpeedObservableCollection<Member> ResultListItemsSource
         {
-            get { return resultListItemsSource; }
-            set { SetProperty(ref resultListItemsSource, value); }
+            get
+            {
+                if (_resultListItemsSource == null)
+                    _resultListItemsSource = new SpeedObservableCollection<Member>();
+                return _resultListItemsSource;
+            }
+            set { SetProperty(ref _resultListItemsSource, value); }
         }
 
-        public SearchPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestServices) : base(navigationService, fitMeetRestServices)
+        public SearchPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestServices, IEventAggregator eventAggregator) : base(navigationService, fitMeetRestServices)
         {
             Title = "Search";
             ItemAppearingCommand = new DelegateCommand<object>(OnItemAppearing);
+
+            _eventAggregator = eventAggregator;
+            _eventAggregator.GetEvent<UpdateFilterEvent>().Subscribe(UpdateFilter);
+        }
+
+        private void UpdateFilter(UpdateFilterEventArgs obj)
+        {
+            if (obj != null)
+            {
+                _hasFilter = true;
+                _updateFilterEventArgs = obj;
+            }
+            else
+            {
+                _hasFilter = false;
+                _updateFilterEventArgs = null;
+            }
+
+            RaisePropertyChanged("FilterImageSource");
+            ReloadItems();
         }
 
         private void OnItemAppearing(object obj)
@@ -107,7 +148,7 @@ namespace FitMeet.ViewModels
                 ResultListItemsSource = new SpeedObservableCollection<Member>();
             }
 
-            var restResponseMessage = await _fitMeetRestService.GetMembersAsync(_curentPage + 1);
+            var restResponseMessage = await GetDataFromRest(_curentPage + 1);
             if (restResponseMessage == null)
             {
                 _curentPage++;
@@ -125,9 +166,25 @@ namespace FitMeet.ViewModels
             IsRefreshing = false;
         }
 
+        private async Task<ResponseMessage<List<Member>>> GetDataFromRest(int page)
+        {
+            ResponseMessage<List<Member>> restResponseMessage;
+            if (!_hasFilter)
+                restResponseMessage = await _fitMeetRestService.GetMembersAsync(page);
+            else
+            {
+                var distance = _updateFilterEventArgs.Distance;
+                var gender = _updateFilterEventArgs.IsMale ? "male" : "female";
+                var activities = _updateFilterEventArgs.Activities;
+                restResponseMessage = await _fitMeetRestService.SearchMembersAsync(page, distance, gender, activities);
+            }
+            return restResponseMessage;
+        }
+
         public override void OnNavigatingTo(NavigationParameters parameters)
         {
-            LoadItems();
+            if (ResultListItemsSource.Count == 0)
+                LoadItems();
         }
     }
 }

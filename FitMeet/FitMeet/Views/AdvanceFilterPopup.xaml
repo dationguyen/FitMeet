@@ -4,9 +4,59 @@
                  xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
                  xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" 
                  prism:ViewModelLocator.AutowireViewModel="True"
-                 Padding="100"
+                 xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
+				 xmlns:converters="clr-namespace:FitMeet.Converters;assembly=FitMeet"
+                 Padding="20,50"
                  x:Class="FitMeet.Views.AdvanceFilterPopup">
 	<popup:PopupPage.Content>
-		<Grid BackgroundColor="White" WidthRequest="400" HeightRequest="800"></Grid>
+		<Grid  BackgroundColor="{StaticResource NavBackgroundColor}"
+			       Padding="20" >
+			<StackLayout>
+				<Picker HorizontalOptions="Fill" HeightRequest="56"
+				        BackgroundColor="{StaticResource NavBackgroundColor}" 
+				        VerticalOptions="Start" 
+				        Focused="VisualElement_OnFocused"
+				        Unfocused="VisualElement_OnUnfocused"
+				        SelectedIndex="{Binding DistanceIndex, Mode=TwoWay}" 
+				        Title="Distance" >
+					<Picker.Items>
+						<x:String>Within 10 km</x:String>
+						<x:String>Within 20 km</x:String>
+						<x:String>Within 30 km</x:String>
+					</Picker.Items>
+				</Picker>
+				<Grid Margin="0,20" >
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"></RowDefinition>
+						<RowDefinition Height="200"></RowDefinition>
+					</Grid.RowDefinitions>
+					<Label Text="Gender" HorizontalOptions="Start" VerticalOptions="Center"></Label>
+					<StackLayout Orientation="Horizontal" HorizontalOptions="End" >
+						<controls:ToggleButton Text="Male"
+					                       Checked="{Binding IsMale}" Command="{Binding GenderSwitchCommand}" CommandParameter="male"/>
+						<controls:ToggleButton Text="Female" 
+					                       Checked="{Binding IsFemale}" Command="{Binding GenderSwitchCommand}" CommandParameter="female" Margin="8,0,2,0" />
+
+					</StackLayout>
+					<Label Text="Activity" Grid.Row="1" Margin="0,30" 
+					       HorizontalOptions="Start" VerticalOptions="Start"></Label>
+
+					<controls:ActivitiesGridView Grid.Row="1" Margin="0,30" 
+					                             ItemSource="{Binding ActivitiesSource,Mode=TwoWay}"
+					                             HorizontalOptions="End"
+					                             SelectedItems="{Binding SelectedActivities,Mode=TwoWay}"/>
+				</Grid>
+				<StackLayout>
+					<Button Text="Save Filter" BackgroundColor="{StaticResource MainColor}"
+					        TextColor="White" Command="{Binding SaveFilterCommand}"/>
+					<Button Text="Clear Filter" BackgroundColor="{StaticResource MainColor}"
+					        TextColor="White" Command="{Binding ClearFilterCommand}" />
+					<Button Text="Cancel" BackgroundColor="{StaticResource RedColor}" 
+					        TextColor="White" Command="{Binding CancelCommand}"/>
+				</StackLayout>
+			</StackLayout>
+		
+		</Grid>
+
 	</popup:PopupPage.Content>
 </popup:PopupPage>

@@ -8,15 +8,15 @@ namespace FitMeet.Controls
     {
         public static BindableProperty ItemSourceProperty = BindableProperty.Create(
             propertyName: "ItemSource",
-            returnType: typeof(List<Skill>),
+            returnType: typeof(List<SkillModel>),
             declaringType: typeof(ActivitiesPanel),
-            defaultValue: new List<Skill>(),
+            defaultValue: new List<SkillModel>(),
             defaultBindingMode: BindingMode.OneWay,
             propertyChanged: ItemSourceValueChanged);
 
-        public List<Skill> ItemSource
+        public List<SkillModel> ItemSource
         {
-            get { return (List<Skill>)GetValue(ItemSourceProperty); }
+            get { return (List<SkillModel>)GetValue(ItemSourceProperty); }
             set
             {
                 SetValue(ItemSourceProperty, value);
@@ -47,7 +47,7 @@ namespace FitMeet.Controls
         private static void ItemSourceValueChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var pannel = ((ActivitiesPanel)bindable);
-            pannel.ItemSource = (List<Skill>)newValue;
+            pannel.ItemSource = (List<SkillModel>)newValue;
         }
 
 

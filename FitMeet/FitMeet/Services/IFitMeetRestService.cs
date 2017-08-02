@@ -25,10 +25,22 @@ namespace FitMeet.Services
         Task<ResponseMessage<WebPageInfo>> GetPageDetailAsync(string id);
 
         /// <summary>
-        /// Get the news detail
+        /// Get the members list
         /// </summary>
         /// <returns></returns>
         Task<ResponseMessage<List<Member>>> GetMembersAsync(int page);
+
+        /// <summary>
+        /// advance search member
+        /// </summary>
+        /// <returns></returns>
+        Task<ResponseMessage<List<Member>>> SearchMembersAsync(int page, int distance, string gender, List<int> activities);
+
+        /// <summary>
+        /// advance search member
+        /// </summary>
+        /// <returns></returns>
+        Task<ResponseMessage<ActivityData>> GetActivityDataAsync();
 
     }
 }

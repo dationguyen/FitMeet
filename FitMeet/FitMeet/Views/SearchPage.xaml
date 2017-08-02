@@ -4,6 +4,7 @@
              x:Class="FitMeet.Views.SearchPage"
              xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:converters="clr-namespace:FitMeet.Converters;assembly=FitMeet"
              xmlns:b="clr-namespace:FitMeet.Behaviors;assembly=FitMeet"
              prism:ViewModelLocator.AutowireViewModel="True" Title="{Binding Title}" >
 	<ContentPage.Content>

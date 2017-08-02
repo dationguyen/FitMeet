@@ -38,6 +38,12 @@
 		    </x:Arguments>
 	    </Color>
 	    
+	    <Color x:FactoryMethod="FromHex" x:Key="BlurTextColor">
+		    <x:Arguments>
+			    <x:String>#c2c2c2</x:String>
+		    </x:Arguments>
+	    </Color>
+	    
       <!-- Styles -->
       <Style TargetType="NavigationPage">
         <Setter Property="BarBackgroundColor" Value="{StaticResource MainColor}"/>
@@ -66,6 +72,17 @@
       <Style TargetType="Button">
         <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
       </Style>
+
+	    <Style TargetType="controls:ToggleButton">
+		    <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
+		    <Setter Property="BorderColor" Value="{StaticResource BodyColor}"/>
+		    <Setter Property="BorderWidth" Value="0.5"/>
+		    <!--<Setter Property="CheckedTextColor" Value="White"/>-->
+		    <!--<Setter Property="CheckedBackgroundColor" Value="{StaticResource MainColor}"/>--> 
+		    <!--<Setter Property="UncheckedTextColor" Value="{StaticResource BodyColor}"/>-->
+		    <!--<Setter Property="UncheckedBackgroundColor" Value="White"/>-->
+		    <Setter Property="WidthRequest" Value="88"/>
+	    </Style>
       <!-- Styles -->
 
      

@@ -39,21 +39,31 @@
     <Compile Include="Behaviors\ItemAppearingBehavior.cs" />
     <Compile Include="Behaviors\PasswordValidatorBehavior.cs" />
     <Compile Include="Behaviors\EmailValidatorBehavior.cs" />
+    <Compile Include="Controls\ActivitiesGridView.cs" />
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\CustomSearchEntry.cs" />
     <Compile Include="Controls\ExtendedButton.cs" />
+    <Compile Include="Controls\GridView.cs" />
     <Compile Include="Controls\HtmlLabel.cs" />
     <Compile Include="Controls\ActivitiesPanel.cs" />
     <Compile Include="Controls\SpeedObservableCollection.cs" />
+    <Compile Include="Controls\ToggleButton.cs" />
+    <Compile Include="Converters\BoolRevertConverter.cs" />
     <Compile Include="Converters\BoolToColorConverter.cs" />
     <Compile Include="Converters\SingleOrArrayJsonConverter.cs" />
+    <Compile Include="EventAggregator\UpdateFilterEvent.cs" />
+    <Compile Include="EventAggregator\UpdateFilterEventArgs.cs" />
     <Compile Include="Extensions\ObservableCollectionExtension.cs" />
+    <Compile Include="Models\ActivityData.cs" />
+    <Compile Include="Models\MemberDetail.cs" />
+    <Compile Include="Services\ActivityService.cs" />
     <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\NewsDetail.cs" />
     <Compile Include="Models\NewsInfomation.cs" />
     <Compile Include="Models\ResponseMessage.cs" />
     <Compile Include="Models\WebPageInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IActivityService.cs" />
     <Compile Include="Services\IFitMeetRestService.cs" />
     <Compile Include="Services\RestApiClient.cs" />
     <Compile Include="Services\FitMeetRestService.cs" />
@@ -91,6 +101,9 @@
     </Compile>
     <Compile Include="Views\ManualLoginPage.xaml.cs">
       <DependentUpon>ManualLoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MemberDetailPage.xaml.cs">
+      <DependentUpon>MemberDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MePage.xaml.cs">
       <DependentUpon>MePage.xaml</DependentUpon>
@@ -260,6 +273,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\AdvanceFilterPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MemberDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

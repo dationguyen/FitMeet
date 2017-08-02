@@ -13,11 +13,23 @@ namespace FitMeet.Services
         private const string getNewsUri = "News/index.json";
         private const string getPageUri = "contentpages/getpage.json";
         private const string getNewsDetailUri = "News/view.json";
-        private const string getMemberUri = " /users/index/page:{0}.json";
+        private const string getMemberUri = "users/index/page:{0}.json";
+        private const string searchMemberUri = "Users/advance_search/page:{0}.json";
+        private const string getActivityDatarUri = "activities/index.json";
 
         public FitMeetRestService()
         {
             this.httpClient = new HttpClient() { BaseAddress = new Uri(baseUri) };
+        }
+
+        public async Task<ResponseMessage<ActivityData>> GetActivityDataAsync()
+        {
+            var param = new Dictionary<string, string>
+            {
+                { "token", "4fmr0pw0kee6h3kccbli" }
+            };
+            return await ApiPost<ResponseMessage<ActivityData>>(getActivityDatarUri, param);
+
         }
 
         public async Task<ResponseMessage<List<Member>>> GetMembersAsync(int pageId)
@@ -61,6 +73,24 @@ namespace FitMeet.Services
                 { "slug", pageName }
             };
             return await ApiPost<ResponseMessage<WebPageInfo>>(getPageUri, param);
+        }
+
+        public async Task<ResponseMessage<List<Member>>> SearchMembersAsync(int page, int distance, string gender, List<int> activities)
+        {
+            var param = new Dictionary<string, string>
+            {
+                { "token", "4fmr0pw0kee6h3kccbli" },
+                { "lat", "-33.8704391" },
+                { "lng", "151.1921796" },
+                { "gender", gender },
+                { "distance", distance.ToString()}
+            };
+            for (int i = 0; i < activities.Count; i++)
+            {
+                param.Add(String.Format("activity[{0}]", i), activities[i].ToString());
+            }
+            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(searchMemberUri, page), param);
+
         }
     }
 }
