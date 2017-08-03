@@ -107,7 +107,7 @@ namespace FitMeet.iOS.Controls
                 this._view.RemoveFromSuperview();
             }
 
-            this._view = RendererFactory.GetRenderer(this._viewCell.View).NativeView;
+            this._view = Platform.CreateRenderer(this._viewCell.View).NativeView;
             this._view.AutoresizingMask = UIViewAutoresizing.All;
             this._view.ContentMode = UIViewContentMode.ScaleToFill;
 

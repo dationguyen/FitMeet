@@ -44,10 +44,12 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<NewsDetailPage>();
             Container.RegisterTypeForNavigation<ManualLoginPage>();
             Container.RegisterTypeForNavigation<AdvanceFilterPopup>();
+            Container.RegisterTypeForNavigation<MemberDetailPage>();
 
             //Services registration
             Container.RegisterType<IFitMeetRestService, FitMeetRestService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IActivityService, ActivityService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IGeolocationServices, GeolocationServices>(new ContainerControlledLifetimeManager());
 
             Container.RegisterPopupNavigationService();
         }

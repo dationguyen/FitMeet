@@ -33,7 +33,7 @@
 					       FontSize="28"
 					       TextColor="{Binding  Source={x:Reference emailValidator},
 												Path=IsValid,
-												Converter={converters:BoolToColorConverter}}" 
+												Converter={StaticResource BoolToColorConverter}}" 
 					       VerticalOptions="Center"></Label>
 				</Grid>
 				<Grid>
@@ -48,7 +48,7 @@
 					       FontSize="28"
 					       TextColor="{Binding  Source={x:Reference passwordValidator},
 												Path=IsValid,
-												Converter={converters:BoolToColorConverter}}" 
+												Converter={StaticResource BoolToColorConverter}}" 
 					       VerticalOptions="Center"></Label>
 				</Grid>
 				<Grid>
@@ -62,7 +62,7 @@
 					       FontSize="28"
 					       TextColor="{Binding  Source={x:Reference confirmPasswordValidator},
 												Path=IsValid,
-												Converter={converters:BoolToColorConverter}}" 
+												Converter={StaticResource BoolToColorConverter}}" 
 					       VerticalOptions="Center"></Label>
 				</Grid>
 				

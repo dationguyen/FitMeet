@@ -35,7 +35,7 @@
 						<controls:ToggleButton Text="Male"
 					                       Checked="{Binding IsMale}" Command="{Binding GenderSwitchCommand}" CommandParameter="male"/>
 						<controls:ToggleButton Text="Female" 
-					                       Checked="{Binding IsFemale}" Command="{Binding GenderSwitchCommand}" CommandParameter="female" Margin="8,0,2,0" />
+					                       Checked="{Binding IsMale, Converter={StaticResource RevertConverter}}" Command="{Binding GenderSwitchCommand}" CommandParameter="female" Margin="8,0,2,0" />
 
 					</StackLayout>
 					<Label Text="Activity" Grid.Row="1" Margin="0,30" 

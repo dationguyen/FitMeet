@@ -17,13 +17,26 @@ namespace FitMeet.ViewModels
 
 
         private SpeedObservableCollection<Member> _resultListItemsSource;
-        private bool _isLoading;
         private int _pageCount = 1;
         private int _curentPage = 0;
         private bool _isRefreshing = false;
         private bool _hasFilter = false;
-
         private UpdateFilterEventArgs _updateFilterEventArgs;
+        private Member _searchListSelectedItem;
+
+        public Member SearchListSelectedItem
+        {
+            get { return null; }
+            set
+            {
+                SetProperty(ref _searchListSelectedItem, value);
+                if (value != null)
+                {
+                    Navigate("MemberDetailPage?id=" + ((Member)value).MemberId);
+                }
+            }
+        }
+
 
         public string FilterImageSource
         {
@@ -46,14 +59,7 @@ namespace FitMeet.ViewModels
         {
             get { return _curentPage < _pageCount; }
         }
-
-
-        public bool IsLoading
-        {
-            get { return _isLoading; }
-            set { SetProperty(ref _isLoading, value); }
-        }
-
+        
         public DelegateCommand RefreshCommand
         {
             get
@@ -129,7 +135,7 @@ namespace FitMeet.ViewModels
 
         private void OnItemAppearing(object obj)
         {
-            if (IsLoading || ResultListItemsSource.Count == 0)
+            if (IsRefreshing || ResultListItemsSource.Count == 0)
                 return;
 
             //hit bottom!
@@ -152,6 +158,7 @@ namespace FitMeet.ViewModels
             if (restResponseMessage == null)
             {
                 _curentPage++;
+                IsRefreshing = false;
                 return;
             }
             var output = restResponseMessage?.Output;

@@ -53,7 +53,8 @@ namespace FitMeet.Controls
         /// <summary>
         /// The padding property
         /// </summary>
-        public static readonly BindableProperty PaddingProperty = BindableProperty.Create<GridView, Thickness>(view => view.Padding, new Thickness(0), BindingMode.OneWay);
+        //public static readonly BindableProperty PaddingProperty = BindableProperty.Create<GridView, Thickness>(view => view.Padding, new Thickness(0), BindingMode.OneWay);
+        public static readonly BindableProperty PaddingProperty = BindableProperty.Create("Padding", typeof(Thickness), typeof(GridView), new Thickness(0), BindingMode.OneWay, null, null, null, null);
 
         //
         // Properties

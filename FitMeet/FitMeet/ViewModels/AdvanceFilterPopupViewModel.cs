@@ -42,14 +42,8 @@ namespace FitMeet.ViewModels
             set
             {
                 SetProperty(ref _isMale, value);
-                RaisePropertyChanged("IsFemale");
             }
         }
-        public bool IsFemale
-        {
-            get { return !_isMale; }
-        }
-
 
         private int GetDistance()
         {

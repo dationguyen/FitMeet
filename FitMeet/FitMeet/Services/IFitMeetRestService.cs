@@ -42,5 +42,17 @@ namespace FitMeet.Services
         /// <returns></returns>
         Task<ResponseMessage<ActivityData>> GetActivityDataAsync();
 
+        /// <summary>
+        /// get member Detail
+        /// </summary>
+        /// <returns></returns>
+        Task<ResponseMessage<MemberDetail>> GetMemberDetailAsync(string id);
+
+        /// <summary>
+        /// Get the friends list
+        /// </summary>
+        /// <returns></returns>
+        Task<ResponseMessage<List<Member>>> GetFriendsAsync(int page);
+
     }
 }

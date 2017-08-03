@@ -8,27 +8,16 @@ namespace FitMeet.Models
         //private List<Activity> activies;
         public string FullName => string.Format("{0} {1}", MemberFirstName, MemberLastName);
 
-        //public List<Activity> Activities
-        //{
-        //    get
-        //    {
-        //        if (activies == null)
-        //        {
-        //            activies = new List<Activity>();
-        //            if (Skills != null)
-        //            {
-        //                foreach (var skill in Skills)
-        //                {
-        //                    foreach (var activity in skill?.Activities)
-        //                    {
-        //                        activies.Add(activity);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        return activies;
-        //    }
-        //}
+        public string NameSort
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(MemberFirstName) || MemberFirstName.Length == 0)
+                    return "?";
+
+                return MemberFirstName[0].ToString().ToUpper();
+            }
+        }
 
         public string GenderLogoUrl
         {
@@ -100,7 +89,7 @@ namespace FitMeet.Models
         public int CountActivity { get; set; }
 
         [JsonProperty("activity")]
-        public ActivityModel[] Activities { get; set; }
+        public List<ActivityModel> Activities { get; set; }
     }
 
     public class ActivityModel

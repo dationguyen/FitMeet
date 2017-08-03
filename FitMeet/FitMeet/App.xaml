@@ -2,48 +2,49 @@
 <prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                         xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
+                        xmlns:converter="clr-namespace:FitMeet.Converters;assembly=FitMeet"
                         xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms"
                         x:Class="FitMeet.App">
   <prism:PrismApplication.Resources>
     <ResourceDictionary>
-	    <!--Colors-->
-	    <Color x:FactoryMethod="FromHex" x:Key="MainColor">
-		    <x:Arguments>
-			    <x:String>#4cbea0</x:String>
-		    </x:Arguments>
-	    </Color>
-	    <Color x:FactoryMethod="FromHex" x:Key="RedColor">
-		    <x:Arguments>
-			    <x:String>#f27062</x:String>
-		    </x:Arguments>
-	    </Color>
-	    <Color x:FactoryMethod="FromHex" x:Key="BodyColor">
-		    <x:Arguments>
-			    <x:String>#5a5a5a</x:String>
-		    </x:Arguments>
-	    </Color>
-	    <Color x:FactoryMethod="FromHex" x:Key="PlaceHolderColor">
-		    <x:Arguments>
-			    <x:String>#7e7e7e</x:String>
-		    </x:Arguments>
-	    </Color>
-	    <Color x:FactoryMethod="FromHex" x:Key="NavBackgroundColor">
-		    <x:Arguments>
-			    <x:String>#f5f5f5</x:String>
-		    </x:Arguments>
-	    </Color>
-	    <Color x:FactoryMethod="FromHex" x:Key="BorderColor">
-		    <x:Arguments>
-			    <x:String>#e8e8e8</x:String>
-		    </x:Arguments>
-	    </Color>
-	    
-	    <Color x:FactoryMethod="FromHex" x:Key="BlurTextColor">
-		    <x:Arguments>
-			    <x:String>#c2c2c2</x:String>
-		    </x:Arguments>
-	    </Color>
-	    
+      <!--Colors-->
+      <Color x:FactoryMethod="FromHex" x:Key="MainColor">
+        <x:Arguments>
+          <x:String>#4cbea0</x:String>
+        </x:Arguments>
+      </Color>
+      <Color x:FactoryMethod="FromHex" x:Key="RedColor">
+        <x:Arguments>
+          <x:String>#f27062</x:String>
+        </x:Arguments>
+      </Color>
+      <Color x:FactoryMethod="FromHex" x:Key="BodyColor">
+        <x:Arguments>
+          <x:String>#5a5a5a</x:String>
+        </x:Arguments>
+      </Color>
+      <Color x:FactoryMethod="FromHex" x:Key="PlaceHolderColor">
+        <x:Arguments>
+          <x:String>#7e7e7e</x:String>
+        </x:Arguments>
+      </Color>
+      <Color x:FactoryMethod="FromHex" x:Key="NavBackgroundColor">
+        <x:Arguments>
+          <x:String>#f5f5f5</x:String>
+        </x:Arguments>
+      </Color>
+      <Color x:FactoryMethod="FromHex" x:Key="BorderColor">
+        <x:Arguments>
+          <x:String>#e8e8e8</x:String>
+        </x:Arguments>
+      </Color>
+
+      <Color x:FactoryMethod="FromHex" x:Key="BlurTextColor">
+        <x:Arguments>
+          <x:String>#c2c2c2</x:String>
+        </x:Arguments>
+      </Color>
+
       <!-- Styles -->
       <Style TargetType="NavigationPage">
         <Setter Property="BarBackgroundColor" Value="{StaticResource MainColor}"/>
@@ -64,28 +65,30 @@
       </Style>
 
       <Style TargetType="controls:HtmlLabel">
-	      <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
-	      <Setter Property="FontSize" Value="Small"/>
-	      <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
+        <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
+        <Setter Property="FontSize" Value="Small"/>
+        <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
       </Style>
-	    
+
       <Style TargetType="Button">
         <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
       </Style>
 
-	    <Style TargetType="controls:ToggleButton">
-		    <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
-		    <Setter Property="BorderColor" Value="{StaticResource BodyColor}"/>
-		    <Setter Property="BorderWidth" Value="0.5"/>
-		    <!--<Setter Property="CheckedTextColor" Value="White"/>-->
-		    <!--<Setter Property="CheckedBackgroundColor" Value="{StaticResource MainColor}"/>--> 
-		    <!--<Setter Property="UncheckedTextColor" Value="{StaticResource BodyColor}"/>-->
-		    <!--<Setter Property="UncheckedBackgroundColor" Value="White"/>-->
-		    <Setter Property="WidthRequest" Value="88"/>
-	    </Style>
+      <Style TargetType="controls:ToggleButton">
+        <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
+        <Setter Property="BorderColor" Value="{StaticResource BodyColor}"/>
+        <Setter Property="BorderWidth" Value="0.5"/>
+        <!--<Setter Property="CheckedTextColor" Value="White"/>-->
+        <!--<Setter Property="CheckedBackgroundColor" Value="{StaticResource MainColor}"/>-->
+        <!--<Setter Property="UncheckedTextColor" Value="{StaticResource BodyColor}"/>-->
+        <!--<Setter Property="UncheckedBackgroundColor" Value="White"/>-->
+        <Setter Property="WidthRequest" Value="88"/>
+      </Style>
       <!-- Styles -->
 
-     
+      <converter:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+      <converter:BoolRevertConverter x:Key="RevertConverter"/>
+      <converter:BoolToColorConverter x:Key="BoolToColorConverter"/>
     </ResourceDictionary>
   </prism:PrismApplication.Resources>
 

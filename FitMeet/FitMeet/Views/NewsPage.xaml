@@ -13,7 +13,8 @@
 			<Image Source="{Binding LogoImageSource}" HeightRequest="100" ></Image>
 			<ListView Grid.Row="1" ItemsSource="{Binding NewsListItemsSource}" 
 			          ItemTapped="ListView_OnItemTapped"
-			          SeparatorVisibility="None" HasUnevenRows="True" RowHeight="-1" SelectedItem="{Binding NewsListSelectedItem,Mode=TwoWay}">
+			          SeparatorVisibility="None" HasUnevenRows="True" RowHeight="-1" 
+			          SelectedItem="{Binding NewsListSelectedItem,Mode=TwoWay}">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<ViewCell>

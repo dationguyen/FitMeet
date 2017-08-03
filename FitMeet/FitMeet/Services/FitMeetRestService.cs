@@ -1,4 +1,5 @@
 ﻿using FitMeet.Models;
+using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -14,12 +15,19 @@ namespace FitMeet.Services
         private const string getPageUri = "contentpages/getpage.json";
         private const string getNewsDetailUri = "News/view.json";
         private const string getMemberUri = "users/index/page:{0}.json";
+        private const string getFriendUri = "friends/index/page:{0}.json";
+        private const string getMemberDetailUri = "/users/view.json";
         private const string searchMemberUri = "Users/advance_search/page:{0}.json";
         private const string getActivityDatarUri = "activities/index.json";
 
-        public FitMeetRestService()
+        private readonly IPageDialogService _dialogService;
+        private readonly IGeolocationServices _geoService;
+
+        public FitMeetRestService(IPageDialogService dialogService, IGeolocationServices geoService)
         {
             this.httpClient = new HttpClient() { BaseAddress = new Uri(baseUri) };
+            _dialogService = dialogService;
+            _geoService = geoService;
         }
 
         public async Task<ResponseMessage<ActivityData>> GetActivityDataAsync()
@@ -32,13 +40,38 @@ namespace FitMeet.Services
 
         }
 
-        public async Task<ResponseMessage<List<Member>>> GetMembersAsync(int pageId)
+        public async Task<ResponseMessage<List<Member>>> GetFriendsAsync(int page)
+        {
+            var position = await _geoService.GetPosition();
+
+            var param = new Dictionary<string, string>
+            {
+                { "token", "4fmr0pw0kee6h3kccbli" },
+                { "lat", position?.Latitude.ToString() },
+                { "lng", position?.Longitude.ToString() }
+            };
+            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(getFriendUri, page), param);
+        }
+
+        public async Task<ResponseMessage<MemberDetail>> GetMemberDetailAsync(string id)
         {
             var param = new Dictionary<string, string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" },
-                { "lat", "-33.8704391" },
-                { "lng", "151.1921796" }
+                { "id", id }
+            };
+            return await ApiPost<ResponseMessage<MemberDetail>>(getMemberDetailUri, param);
+        }
+
+        public async Task<ResponseMessage<List<Member>>> GetMembersAsync(int pageId)
+        {
+            var position = await _geoService.GetPosition();
+
+            var param = new Dictionary<string, string>
+            {
+                { "token", "4fmr0pw0kee6h3kccbli" },
+                { "lat", position?.Latitude.ToString() },
+                { "lng", position?.Longitude.ToString() }
             };
             return await ApiPost<ResponseMessage<List<Member>>>(String.Format(getMemberUri, pageId), param);
         }
@@ -77,11 +110,13 @@ namespace FitMeet.Services
 
         public async Task<ResponseMessage<List<Member>>> SearchMembersAsync(int page, int distance, string gender, List<int> activities)
         {
+            var position = await _geoService.GetPosition();
+
             var param = new Dictionary<string, string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" },
-                { "lat", "-33.8704391" },
-                { "lng", "151.1921796" },
+                { "lat", position?.Latitude.ToString() },
+                { "lng", position?.Longitude.ToString() },
                 { "gender", gender },
                 { "distance", distance.ToString()}
             };

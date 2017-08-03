@@ -4,16 +4,18 @@ using Xamarin.Forms;
 
 namespace FitMeet.Converters
 {
-    public class BoolRevertConverter : IValueConverter
+    public class StringToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !(bool)value;
+            var result = ((string)value).Equals((string)parameter, StringComparison.OrdinalIgnoreCase);
+            return result;
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return !(bool)value;
+            throw new NotImplementedException();
         }
     }
 }
