@@ -116,6 +116,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FitMeet\FitMeet.csproj">
       <Name>FitMeet</Name>
+      <Project>{536615EB-601A-426C-B4E9-A5B75ACC4F50}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

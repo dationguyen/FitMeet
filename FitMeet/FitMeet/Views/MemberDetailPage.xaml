@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMeet.Views.MemberDetailPage"
@@ -139,37 +139,42 @@
 						</ListView.ItemTemplate>
 					</ListView>
 				</Grid>
-				<StackLayout BackgroundColor="White" Padding="30">
-					<StackLayout.Resources>
-						<ResourceDictionary>
-							<Style TargetType="Button">
-								<Setter Property="TextColor" Value="White"/>
-								<Setter Property="BorderWidth" Value="{StaticResource BorderThickness}"/>
-								<Setter Property="BorderColor" Value="{StaticResource BorderColor}"/>
-								<Setter Property="BackgroundColor" Value="{StaticResource MainColor}"/>
-							</Style>
-						</ResourceDictionary>
-					</StackLayout.Resources>
-					<Button Text="Message" 
-					        IsVisible="{Binding DataSource.IsFriend, 
-												Converter={StaticResource StringToVisibilityConverter}, 
-												ConverterParameter=Friends}" />
-					<Button Text="Request to Connect" 
-					        IsVisible="{Binding DataSource.IsFriend, 
-												Converter={StaticResource StringToVisibilityConverter}, 
-												ConverterParameter=Connect}" 
-							Command="{Binding AddFriendCommand}"/>
-					<Button Text="Friend Request Pending"    
-					        IsVisible="{Binding DataSource.IsFriend, 
-												Converter={StaticResource StringToVisibilityConverter}, 
-												ConverterParameter=Pending}" 
-					        BackgroundColor="{StaticResource RedColor}"></Button>
-					<Button Text="Friend Request Sent"    
-					        IsVisible="{Binding DataSource.IsFriend, 
-												Converter={StaticResource StringToVisibilityConverter}, 
-												ConverterParameter=Sent}" 
-					        BackgroundColor="{StaticResource RedColor}"></Button>
-				</StackLayout>
+                <Grid BackgroundColor="White" Padding="30"> 
+    				<StackLayout >
+    					<StackLayout.Resources>
+    						<ResourceDictionary>
+    							<Style TargetType="Button">
+    								<Setter Property="TextColor" Value="White"/>
+    								<Setter Property="BorderWidth" Value="{StaticResource BorderThickness}"/>
+    								<Setter Property="BorderColor" Value="{StaticResource BorderColor}"/>
+    								<Setter Property="BackgroundColor" Value="{StaticResource MainColor}"/>
+    							</Style>
+    						</ResourceDictionary>
+    					</StackLayout.Resources>
+    					<Button Text="Message" 
+    					        IsVisible="{Binding DataSource.IsFriend, 
+    												Converter={StaticResource StringToVisibilityConverter}, 
+    												ConverterParameter=Friends}" />
+    					<Button Text="Request to Connect" 
+    					        IsVisible="{Binding DataSource.IsFriend, 
+    												Converter={StaticResource StringToVisibilityConverter}, 
+    												ConverterParameter=Connect}" 
+    							Command="{Binding AddFriendCommand}"/>
+    					<Button Text="Friend Request Pending"    
+    					        IsVisible="{Binding DataSource.IsFriend, 
+    												Converter={StaticResource StringToVisibilityConverter}, 
+    												ConverterParameter=Pending}" 
+    					        BackgroundColor="{StaticResource RedColor}"></Button>
+                        <Button Text="Friend Request Sent"    
+                                IsVisible="{Binding DataSource.IsFriend, 
+                                                    Converter={StaticResource StringToVisibilityConverter}, 
+                                                    ConverterParameter=Sent}" 
+                                BackgroundColor="{StaticResource RedColor}"></Button>
+    				</StackLayout>
+                    <Grid BackgroundColor="#8CFFFFFF" IsVisible="{Binding IsAdding}" >
+                        <ActivityIndicator IsRunning="true" Color="Black"></ActivityIndicator>
+                    </Grid> 
+                </Grid>
 			</StackLayout>
 		</ScrollView>
 	</ContentPage.Content>

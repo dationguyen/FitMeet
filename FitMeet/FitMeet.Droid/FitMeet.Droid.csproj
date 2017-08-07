@@ -166,7 +166,6 @@
     <AndroidResource Include="Resources\layout\toolbar.xml" />
     <AndroidResource Include="Resources\values\colors.xml" />
     <AndroidResource Include="Resources\values\styles.xml" />
-    <AndroidResource Include="Resources\values-v21\styles.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
@@ -174,6 +173,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FitMeet\FitMeet.csproj">
       <Name>FitMeet</Name>
+      <Project>{536615EB-601A-426C-B4E9-A5B75ACC4F50}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

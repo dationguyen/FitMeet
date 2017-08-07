@@ -11,6 +11,7 @@ namespace FitMeet.ViewModels
         private MemberDetail _dataSource;
         private double _activitiesHeightRequest;
         private double _trainingPlaceHeightRequest;
+        private bool _isAdding = false;
 
         public DelegateCommand AddFriendCommand
         {
@@ -18,12 +19,14 @@ namespace FitMeet.ViewModels
             {
                 return new DelegateCommand(async () =>
                 {
+                    IsAdding = true;
                     var success = await _fitMeetRestService.AddFriendsAsync(_dataSource.UserId);
                     if (success)
                     {
                         DataSource.IsFriend = "Sent";
                         RaisePropertyChanged("DataSource");
                     }
+                    IsAdding = false;
                 });
             }
         }
@@ -44,8 +47,11 @@ namespace FitMeet.ViewModels
             get { return _activitiesHeightRequest; }
             set { SetProperty(ref _activitiesHeightRequest, value); }
         }
-
-
+		public bool IsAdding
+		{
+			get { return _isAdding; }
+			set { SetProperty(ref _isAdding, value); }
+		}
         public MemberDetailPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestService) : base(navigationService, fitMeetRestService)
         {
         }

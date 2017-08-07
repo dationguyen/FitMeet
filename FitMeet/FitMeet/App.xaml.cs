@@ -14,11 +14,10 @@ namespace FitMeet
         {
         }
 
-        public App() : base(null)
-        {
-
-        }
-
+		public App()
+		{
+			
+		}
         protected override void OnInitialized()
         {
             InitializeComponent();
