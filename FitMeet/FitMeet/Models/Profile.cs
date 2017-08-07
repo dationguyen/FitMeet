@@ -22,9 +22,9 @@ namespace FitMeet.Models
         public string goalId { get; set; }
         public string goal { get; set; }
         public int countSkill { get; set; }
-        public Skill[] skill { get; set; }
+        public List<SkillModel> skill { get; set; }
         public int countTrainPlace { get; set; }
-        public Trainplace[] trainPlace { get; set; }
+        public List<Trainplace> trainPlace { get; set; }
         public string hasFacebook { get; set; }
         public Request request { get; set; }
     }
@@ -35,28 +35,8 @@ namespace FitMeet.Models
         public int friend { get; set; }
     }
 
-    public class Skill
-    {
-        public string levelTitle { get; set; }
-        public int LevelId { get; set; }
-        public int countActivity { get; set; }
-        public Activity[] activity { get; set; }
-    }
+   
 
-    public class Activity
-    {
-        public string activityUserId { get; set; }
-        public string activityId { get; set; }
-        public string activityIcon { get; set; }
-        public string activityTitle { get; set; }
-    }
-
-    public class Trainplace
-    {
-        public string TrainPlaceId { get; set; }
-        public string Location { get; set; }
-        public string LocationId { get; set; }
-        public string LocationTitle { get; set; }
-    }
+  
 
 }
