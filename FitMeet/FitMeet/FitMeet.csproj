@@ -58,6 +58,7 @@
     <Compile Include="Controls\GroupCollection.cs" />
     <Compile Include="Models\ActivityData.cs" />
     <Compile Include="Models\MemberDetail.cs" />
+    <Compile Include="Models\Profile.cs" />
     <Compile Include="Services\ActivityService.cs" />
     <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\NewsDetail.cs" />
