@@ -47,11 +47,11 @@ namespace FitMeet.ViewModels
             get { return _activitiesHeightRequest; }
             set { SetProperty(ref _activitiesHeightRequest, value); }
         }
-		public bool IsAdding
-		{
-			get { return _isAdding; }
-			set { SetProperty(ref _isAdding, value); }
-		}
+        public bool IsAdding
+        {
+            get { return _isAdding; }
+            set { SetProperty(ref _isAdding, value); }
+        }
         public MemberDetailPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestService) : base(navigationService, fitMeetRestService)
         {
         }

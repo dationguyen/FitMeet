@@ -16,6 +16,7 @@ namespace FitMeet.Services
         private const string getNewsDetailUri = "News/view.json";
         private const string getMemberUri = "users/index/page:{0}.json";
         private const string getFriendUri = "friends/index/page:{0}.json";
+        private const string getProfileUri = "Users/my_profile.json";
         private const string addFriendUri = "Friends/add.json";
         private const string getMemberDetailUri = "/users/view.json";
         private const string searchMemberUri = "Users/advance_search/page:{0}.json";
