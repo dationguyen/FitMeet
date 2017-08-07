@@ -1,18 +1,153 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FitMeet.Views.MePage"
-             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True" Title="{Binding Title}">
-
-	<ContentPage.ToolbarItems>
-		<ToolbarItem Name="Edit" Icon="edit_logo.png" 
-		             Command="{Binding NavigateCommand}" 
-		             CommandParameter="app:///MainPage/NavigationPage/MainTabbedPage/MePage/SettingPage" ></ToolbarItem>
-	</ContentPage.ToolbarItems>
-	<ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
-        </StackLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FitMeet.Views.MePage" xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet" prism:ViewModelLocator.AutowireViewModel="True" Title="Me">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="Micro" />
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+            <x:Double x:Key="BorderThickness">1</x:Double>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Spacing="{StaticResource BorderThickness}" VerticalOptions="Start" BackgroundColor="{StaticResource BorderColor}">
+                <StackLayout BackgroundColor="White">
+                    <Image Source="{Binding DataSource.UserPhoto}" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" Margin="0,20,0,10" Aspect="AspectFill" />
+                    <Label Text="{Binding DataSource.FullName}" FontSize="Small" Margin="0,0,0,10" HorizontalOptions="Center">
+                    </Label>
+                </StackLayout>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="72">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="16">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Gender" HorizontalTextAlignment="End">
+                    </Label>
+                    <Label Grid.Column="2" Text="{Binding DataSource.Gender}">
+                    </Label>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="72">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="16">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Age" HorizontalTextAlignment="End">
+                    </Label>
+                    <Label Grid.Column="2" Text="{Binding DataSource.Age}">
+                    </Label>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="72">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="16">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="About" HorizontalTextAlignment="End">
+                    </Label>
+                    <Label Grid.Column="2" Text="{Binding DataSource.About}">
+                    </Label>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="72">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="16">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Address" HorizontalTextAlignment="End">
+                    </Label>
+                    <Label Grid.Column="2" Text="{Binding DataSource.Address}">
+                    </Label>
+                </Grid>
+                <Grid>
+                    <Label Text="">
+                    </Label>
+                </Grid>
+                <Grid VerticalOptions="Start">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="72">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="16">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Activity" HorizontalTextAlignment="End">
+                    </Label>
+                    <StackLayout Grid.Column="2">
+                        <StackLayout>
+                            <ListView ItemsSource="{Binding DataSource.Skill}" RowHeight="30" HeightRequest="{Binding ActivitiesHeightRequest}" VerticalOptions="Start" SeparatorVisibility="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell Height="30">
+                                            <StackLayout Orientation="Horizontal">
+                                                <StackLayout VerticalOptions="Center" Padding="4,2" BackgroundColor="{StaticResource MainColor}" HorizontalOptions="Start">
+                                                    <Label VerticalOptions="Start" TextColor="White" Text="{Binding LevelTitle}" />
+                                                </StackLayout>
+                                                <controls:ActivitiesStackLayout Orientation="Horizontal" VerticalOptions="Center" HeightRequest="14" ItemsSource="{Binding Activities}">
+                                                </controls:ActivitiesStackLayout>
+                                            </StackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                    </StackLayout>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="72">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="16">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Goal" HorizontalTextAlignment="End">
+                    </Label>
+                    <Label Grid.Column="2" Text="{Binding DataSource.Goal}">
+                    </Label>
+                </Grid>
+                <Grid VerticalOptions="Start">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="72">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="16">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Training Place" HorizontalTextAlignment="End">
+                    </Label>
+                    <ListView Grid.Column="2" ItemsSource="{Binding DataSource.TrainPlace}" HasUnevenRows="True" RowHeight="18" SeparatorVisibility="None" HeightRequest="{Binding TrainingPlaceHeightRequest}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Label Text="{Binding Location}">
+                                    </Label>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

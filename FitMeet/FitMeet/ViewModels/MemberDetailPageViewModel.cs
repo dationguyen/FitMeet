@@ -31,17 +31,17 @@ namespace FitMeet.ViewModels
             }
         }
 
+        public MemberDetail DataSource
+        {
+            get { return _dataSource; }
+            set { SetProperty(ref _dataSource, value); }
+        }
         public double TrainingPlaceHeightRequest
         {
             get { return _trainingPlaceHeightRequest; }
             set => SetProperty(ref _trainingPlaceHeightRequest, value);
         }
 
-        public MemberDetail DataSource
-        {
-            get { return _dataSource; }
-            set { SetProperty(ref _dataSource, value); }
-        }
         public double ActivitiesHeightRequest
         {
             get { return _activitiesHeightRequest; }
@@ -64,7 +64,7 @@ namespace FitMeet.ViewModels
             var restResponseMessage = await _fitMeetRestService.GetMemberDetailAsync(id);
             DataSource = restResponseMessage?.Output?.Response;
             ActivitiesHeightRequest = DataSource.CountSkill * 30;
-            TrainingPlaceHeightRequest = DataSource.CountTrainPlace * 18;
+            TrainingPlaceHeightRequest = DataSource.CountTrainPlace * 20;
         }
     }
 }

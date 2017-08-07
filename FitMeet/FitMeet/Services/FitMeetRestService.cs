@@ -121,6 +121,15 @@ namespace FitMeet.Services
             return await ApiPost<ResponseMessage<WebPageInfo>>(getPageUri, param);
         }
 
+        public async Task<ResponseMessage<UserProfile>> GetUserProfileAsync()
+        {
+            var param = new Dictionary<string, string>
+			{
+				{ "token", "4fmr0pw0kee6h3kccbli" }
+			};
+            return await ApiPost<ResponseMessage<UserProfile>>(getProfileUri, param);
+        }
+
         public async Task<ResponseMessage<List<Member>>> SearchMembersAsync(int page, int distance, string gender, List<int> activities)
         {
             var position = await _geoService.GetPosition();
@@ -140,5 +149,7 @@ namespace FitMeet.Services
             return await ApiPost<ResponseMessage<List<Member>>>(String.Format(searchMemberUri, page), param);
 
         }
+
+ 
     }
 }

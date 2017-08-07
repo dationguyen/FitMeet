@@ -9,6 +9,8 @@ namespace FitMeet.Models
 {
     public class UserProfile
     {
+        public string FullName => string.Format("{0} {1}", UserFirstName, UserLastName);
+
         [JsonProperty("userFirstName")]
         public string UserFirstName { get; set; }
 

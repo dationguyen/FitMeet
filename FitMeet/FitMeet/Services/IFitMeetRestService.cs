@@ -59,5 +59,11 @@ namespace FitMeet.Services
         /// </summary>
         /// <returns></returns>
         Task<bool> AddFriendsAsync(string friendId);
+
+        /// <summary>
+        /// Add Friend
+        /// </summary>
+        /// <returns></returns>
+        Task<ResponseMessage<UserProfile>> GetUserProfileAsync();
     }
 }
