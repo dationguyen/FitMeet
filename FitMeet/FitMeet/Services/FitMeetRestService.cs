@@ -16,6 +16,7 @@ namespace FitMeet.Services
         private const string getNewsDetailUri = "News/view.json";
         private const string getMemberUri = "users/index/page:{0}.json";
         private const string getFriendUri = "friends/index/page:{0}.json";
+        private const string addFriendUri = "Friends/add.json";
         private const string getMemberDetailUri = "/users/view.json";
         private const string searchMemberUri = "Users/advance_search/page:{0}.json";
         private const string getActivityDatarUri = "activities/index.json";
@@ -28,6 +29,17 @@ namespace FitMeet.Services
             this.httpClient = new HttpClient() { BaseAddress = new Uri(baseUri) };
             _dialogService = dialogService;
             _geoService = geoService;
+        }
+
+        public async Task<bool> AddFriendsAsync(int friendId)
+        {
+            var param = new Dictionary<string, string>
+            {
+                { "token", "4fmr0pw0kee6h3kccbli" },
+                { "friend", friendId.ToString() }
+            };
+            var result = await ApiPost<ResponseMessage<string>>(getActivityDatarUri, param);
+            return result?.Output?.Status == 1;
         }
 
         public async Task<ResponseMessage<ActivityData>> GetActivityDataAsync()

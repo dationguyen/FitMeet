@@ -151,15 +151,16 @@
 						</ResourceDictionary>
 					</StackLayout.Resources>
 					<Button Text="Message" 
-					        IsVisible="{Binding DataSource.IsFriend , 
+					        IsVisible="{Binding DataSource.IsFriend, 
 												Converter={StaticResource StringToVisibilityConverter}, 
 												ConverterParameter=Friends}" />
 					<Button Text="Request to Connect" 
-					        IsVisible="{Binding DataSource.IsFriend , 
+					        IsVisible="{Binding DataSource.IsFriend, 
 												Converter={StaticResource StringToVisibilityConverter}, 
-												ConverterParameter=Connect}" />
+												ConverterParameter=Connect}" 
+							Command="{Binding AddFriendCommand}"/>
 					<Button Text="Friend Request Pending"    
-					        IsVisible="{Binding DataSource.IsFriend , 
+					        IsVisible="{Binding DataSource.IsFriend, 
 												Converter={StaticResource StringToVisibilityConverter}, 
 												ConverterParameter=Pending}" 
 					        BackgroundColor="{StaticResource RedColor}"></Button>
