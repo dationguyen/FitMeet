@@ -31,14 +31,14 @@ namespace FitMeet.Services
             _geoService = geoService;
         }
 
-        public async Task<bool> AddFriendsAsync(int friendId)
+        public async Task<bool> AddFriendsAsync(string friendId)
         {
             var param = new Dictionary<string, string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" },
-                { "friend", friendId.ToString() }
+                { "friend", friendId }
             };
-            var result = await ApiPost<ResponseMessage<string>>(getActivityDatarUri, param);
+            var result = await ApiPost<ResponseMessage<string>>(addFriendUri, param);
             return result?.Output?.Status == 1;
         }
 

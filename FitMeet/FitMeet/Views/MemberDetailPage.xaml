@@ -164,6 +164,11 @@
 												Converter={StaticResource StringToVisibilityConverter}, 
 												ConverterParameter=Pending}" 
 					        BackgroundColor="{StaticResource RedColor}"></Button>
+					<Button Text="Friend Request Sent"    
+					        IsVisible="{Binding DataSource.IsFriend, 
+												Converter={StaticResource StringToVisibilityConverter}, 
+												ConverterParameter=Sent}" 
+					        BackgroundColor="{StaticResource RedColor}"></Button>
 				</StackLayout>
 			</StackLayout>
 		</ScrollView>

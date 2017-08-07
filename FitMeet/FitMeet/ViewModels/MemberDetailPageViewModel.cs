@@ -1,5 +1,6 @@
 ﻿using FitMeet.Models;
 using FitMeet.Services;
+using Prism.Commands;
 using Prism.Navigation;
 
 namespace FitMeet.ViewModels
@@ -10,6 +11,22 @@ namespace FitMeet.ViewModels
         private MemberDetail _dataSource;
         private double _activitiesHeightRequest;
         private double _trainingPlaceHeightRequest;
+
+        public DelegateCommand AddFriendCommand
+        {
+            get
+            {
+                return new DelegateCommand(async () =>
+                {
+                    var success = await _fitMeetRestService.AddFriendsAsync(_dataSource.UserId);
+                    if (success)
+                    {
+                        DataSource.IsFriend = "Sent";
+                        RaisePropertyChanged("DataSource");
+                    }
+                });
+            }
+        }
 
         public double TrainingPlaceHeightRequest
         {

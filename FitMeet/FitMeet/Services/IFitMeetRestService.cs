@@ -58,6 +58,6 @@ namespace FitMeet.Services
         /// Add Friend
         /// </summary>
         /// <returns></returns>
-        Task<bool> AddFriendsAsync(int friendId);
+        Task<bool> AddFriendsAsync(string friendId);
     }
 }
