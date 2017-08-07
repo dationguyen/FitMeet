@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMeet.Views.NewsDetailPage"
@@ -11,6 +11,7 @@
 	       <StackLayout Padding="20,10">
 				<Label Text="{Binding DataSource.Title}" TextColor="{StaticResource MainColor}"></Label>
 				<Label Text="{Binding  DataSource.Created}" FontSize="Micro"></Label>
+                <Image Source="{Binding DataSource.Picture}" Margin="40,10"></Image>
 				<controls:HtmlLabel Text="{Binding DataSource.Description}" ></controls:HtmlLabel>
 		   </StackLayout>
 	   </ScrollView>

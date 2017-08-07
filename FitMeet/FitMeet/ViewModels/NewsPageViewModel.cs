@@ -2,6 +2,8 @@
 using FitMeet.Services;
 using Prism.Navigation;
 using System.Collections.Generic;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace FitMeet.ViewModels
 {
@@ -10,8 +12,8 @@ namespace FitMeet.ViewModels
         //fields
         private string logoImageSource;
 
-        private List<NewsInfomation> newsListItemsSource;
-        private NewsInfomation _newsListSelectedItem;
+        private ObservableCollection<News> _newsListItemsSource;
+        private News _newsListSelectedItem;
 
 
         //Properties
@@ -21,13 +23,13 @@ namespace FitMeet.ViewModels
             set { SetProperty(ref logoImageSource, value); }
         }
 
-        public List<NewsInfomation> NewsListItemsSource
+        public ObservableCollection<News> NewsListItemsSource
         {
-            get => newsListItemsSource;
-            set => SetProperty(ref newsListItemsSource, value);
+            get => _newsListItemsSource;
+            set => SetProperty(ref _newsListItemsSource, value);
         }
 
-        public NewsInfomation NewsListSelectedItem
+        public News NewsListSelectedItem
         {
             get { return null; }
             set
@@ -35,7 +37,9 @@ namespace FitMeet.ViewModels
                 SetProperty(ref _newsListSelectedItem, value);
                 if (value != null)
                 {
-                    Navigate("NewsDetailPage?id=" + ((NewsInfomation)value).Id);
+                    var item = NewsListItemsSource.Single(u => u.Id == value.Id);
+                    item.View = "1";                
+                    //NavigateCommand.Execute("NewsDetailPage?id=" + ((News)value).Id);
                 }
 
             }
@@ -52,7 +56,12 @@ namespace FitMeet.ViewModels
             base.OnNavigatingTo(parameters);
             var result = await _fitMeetRestService.GetNewsAsync();
             LogoImageSource = result.Output.Banner;
-            NewsListItemsSource = result.Output.Response;
+            var list = result.Output.Response;
+            foreach (var item in list)
+            {
+                item.View = "0";
+            };
+            NewsListItemsSource =  new ObservableCollection<News>(list);
         }
     }
 }

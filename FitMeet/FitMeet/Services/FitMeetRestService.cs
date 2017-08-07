@@ -93,13 +93,13 @@ namespace FitMeet.Services
         /// Get the list of news
         /// </summary>
         /// <returns></returns>
-        public async Task<ResponseMessage<List<NewsInfomation>>> GetNewsAsync()
+        public async Task<ResponseMessage<List<News>>> GetNewsAsync()
         {
             var param = new Dictionary<string, string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" }
             };
-            return await ApiPost<ResponseMessage<List<NewsInfomation>>>(getNewsUri, param);
+            return await ApiPost<ResponseMessage<List<News>>>(getNewsUri, param);
         }
 
         public async Task<ResponseMessage<NewsDetail>> GetNewsDetailAsync(string id)

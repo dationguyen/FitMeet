@@ -10,7 +10,7 @@ namespace FitMeet.Services
         /// Get the list of news
         /// </summary>
         /// <returns></returns>
-        Task<ResponseMessage<List<NewsInfomation>>> GetNewsAsync();
+        Task<ResponseMessage<List<News>>> GetNewsAsync();
 
         /// <summary>
         /// Get the news detail

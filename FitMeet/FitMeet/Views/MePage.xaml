@@ -93,7 +93,11 @@
                     </Label>
                     <StackLayout Grid.Column="2">
                         <StackLayout>
-                            <ListView ItemsSource="{Binding DataSource.Skill}" RowHeight="30" HeightRequest="{Binding ActivitiesHeightRequest}" VerticalOptions="Start" SeparatorVisibility="None">
+                            <ListView ItemsSource="{Binding DataSource.Skill}"
+                                RowHeight="30" 
+                                SelectedItem ="{Binding NullItem,Mode=TwoWay}"
+                                HeightRequest="{Binding ActivitiesHeightRequest}" 
+                                VerticalOptions="Start" SeparatorVisibility="None">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell Height="30">
@@ -136,11 +140,16 @@
                     </Grid.ColumnDefinitions>
                     <Label Text="Training Place" HorizontalTextAlignment="End">
                     </Label>
-                    <ListView Grid.Column="2" ItemsSource="{Binding DataSource.TrainPlace}" HasUnevenRows="True" RowHeight="18" SeparatorVisibility="None" HeightRequest="{Binding TrainingPlaceHeightRequest}">
+                    <ListView Grid.Column="2" 
+                        ItemsSource="{Binding DataSource.TrainPlace}"
+                        SelectedItem ="{Binding NullItem,Mode=TwoWay}"
+                        HasUnevenRows="True" RowHeight="18" 
+                        SeparatorVisibility="None" 
+                        HeightRequest="{Binding TrainingPlaceHeightRequest}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <Label Text="{Binding Location}">
+                                    <Label Text="{Binding LocationTitle}">
                                     </Label>
                                 </ViewCell>
                             </DataTemplate>

@@ -10,6 +10,12 @@ namespace FitMeet.ViewModels
 		private double _activitiesHeightRequest;
 		private double _trainingPlaceHeightRequest;
 
+        public object NullItem 
+        {
+            get =>  null;
+            set => RaisePropertyChanged("NullItem"); 
+        }
+
 		public double TrainingPlaceHeightRequest
 		{
 			get { return _trainingPlaceHeightRequest; }
@@ -42,7 +48,7 @@ namespace FitMeet.ViewModels
 				DataSource = response?.Output?.Response;
             }
 			ActivitiesHeightRequest = DataSource.CountSkill * 30;
-			TrainingPlaceHeightRequest = DataSource.CountTrainPlace * 20;
+			TrainingPlaceHeightRequest = DataSource.CountTrainPlace * 18;
         }
     }
 }

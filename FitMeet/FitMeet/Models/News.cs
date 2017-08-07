@@ -2,7 +2,7 @@
 
 namespace FitMeet.Models
 {
-    public class NewsInfomation
+    public class News
     {
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -24,5 +24,12 @@ namespace FitMeet.Models
 
         [JsonProperty("view")]
         public string View { get; set; }
+
+        public bool Readed {
+            get
+            {
+                return View != "0";
+            } 
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
 				  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 				  xmlns:local="clr-namespace:FitMeet.Views;assembly=FitMeet"
@@ -30,13 +30,12 @@
 				</StackLayout.Resources>
 				<controls:ExtendedButton Text="Settings" Margin="0,30" 
 				        Command="{Binding NavigateCommand}" 
-				        CommandParameter="NavigationPage/MainTabbedPage/SettingPage"/>
+                        CommandParameter="NavigationPage/MainTabbedPage/SettingPage"/>
 				<controls:ExtendedButton  Text="Privacy Policy" 
 				        Command="{Binding NavigateCommand}"
 				        CommandParameter="NavigationPage/MainTabbedPage/PrivacyPolicyPage"/>
 				<controls:ExtendedButton  Text="Rate Fitmeet" 
-				        Command="{Binding NavigateCommand}"
-				        CommandParameter="SettingsPage"/>
+				       />
 				<controls:ExtendedButton  Text="About Fitmeet" 
 				        Command="{Binding NavigateCommand}" 
 				        CommandParameter="NavigationPage/MainTabbedPage/AboutPage"/>
