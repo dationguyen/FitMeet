@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
+using System.Diagnostics;
 
 namespace FitMeet.Services
 {
@@ -21,15 +22,22 @@ namespace FitMeet.Services
 
         public async Task<Position> GetPosition()
         {
-            var period = DateTime.Now - lastUpdateTime;
-           
-
+            var period = DateTime.Now - lastUpdateTime;           
+            
             if (_position == null || period >= _timeOut)
             {
-                var locator = CrossGeolocator.Current;
-                _position = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
+                try
+                {
+                    var locator = CrossGeolocator.Current;
+                    _position = await locator.GetPositionAsync(TimeSpan.FromSeconds(10));
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine( e.ToString());
+                    _position = new Position() { Latitude = -33.870452, Longitude = 151.192191 };
+                }
+               
             }
-
             return _position;
         }
     }

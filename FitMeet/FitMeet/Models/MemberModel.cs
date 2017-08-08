@@ -77,34 +77,4 @@ namespace FitMeet.Models
         public List<SkillModel> Skills { get; set; }
     }
 
-    public class SkillModel
-    {
-        [JsonProperty("levelTitle")]
-        public string LevelTitle { get; set; }
-
-        [JsonProperty("LevelId")]
-        public int LevelId { get; set; }
-
-        [JsonProperty("countActivity")]
-        public int CountActivity { get; set; }
-
-        [JsonProperty("activity")]
-        public List<ActivityModel> Activities { get; set; }
-    }
-
-    public class ActivityModel
-    {
-        [JsonProperty("activityUserId")]
-        public string ActivityUserId { get; set; }
-
-        [JsonProperty("activityId")]
-        public string ActivityId { get; set; }
-
-        [JsonProperty("activityIcon")]
-        public string ActivityIcon { get; set; }
-
-        [JsonProperty("activityTitle")]
-        public string ActivityTitle { get; set; }
-    }
-
 }

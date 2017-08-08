@@ -35,11 +35,18 @@ namespace FitMeet.ViewModels
             set
             {
                 SetProperty(ref _newsListSelectedItem, value);
-                if (value != null)
+                if (_newsListSelectedItem != null)
                 {
-                    var item = NewsListItemsSource.Single(u => u.Id == value.Id);
-                    item.View = "1";                
-                    //NavigateCommand.Execute("NewsDetailPage?id=" + ((News)value).Id);
+                    var index = NewsListItemsSource.IndexOf(_newsListSelectedItem);
+                    if (index > -1)
+                    {
+
+                        _newsListSelectedItem.View = "1";
+                        NewsListItemsSource.RemoveAt(index);
+                        NewsListItemsSource.Insert(index, _newsListSelectedItem);
+                    }
+                    RaisePropertyChanged("NewsListItemsSource");
+                    NavigateCommand.Execute("NewsDetailPage?id=" + ((News)value).Id);
                 }
 
             }
@@ -57,11 +64,7 @@ namespace FitMeet.ViewModels
             var result = await _fitMeetRestService.GetNewsAsync();
             LogoImageSource = result.Output.Banner;
             var list = result.Output.Response;
-            foreach (var item in list)
-            {
-                item.View = "0";
-            };
-            NewsListItemsSource =  new ObservableCollection<News>(list);
+            NewsListItemsSource = new ObservableCollection<News>(list);
         }
     }
 }

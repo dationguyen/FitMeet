@@ -88,13 +88,9 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controls\GridCollectionView.cs" />
-    <Compile Include="Controls\GridDataSource.cs" />
-    <Compile Include="Controls\GridViewCell.cs" />
     <Compile Include="Extensions\AlignmentExtensions.cs" />
     <Compile Include="Renderers\CustomSearchEntryRenderer.cs" />
     <Compile Include="Renderers\ExtendedButtonRenderer.cs" />
-    <Compile Include="Renderers\GridViewRenderer.cs" />
     <Compile Include="Renderers\HtmlLabelRenderer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />

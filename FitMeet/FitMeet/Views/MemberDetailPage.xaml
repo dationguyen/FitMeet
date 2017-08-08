@@ -81,6 +81,7 @@
 						<StackLayout>
 							<ListView ItemsSource="{Binding DataSource.Skill}"
 									  RowHeight="30"
+                                      SelectedItem="{Binding NullItem,Mode=TwoWay}"
 							          HeightRequest="{Binding ActivitiesHeightRequest}"
 							          VerticalOptions="Start"
 								      SeparatorVisibility="None" >
@@ -128,6 +129,7 @@
 					<Label Text="Training Place" HorizontalTextAlignment="End" ></Label>
 					<ListView Grid.Column="2" ItemsSource="{Binding DataSource.TrainPlace}" 
 					          HasUnevenRows="True" RowHeight="18"  
+                              SelectedItem="{Binding NullItem,Mode=TwoWay}"
 					          SeparatorVisibility="None"
 					          HeightRequest="{Binding TrainingPlaceHeightRequest}" >
 						<ListView.ItemTemplate>
