@@ -107,8 +107,8 @@
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork@2x" />
     <None Include="packages.config" />
-    <BundleResource Include="Resources\Fonts\Myriad Pro Regular.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <BundleResource Include="Resources\Fonts\MyriadPro-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
   </ItemGroup>
   <ItemGroup>

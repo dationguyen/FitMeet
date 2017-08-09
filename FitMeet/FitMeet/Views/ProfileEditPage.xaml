@@ -69,15 +69,15 @@
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                         <ColumnDefinition Width="2*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <Picker ItemsSource="{Binding BindingContext.ActivitiesData,
+                                    <controls:CustomPicker ItemsSource="{Binding BindingContext.ActivitiesData,
                                                                   Source={x:Reference Master}}"  
                                             SelectedItem="{Binding Activity}"   
-                                            ItemDisplayBinding="{Binding Name}"></Picker>
-                                    <Picker Grid.Column="1" 
+                                            ItemDisplayBinding="{Binding Name}"></controls:CustomPicker>
+                                    <controls:CustomPicker Grid.Column="1" 
                                             ItemsSource="{Binding BindingContext.LevelsData,
                                                                   Source={x:Reference Master}}"  
                                             SelectedItem="{Binding Level}"
-                                            ItemDisplayBinding="{Binding Name}"></Picker>
+                                            ItemDisplayBinding="{Binding Name}"></controls:CustomPicker>
                                 </Grid>
                             </DataTemplate>
                         </controls:ItemsStack.ItemTemplate>

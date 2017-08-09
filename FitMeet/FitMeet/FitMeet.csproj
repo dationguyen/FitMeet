@@ -40,7 +40,7 @@
     <Compile Include="Behaviors\PasswordValidatorBehavior.cs" />
     <Compile Include="Behaviors\EmailValidatorBehavior.cs" />
     <Compile Include="Controls\ActivitiesGridView.cs" />
-    <Compile Include="Controls\ActivityKeyListView.cs" />
+    <Compile Include="Controls\ActivitiesStackLayout.cs" />
     <Compile Include="Controls\BorderEditor.cs" />
     <Compile Include="Controls\CheckBox.cs" />
     <Compile Include="Controls\CustomPicker.cs" />

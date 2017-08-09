@@ -49,7 +49,7 @@
 	<array/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Fonts\Myriad Pro Regular.ttf</string>
+		<string>Fonts\MyriadPro-Regular.ttf</string>
 	</array>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Can we use your location</string>
