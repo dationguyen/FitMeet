@@ -1,8 +1,6 @@
 ﻿using FitMeet.Models;
 using FitMeet.Services;
 using Prism.Navigation;
-using System.Collections.Generic;
-using System.Linq;
 using System.Collections.ObjectModel;
 
 namespace FitMeet.ViewModels
@@ -57,13 +55,13 @@ namespace FitMeet.ViewModels
         {
             Title = "News";
         }
-
-        public override async void OnNavigatingTo(NavigationParameters parameters)
+     
+        public override async void OnNavigatedTo(NavigationParameters parameters)
         {
-            base.OnNavigatingTo(parameters);
+            base.OnNavigatedTo(parameters);
             var result = await _fitMeetRestService.GetNewsAsync();
-            LogoImageSource = result.Output.Banner;
-            var list = result.Output.Response;
+            LogoImageSource = result?.Output?.Banner;
+            var list = result?.Output?.Response;
             NewsListItemsSource = new ObservableCollection<News>(list);
         }
     }

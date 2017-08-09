@@ -5,9 +5,9 @@ using Xamarin.Forms.Xaml;
 namespace FitMeet.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class NewsDetailPage : ContentPage
+    public partial class ProfileEditPage : ContentPage
     {
-        public NewsDetailPage()
+        public ProfileEditPage()
         {
             InitializeComponent();
         }

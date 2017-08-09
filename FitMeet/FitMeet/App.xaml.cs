@@ -44,6 +44,7 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<ManualLoginPage>();
             Container.RegisterTypeForNavigation<AdvanceFilterPopup>();
             Container.RegisterTypeForNavigation<MemberDetailPage>();
+            Container.RegisterTypeForNavigation<ProfileEditPage>();
 
             //Services registration
             Container.RegisterType<IFitMeetRestService, FitMeetRestService>(new ContainerControlledLifetimeManager());

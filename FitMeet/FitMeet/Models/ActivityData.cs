@@ -9,7 +9,7 @@ namespace FitMeet.Models
         public List<Activity> Activity { get; set; }
 
         [JsonProperty("skill")]
-        public List<Skill> Skill { get; set; }
+        public List<Level> Skill { get; set; }
 
         [JsonProperty("goal")]
         public List<Goal> Goal { get; set; }

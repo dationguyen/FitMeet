@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using FitMeet.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FitMeet.Services
 {
     public interface IActivityService
     {
-        List<Models.Activity> Activities { get; }
-        List<Models.Goal> Goals { get; }
-        List<Models.Skill> Skills { get; }
+        List<Activity> Activities { get; }
+        List<Goal> Goals { get; }
+        List<Level> Levels { get; }
+        Level GetLevel( string id );
+        Activity GetActivity( string id );
 
         Task UpdateAsync();
 

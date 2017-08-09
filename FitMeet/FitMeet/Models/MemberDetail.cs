@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace FitMeet.Models
 {
-
     public class MemberDetail
     {
         public string FullName => string.Format("{0} {1}", UserFirstName, UserLastName);

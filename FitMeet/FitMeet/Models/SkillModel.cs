@@ -9,7 +9,7 @@ namespace FitMeet.Models
         public string LevelTitle { get; set; }
 
         [JsonProperty("LevelId")]
-        public int LevelId { get; set; }
+        public string LevelId { get; set; }
 
         [JsonProperty("countActivity")]
         public int CountActivity { get; set; }

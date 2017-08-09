@@ -2,7 +2,7 @@
 
 namespace FitMeet.Models
 {
-    public class Skill
+    public class Level
     {
         [JsonProperty("id")]
         public string Id { get; set; }

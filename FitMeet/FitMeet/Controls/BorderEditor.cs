@@ -2,8 +2,7 @@
 
 namespace FitMeet.Controls
 {
-    public class CustomSearchEntry :Entry
+    public class BorderedEditor : Editor
     {
-        
     }
 }

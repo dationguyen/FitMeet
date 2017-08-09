@@ -1,5 +1,6 @@
 ﻿using FitMeet.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FitMeet.Services
@@ -25,7 +26,7 @@ namespace FitMeet.Services
             }
         }
 
-        public List<Skill> Skills
+        public List<Level> Levels
         {
             get
             {
@@ -37,7 +38,7 @@ namespace FitMeet.Services
         {
             var data = new ActivityData();
             var result = await _fitMeetRestService.GetActivityDataAsync();
-            if (result != null)
+            if ( result != null )
             {
                 data = result?.Output?.Response;
             }
@@ -46,13 +47,24 @@ namespace FitMeet.Services
 
         public async Task UpdateAsync()
         {
-            if (_data == null)
+            if ( _data == null )
             {
                 _data = await GetData();
             }
         }
 
-        public ActivityService(IFitMeetRestService fitMeetRestService)
+        public Level GetLevel( string id )
+        {
+            var skill = Levels?.First(a => a.Id == id);
+            return skill;
+        }
+        public Activity GetActivity( string id )
+        {
+            var activity = Activities?.First(a => a.Id == id);
+            return activity;
+        }
+
+        public ActivityService( IFitMeetRestService fitMeetRestService )
         {
             _fitMeetRestService = fitMeetRestService;
         }

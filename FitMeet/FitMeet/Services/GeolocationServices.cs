@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Plugin.Geolocator;
+﻿using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
+using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace FitMeet.Services
 {
