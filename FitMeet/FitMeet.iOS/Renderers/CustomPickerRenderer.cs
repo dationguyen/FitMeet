@@ -16,7 +16,7 @@ namespace FitMeet.iOS.Renderers
             if ( this.Control == null )
                 return;
 
-            Control.Font = UIFont.FromName("MyriadPro-Regular" , 6f);
+            Control.Font = UIFont.FromName("MyriadPro" , 15f);
             Control.MinimumFontSize = 6f;
             Control.TextAlignment = UITextAlignment.Center;
         }

@@ -54,28 +54,28 @@
       <Style TargetType="Entry">
         <Setter Property="HeightRequest" Value="50"/>
         <Setter Property="Margin" Value="0,6"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
+        <Setter Property="FontSize" Value="Small"/>
+        <Setter Property="FontFamily" Value="MyriadPro"/>
         <Setter Property="PlaceholderColor" Value="{StaticResource PlaceHolderColor}"/>
       </Style>
 
       <Style TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
-        <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
+        <Setter Property="FontFamily" Value="MyriadPro"/>
       </Style>
 
       <Style TargetType="controls:HtmlLabel">
         <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
         <Setter Property="FontSize" Value="Small"/>
-        <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
+        <Setter Property="FontFamily" Value="MyriadPro"/>
       </Style>
 
       <Style TargetType="Button">
-        <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
+        <Setter Property="FontFamily" Value="MyriadPro"/>
       </Style>
 
       <Style TargetType="controls:ToggleButton">
-        <Setter Property="FontFamily" Value="Myriad Pro Regular"/>
+        <Setter Property="FontFamily" Value="MyriadPro"/>
         <Setter Property="BorderColor" Value="{StaticResource BodyColor}"/>
         <Setter Property="BorderWidth" Value="0.5"/>
         <!--<Setter Property="CheckedTextColor" Value="White"/>-->

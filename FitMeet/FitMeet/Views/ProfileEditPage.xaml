@@ -43,6 +43,7 @@
                     <Entry Text="{Binding DataSource.Address}"></Entry>
                     <Grid Margin="0,20">
                         <Label Text="Gender"
+                               Font="MyriadPro" FontAttributes="Bold" 
                                HorizontalOptions="Start"
                                VerticalOptions="Center"></Label>
                         <StackLayout Orientation="Horizontal"
