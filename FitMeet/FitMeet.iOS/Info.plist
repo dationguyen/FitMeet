@@ -47,10 +47,6 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleDocumentTypes</key>
 	<array/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Fonts\MyriadPro-Regular.ttf</string>
-	</array>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Can we use your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -64,5 +60,9 @@
 	<string>FitMeet</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fonts/MyriadPro-Regular.ttf</string>
+	</array>
 </dict>
 </plist>
