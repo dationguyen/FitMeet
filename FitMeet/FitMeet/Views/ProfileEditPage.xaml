@@ -4,7 +4,9 @@
              x:Class="FitMeet.Views.ProfileEditPage"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
-             prism:ViewModelLocator.AutowireViewModel="True" x:Name="Master"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Name="Master"
              BackgroundColor="{StaticResource NavBackgroundColor}">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -15,35 +17,34 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout>
-                <Grid BackgroundColor="White"
-                      Padding="30,4"
-                      Margin="0,20,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Image WidthRequest="60"
-                           HeightRequest="60"
-                           Source="{Binding DataSource.UserPhoto}"
-                           Aspect="AspectFill"></Image>
-                    <Label Text="Change Profile Picture"
-                           VerticalOptions="Center"
-                           Grid.Column="1"
-                           Margin="20,0,0,0" />
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding EditCommand}"    
-                                              NumberOfTapsRequired="1" />
-                    </Grid.GestureRecognizers>
-                </Grid>
-                <StackLayout Padding="30,0">
+        <Grid>
+            <ScrollView>
+                <StackLayout  Padding="30,0">
+                    <Grid BackgroundColor="White"
+                          Padding="30,4"
+                          Margin="-30,20,-30,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image WidthRequest="60"
+                               HeightRequest="60"
+                               Source="{Binding DataSource.UserPhoto}"
+                               Aspect="AspectFill"></Image>
+                        <Label Text="Change Profile Picture"
+                               VerticalOptions="Center"
+                               Grid.Column="1"
+                               Margin="20,0,0,0" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditCommand}"
+                                                  NumberOfTapsRequired="1" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
                     <Entry Text="{Binding DataSource.FullName}"></Entry>
                     <Entry Text="{Binding DataSource.Dob}"></Entry>
                     <Entry Text="{Binding DataSource.Address}"></Entry>
                     <Grid Margin="0,20">
                         <Label Text="Gender"
-                               Font="MyriadPro" FontAttributes="Bold" 
                                HorizontalOptions="Start"
                                VerticalOptions="Center"></Label>
                         <StackLayout Orientation="Horizontal"
@@ -61,30 +62,114 @@
                         </StackLayout>
                     </Grid>
                     <Label  Text="Describle Yourself"></Label>
-                    <controls:BorderedEditor HeightRequest="120" Margin="0,10"></controls:BorderedEditor>
+                    <controls:BorderedEditor HeightRequest="120"
+                                             Margin="0,10"
+                                             Text="{Binding About}"></controls:BorderedEditor>
                     <controls:ItemsStack ItemsSource="{Binding ActivitiesLevel,Mode=TwoWay}">
                         <controls:ItemsStack.ItemTemplate>
                             <DataTemplate>
-                                <Grid HeightRequest="40" BackgroundColor="Beige">
+                                <Grid HeightRequest="40"
+                                      BackgroundColor="Beige">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                         <ColumnDefinition Width="2*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <controls:CustomPicker ItemsSource="{Binding BindingContext.ActivitiesData,
-                                                                  Source={x:Reference Master}}"  
-                                            SelectedItem="{Binding Activity}"   
-                                            ItemDisplayBinding="{Binding Name}"></controls:CustomPicker>
-                                    <controls:CustomPicker Grid.Column="1" 
-                                            ItemsSource="{Binding BindingContext.LevelsData,
-                                                                  Source={x:Reference Master}}"  
-                                            SelectedItem="{Binding Level}"
-                                            ItemDisplayBinding="{Binding Name}"></controls:CustomPicker>
+                                                                  Source={x:Reference Master}}"
+                                                           Padding="30,0,0,0"
+                                                           SelectedItem="{Binding Activity}"
+                                                           ItemDisplayBinding="{Binding Name}" />
+                                    <controls:ExtendedButton WidthRequest="30"
+                                                             HorizontalOptions="Start"
+                                                             VerticalContentAlignment="Center"
+                                                             VerticalOptions="Fill"
+                                                             Padding="10,0,4,0"
+                                                             Command="{Binding BindingContext.DeleteActivityCommand,
+                                                                               Source={x:Reference Master}}"
+                                                             CommandParameter="{Binding }"
+                                                             Image="remove.png"></controls:ExtendedButton>
+                                    <controls:CustomPicker Grid.Column="1"
+                                                           ItemsSource="{Binding BindingContext.LevelsData,
+                                                                  Source={x:Reference Master}}"
+                                                           SelectedItem="{Binding Level}"
+                                                           ItemDisplayBinding="{Binding Name}" />
                                 </Grid>
                             </DataTemplate>
                         </controls:ItemsStack.ItemTemplate>
                     </controls:ItemsStack>
+                    <Button BackgroundColor="White"
+                            BorderColor="{StaticResource BorderColor}"
+                            BorderWidth="0.5"
+                            Command="{Binding AddActivityCommand}"
+                            TextColor="{StaticResource BodyColor}"
+                            BorderRadius="4"
+                            Margin="0,0,0,20"
+                            Text="+"></Button>
+                    <controls:ItemsStack ItemsSource="{Binding Trainplaces,Mode=TwoWay}">
+                        <controls:ItemsStack.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HeightRequest="40"
+                                      BackgroundColor="Beige">
+                                    <controls:CustomPicker ItemsSource="{Binding BindingContext.TrainingLocations,
+                                                                  Source={x:Reference Master}}"
+                                                           Padding="30,0,0,0"
+                                                           SelectedItem="{Binding}"
+                                                           ItemDisplayBinding="{Binding LocationTitle}" />
+                                    <controls:ExtendedButton WidthRequest="30"
+                                                             HorizontalOptions="Start"
+                                                             VerticalContentAlignment="Center"
+                                                             VerticalOptions="Fill"
+                                                             Padding="10,0,4,0"
+                                                             Command="{Binding BindingContext.DeletePlaceCommand,
+                                                                  Source={x:Reference Master}}"
+                                                             CommandParameter="{Binding }"
+                                                             HeightRequest="20"
+                                                             Image="remove.png"></controls:ExtendedButton>
+                                </Grid>
+                            </DataTemplate>
+                        </controls:ItemsStack.ItemTemplate>
+                    </controls:ItemsStack>
+                    <Button BackgroundColor="White"
+                            BorderColor="{StaticResource BorderColor}"
+                            BorderWidth="0.5"
+                            Command="{Binding AddPlaceCommand}"
+                            TextColor="{StaticResource BodyColor}"
+                            BorderRadius="4"
+                            Text="+"></Button>
+                    <controls:CustomPicker HeightRequest="40"
+                                           Margin="0,20" 
+                                           ItemsSource="{Binding Goals}" 
+                                           SelectedItem="{Binding SelectedGoal, Mode=TwoWay}"
+                                           ItemDisplayBinding="{Binding Name}">
+                        <controls:CustomPicker.Behaviors>
+                            <b:EventToCommandBehavior EventName="Unfocused" Command="{Binding GoalSelected}"></b:EventToCommandBehavior>
+                        </controls:CustomPicker.Behaviors>
+                    </controls:CustomPicker>
+                    <Button Text="Apply Changes"
+                            BackgroundColor="{StaticResource MainColor}"
+                            TextColor="White"
+                            Margin="0,0,0,30"></Button>
                 </StackLayout>
-            </StackLayout>
-        </ScrollView>
+            </ScrollView>
+            <Grid BackgroundColor="#8C000000" IsVisible="{Binding IsPopupVisible}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding HidePopup}" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                </Grid.GestureRecognizers>
+                <StackLayout  VerticalOptions="Center" Padding="20,20,20,0" Margin="30,0" BackgroundColor="White">
+                    <Label Text="Set your Goal"></Label>
+                    <Entry></Entry>
+                    <Grid Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Text="Cancel"
+                                Command="{Binding HidePopup}"></Button>
+                        <Button Grid.Column="1"
+                                Text="Ok"></Button>
+                    </Grid>
+                </StackLayout>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

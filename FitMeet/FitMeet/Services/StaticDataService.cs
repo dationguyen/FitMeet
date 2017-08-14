@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 
 namespace FitMeet.Services
 {
-    public class ActivityService : IActivityService
+    public class StaticDataService : IStaticDataService
     {
         private readonly IFitMeetRestService _fitMeetRestService;
-        private ActivityData _data;
+        private ActivityData _activityData;
+        public List<Place> TrainingLocationData { get; private set; }
 
         public List<Activity> Activities
         {
             get
             {
-                return _data?.Activity;
+                return _activityData?.Activity;
             }
         }
 
@@ -22,7 +23,7 @@ namespace FitMeet.Services
         {
             get
             {
-                return _data?.Goal;
+                return _activityData?.Goal;
             }
         }
 
@@ -30,7 +31,7 @@ namespace FitMeet.Services
         {
             get
             {
-                return _data?.Skill;
+                return _activityData?.Skill;
             }
         }
 
@@ -45,11 +46,27 @@ namespace FitMeet.Services
             return data;
         }
 
+        private async Task<List<Place>> GetTrainPlaces()
+        {
+            var data = new List<Place>();
+            var result = await _fitMeetRestService.GetTrainingLocationAsync();
+            if ( result != null )
+            {
+                data = result?.Output?.Response;
+            }
+            return data;
+        }
+
+
         public async Task UpdateAsync()
         {
-            if ( _data == null )
+            if ( _activityData == null )
             {
-                _data = await GetData();
+                _activityData = await GetData();
+            }
+            if ( TrainingLocationData == null )
+            {
+                TrainingLocationData = await GetTrainPlaces();
             }
         }
 
@@ -64,7 +81,13 @@ namespace FitMeet.Services
             return activity;
         }
 
-        public ActivityService( IFitMeetRestService fitMeetRestService )
+        public Place GetTrainingLocation( string id )
+        {
+            var place = TrainingLocationData?.First(a => a.LocationId == id);
+            return place;
+        }
+
+        public StaticDataService( IFitMeetRestService fitMeetRestService )
         {
             _fitMeetRestService = fitMeetRestService;
         }

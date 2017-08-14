@@ -1,7 +1,7 @@
-﻿using Xamarin.Forms.Platform.iOS;
-using Xamarin.Forms;
+﻿using FitMeet.Controls;
 using FitMeet.iOS.Renderers;
-using FitMeet.Controls;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(BorderedEditor) , typeof(BorderedEditorRenderer))]
 namespace FitMeet.iOS.Renderers
@@ -15,8 +15,8 @@ namespace FitMeet.iOS.Renderers
             if ( Control != null )
             {
                 Control.Layer.CornerRadius = 8;
-                Control.Layer.BorderColor = Color.FromHex("e8e8e8").ToCGColor();
-                Control.Layer.BorderWidth = 1;
+                Control.Layer.BorderColor = Color.FromHex("c2c2c2").ToCGColor();
+                Control.Layer.BorderWidth = 0.5f;
             }
         }
     }

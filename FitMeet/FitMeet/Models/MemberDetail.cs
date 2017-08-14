@@ -5,7 +5,7 @@ namespace FitMeet.Models
 {
     public class MemberDetail
     {
-        public string FullName => string.Format("{0} {1}", UserFirstName, UserLastName);
+        public string FullName => string.Format("{0} {1}" , UserFirstName , UserLastName);
 
         [JsonProperty("userId")]
         public string UserId { get; set; }
@@ -49,15 +49,4 @@ namespace FitMeet.Models
         [JsonProperty("isFriend")]
         public string IsFriend { get; set; }
     }
-
-
-
-    public class Trainplace
-    {
-        public string TrainPlaceId { get; set; }
-        public string Location { get; set; }
-        public string LocationId { get; set; }
-        public string LocationTitle { get; set; }
-    }
-
 }

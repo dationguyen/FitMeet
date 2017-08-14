@@ -13,7 +13,7 @@ namespace FitMeet.ViewModels
     public class AdvanceFilterPopupViewModel : ViewModelBase
     {
         private readonly IEventAggregator _eventAggregator;
-        private readonly IActivityService _activityService;
+        private readonly IStaticDataService _staticDataService;
         private readonly IPageDialogService _dialogService;
 
         private int _distanceIndex;
@@ -130,8 +130,8 @@ namespace FitMeet.ViewModels
 
         public override async void OnNavigatingTo(NavigationParameters parameters)
         {
-            await _activityService.UpdateAsync();
-            ActivitiesSource = _activityService.Activities;
+            await _staticDataService.UpdateAsync();
+            ActivitiesSource = _staticDataService.Activities;
 
             var filterAgr = (UpdateFilterEventArgs)parameters["agr"];
             if (filterAgr != null)
@@ -155,10 +155,10 @@ namespace FitMeet.ViewModels
             IFitMeetRestService fitMeetRestService,
             IPageDialogService dialogService,
             IEventAggregator eventAggregator,
-            IActivityService activityService) : base(navigationService, fitMeetRestService)
+            IStaticDataService staticDataService) : base(navigationService, fitMeetRestService)
         {
             _eventAggregator = eventAggregator;
-            _activityService = activityService;
+            _staticDataService = staticDataService;
             _dialogService = dialogService;
         }
 

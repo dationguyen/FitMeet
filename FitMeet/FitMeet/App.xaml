@@ -55,27 +55,27 @@
         <Setter Property="HeightRequest" Value="50"/>
         <Setter Property="Margin" Value="0,6"/>
         <Setter Property="FontSize" Value="Small"/>
-        <Setter Property="FontFamily" Value="MyriadPro"/>
+        <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
         <Setter Property="PlaceholderColor" Value="{StaticResource PlaceHolderColor}"/>
       </Style>
 
       <Style TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
-        <Setter Property="FontFamily" Value="MyriadPro"/>
+        <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
       </Style>
 
       <Style TargetType="controls:HtmlLabel">
         <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
         <Setter Property="FontSize" Value="Small"/>
-        <Setter Property="FontFamily" Value="MyriadPro"/>
+        <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
       </Style>
 
       <Style TargetType="Button">
-        <Setter Property="FontFamily" Value="MyriadPro"/>
+        <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
       </Style>
 
       <Style TargetType="controls:ToggleButton">
-        <Setter Property="FontFamily" Value="MyriadPro"/>
+        <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
         <Setter Property="BorderColor" Value="{StaticResource BodyColor}"/>
         <Setter Property="BorderWidth" Value="0.5"/>
         <!--<Setter Property="CheckedTextColor" Value="White"/>-->
@@ -83,6 +83,7 @@
         <!--<Setter Property="UncheckedTextColor" Value="{StaticResource BodyColor}"/>-->
         <!--<Setter Property="UncheckedBackgroundColor" Value="White"/>-->
         <Setter Property="WidthRequest" Value="88"/>
+        <Setter Property="HeightRequest" Value="40"/>
       </Style>
       <!-- Styles -->
 

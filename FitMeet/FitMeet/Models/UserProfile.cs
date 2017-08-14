@@ -28,16 +28,6 @@ namespace FitMeet.Models
         [JsonProperty("request")]
         public Request Request { get; set; }
     }
-
-    public class Request
-    {
-        [JsonProperty("message")]
-        public int Message { get; set; }
-
-        [JsonProperty("friend")]
-        public int Friend { get; set; }
-    }
-
 }
 
 

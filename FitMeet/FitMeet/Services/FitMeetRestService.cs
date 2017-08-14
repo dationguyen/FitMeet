@@ -18,6 +18,7 @@ namespace FitMeet.Services
         private const string getFriendUri = "friends/index/page:{0}.json";
         private const string getProfileUri = "Users/my_profile.json";
         private const string addFriendUri = "Friends/add.json";
+        private const string getTrainPlacesUri = "Locations/listTrainPlaces.json";
         private const string getMemberDetailUri = "/users/view.json";
         private const string searchMemberUri = "Users/advance_search/page:{0}.json";
         private const string getActivityDatarUri = "activities/index.json";
@@ -25,68 +26,68 @@ namespace FitMeet.Services
         private readonly IPageDialogService _dialogService;
         private readonly IGeolocationServices _geoService;
 
-        public FitMeetRestService(IPageDialogService dialogService, IGeolocationServices geoService)
+        public FitMeetRestService( IPageDialogService dialogService , IGeolocationServices geoService )
         {
             this.httpClient = new HttpClient() { BaseAddress = new Uri(baseUri) };
             _dialogService = dialogService;
             _geoService = geoService;
         }
 
-        public async Task<bool> AddFriendsAsync(string friendId)
+        public async Task<bool> AddFriendsAsync( string friendId )
         {
-            var param = new Dictionary<string, string>
+            var param = new Dictionary<string , string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" },
                 { "friend", friendId }
             };
-            var result = await ApiPost<ResponseMessage<string>>(addFriendUri, param);
+            var result = await ApiPost<ResponseMessage<string>>(addFriendUri , param);
             return result?.Output?.Status == 1;
         }
 
         public async Task<ResponseMessage<ActivityData>> GetActivityDataAsync()
         {
-            var param = new Dictionary<string, string>
+            var param = new Dictionary<string , string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" }
             };
-            return await ApiPost<ResponseMessage<ActivityData>>(getActivityDatarUri, param);
+            return await ApiPost<ResponseMessage<ActivityData>>(getActivityDatarUri , param);
 
         }
 
-        public async Task<ResponseMessage<List<Member>>> GetFriendsAsync(int page)
+        public async Task<ResponseMessage<List<Member>>> GetFriendsAsync( int page )
         {
             var position = await _geoService.GetPosition();
 
-            var param = new Dictionary<string, string>
+            var param = new Dictionary<string , string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" },
                 { "lat", position?.Latitude.ToString() },
                 { "lng", position?.Longitude.ToString() }
             };
-            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(getFriendUri, page), param);
+            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(getFriendUri , page) , param);
         }
 
-        public async Task<ResponseMessage<MemberDetail>> GetMemberDetailAsync(string id)
+        public async Task<ResponseMessage<MemberDetail>> GetMemberDetailAsync( string id )
         {
-            var param = new Dictionary<string, string>
+            var param = new Dictionary<string , string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" },
                 { "id", id }
             };
-            return await ApiPost<ResponseMessage<MemberDetail>>(getMemberDetailUri, param);
+            return await ApiPost<ResponseMessage<MemberDetail>>(getMemberDetailUri , param);
         }
 
-        public async Task<ResponseMessage<List<Member>>> GetMembersAsync(int pageId)
+        public async Task<ResponseMessage<List<Member>>> GetMembersAsync( int pageId )
         {
             var position = await _geoService.GetPosition();
 
-            var param = new Dictionary<string, string>
+            var param = new Dictionary<string , string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" },
                 { "lat", position?.Latitude.ToString() },
                 { "lng", position?.Longitude.ToString() }
             };
-            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(getMemberUri, pageId), param);
+            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(getMemberUri , pageId) , param);
         }
 
         /// <summary>
@@ -95,46 +96,53 @@ namespace FitMeet.Services
         /// <returns></returns>
         public async Task<ResponseMessage<List<News>>> GetNewsAsync()
         {
-            var param = new Dictionary<string, string>
+            var param = new Dictionary<string , string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" }
             };
-            return await ApiPost<ResponseMessage<List<News>>>(getNewsUri, param);
+            return await ApiPost<ResponseMessage<List<News>>>(getNewsUri , param);
         }
 
-        public async Task<ResponseMessage<NewsDetail>> GetNewsDetailAsync(string id)
+        public async Task<ResponseMessage<NewsDetail>> GetNewsDetailAsync( string id )
         {
-            var param = new Dictionary<string, string>
+            var param = new Dictionary<string , string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" },
                 { "id", id }
             };
-            return await ApiPost<ResponseMessage<NewsDetail>>(getNewsDetailUri, param);
+            return await ApiPost<ResponseMessage<NewsDetail>>(getNewsDetailUri , param);
         }
 
-        public async Task<ResponseMessage<WebPageInfo>> GetPageDetailAsync(string pageName)
+        public async Task<ResponseMessage<WebPageInfo>> GetPageDetailAsync( string pageName )
         {
-            var param = new Dictionary<string, string>
+            var param = new Dictionary<string , string>
             {
                 { "slug", pageName }
             };
-            return await ApiPost<ResponseMessage<WebPageInfo>>(getPageUri, param);
+            return await ApiPost<ResponseMessage<WebPageInfo>>(getPageUri , param);
+        }
+
+        public async Task<ResponseMessage<List<Place>>> GetTrainingLocationAsync()
+        {
+            var param = new Dictionary<string , string>();
+
+            return await ApiPost<ResponseMessage<List<Place>>>(getTrainPlacesUri , param);
         }
 
         public async Task<ResponseMessage<UserProfile>> GetUserProfileAsync()
         {
-            var param = new Dictionary<string, string>
-			{
-				{ "token", "4fmr0pw0kee6h3kccbli" }
-			};
-            return await ApiPost<ResponseMessage<UserProfile>>(getProfileUri, param);
+            var param = new Dictionary<string , string>
+            {
+                { "token", "4fmr0pw0kee6h3kccbli" }
+            };
+            return await ApiPost<ResponseMessage<UserProfile>>(getProfileUri , param);
         }
 
-        public async Task<ResponseMessage<List<Member>>> SearchMembersAsync(int page, int distance, string gender, List<int> activities)
+        public async Task<ResponseMessage<List<Member>>> SearchMembersAsync( int page , int distance , string gender , List<int> activities )
         {
             var position = await _geoService.GetPosition();
 
-            var param = new Dictionary<string, string>
+            var param = new Dictionary<string , string>
             {
                 { "token", "4fmr0pw0kee6h3kccbli" },
                 { "lat", position?.Latitude.ToString() },
@@ -142,14 +150,14 @@ namespace FitMeet.Services
                 { "gender", gender },
                 { "distance", distance.ToString()}
             };
-            for (int i = 0; i < activities.Count; i++)
+            for ( int i = 0 ; i < activities.Count ; i++ )
             {
-                param.Add(String.Format("activity[{0}]", i), activities[i].ToString());
+                param.Add(String.Format("activity[{0}]" , i) , activities[i].ToString());
             }
-            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(searchMemberUri, page), param);
+            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(searchMemberUri , page) , param);
 
         }
 
- 
+
     }
 }

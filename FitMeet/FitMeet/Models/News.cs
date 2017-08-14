@@ -24,12 +24,5 @@ namespace FitMeet.Models
 
         [JsonProperty("view")]
         public string View { get; set; }
-
-        public bool Readed {
-            get
-            {
-                return View != "0";
-            } 
-        }
     }
 }
