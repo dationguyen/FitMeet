@@ -162,10 +162,6 @@ namespace FitMeet.ViewModels
             _dialogService = dialogService;
         }
 
-        ~AdvanceFilterPopupViewModel()
-        {
-        }
-
         private UpdateFilterEventArgs GetArgs()
         {
             var distance = (DistanceIndex + 1) * 10;

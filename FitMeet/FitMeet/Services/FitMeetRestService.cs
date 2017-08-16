@@ -21,10 +21,13 @@ namespace FitMeet.Services
         private const string getTrainPlacesUri = "Locations/listTrainPlaces.json";
         private const string getMemberDetailUri = "/users/view.json";
         private const string searchMemberUri = "Users/advance_search/page:{0}.json";
-        private const string getActivityDatarUri = "activities/index.json";
+        private const string getActivityDataUri = "activities/index.json";
+        private const string UpdateProfileUri = "Users/edit_profile.json";
 
         private readonly IPageDialogService _dialogService;
         private readonly IGeolocationServices _geoService;
+
+        private string token = "r5jchztcob5698kbgdbl";
 
         public FitMeetRestService( IPageDialogService dialogService , IGeolocationServices geoService )
         {
@@ -37,8 +40,8 @@ namespace FitMeet.Services
         {
             var param = new Dictionary<string , string>
             {
-                { "token", "4fmr0pw0kee6h3kccbli" },
-                { "friend", friendId }
+                { "token",token },
+                { "friend",friendId }
             };
             var result = await ApiPost<ResponseMessage<string>>(addFriendUri , param);
             return result?.Output?.Status == 1;
@@ -48,9 +51,9 @@ namespace FitMeet.Services
         {
             var param = new Dictionary<string , string>
             {
-                { "token", "4fmr0pw0kee6h3kccbli" }
+                { "token",token }
             };
-            return await ApiPost<ResponseMessage<ActivityData>>(getActivityDatarUri , param);
+            return await ApiPost<ResponseMessage<ActivityData>>(getActivityDataUri , param);
 
         }
 
@@ -60,7 +63,7 @@ namespace FitMeet.Services
 
             var param = new Dictionary<string , string>
             {
-                { "token", "4fmr0pw0kee6h3kccbli" },
+                { "token",token },
                 { "lat", position?.Latitude.ToString() },
                 { "lng", position?.Longitude.ToString() }
             };
@@ -71,7 +74,7 @@ namespace FitMeet.Services
         {
             var param = new Dictionary<string , string>
             {
-                { "token", "4fmr0pw0kee6h3kccbli" },
+                { "token",token },
                 { "id", id }
             };
             return await ApiPost<ResponseMessage<MemberDetail>>(getMemberDetailUri , param);
@@ -83,7 +86,7 @@ namespace FitMeet.Services
 
             var param = new Dictionary<string , string>
             {
-                { "token", "4fmr0pw0kee6h3kccbli" },
+                { "token",token },
                 { "lat", position?.Latitude.ToString() },
                 { "lng", position?.Longitude.ToString() }
             };
@@ -98,7 +101,7 @@ namespace FitMeet.Services
         {
             var param = new Dictionary<string , string>
             {
-                { "token", "4fmr0pw0kee6h3kccbli" }
+                { "token",token }
             };
             return await ApiPost<ResponseMessage<List<News>>>(getNewsUri , param);
         }
@@ -107,7 +110,7 @@ namespace FitMeet.Services
         {
             var param = new Dictionary<string , string>
             {
-                { "token", "4fmr0pw0kee6h3kccbli" },
+                { "token",token },
                 { "id", id }
             };
             return await ApiPost<ResponseMessage<NewsDetail>>(getNewsDetailUri , param);
@@ -133,7 +136,7 @@ namespace FitMeet.Services
         {
             var param = new Dictionary<string , string>
             {
-                { "token", "4fmr0pw0kee6h3kccbli" }
+                { "token",token }
             };
             return await ApiPost<ResponseMessage<UserProfile>>(getProfileUri , param);
         }
@@ -144,7 +147,7 @@ namespace FitMeet.Services
 
             var param = new Dictionary<string , string>
             {
-                { "token", "4fmr0pw0kee6h3kccbli" },
+                { "token",token },
                 { "lat", position?.Latitude.ToString() },
                 { "lng", position?.Longitude.ToString() },
                 { "gender", gender },
@@ -158,6 +161,49 @@ namespace FitMeet.Services
 
         }
 
+        public async Task<ResponseMessage<string>> UpdateProfileAsync( string fName , string lName , string gender , string goalId , string goalText , string picture , string address , string desciption , string dob , List<string> activitesID , List<string> ids , List<string> skillLevelIds , List<string> placeIds , List<string> locationIds )
+        {
+            var param = new Dictionary<string , string>
+            {
+                { "token",token },
+                { "fname", fName },
+                { "gender", gender },
+                { "goal_id", goalId },
+                { "goal_text", goalText},
+                { "lname",lName },
+                { "picture", picture },
+                { "address", address },
+                { "description", desciption },
+                { "dob", dob },
+                { "edit", "1" }
+            };
 
+            for ( int i = 0 ; i < activitesID.Count ; i++ )
+            {
+                param.Add(String.Format("activity[{0}][skill_level_id]" , i) , skillLevelIds[i]);
+                param.Add(String.Format("activity[{0}][activity_id]" , i) , activitesID[i]);
+            }
+            for ( int i = 0 ; i < ids.Count ; i++ )
+            {
+                param.Add(String.Format("activity[{0}][id]" , i) , ids[i]);
+                if ( i >= activitesID.Count )
+                {
+                    param.Add(String.Format("activity[{0}][delete]" , i) , "1");
+                }
+            }
+            for ( int i = 0 ; i < placeIds.Count ; i++ )
+            {
+                param.Add(String.Format("placesToTrain[{0}][id]" , i) , placeIds[i]);
+                if ( i >= locationIds.Count )
+                {
+                    param.Add(String.Format("placesToTrain[{0}][delete]" , i) , "1");
+                }
+            }
+            for ( int i = 0 ; i < locationIds.Count ; i++ )
+            {
+                param.Add(String.Format("placesToTrain[{0}][location_id]" , i) , locationIds[i]);
+            }
+            return await ApiPost<ResponseMessage<string>>(UpdateProfileUri , param);
+        }
     }
 }

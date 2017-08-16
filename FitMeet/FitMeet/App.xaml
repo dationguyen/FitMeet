@@ -54,11 +54,18 @@
       <Style TargetType="Entry">
         <Setter Property="HeightRequest" Value="50"/>
         <Setter Property="Margin" Value="0,6"/>
+        <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
         <Setter Property="FontSize" Value="Small"/>
         <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
         <Setter Property="PlaceholderColor" Value="{StaticResource PlaceHolderColor}"/>
       </Style>
 
+      <Style TargetType="controls:BorderedEditor">
+          <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
+          <Setter Property="FontSize" Value="Small"/>
+          <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
+      </Style>
+      
       <Style TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
         <Setter Property="FontFamily" Value="MyriadPro-Regular"/>

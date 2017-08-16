@@ -71,5 +71,12 @@ namespace FitMeet.Services
         /// </summary>
         /// <returns></returns>
         Task<ResponseMessage<List<Place>>> GetTrainingLocationAsync();
+
+
+        /// <summary>
+        /// Edit Profile
+        /// </summary>
+        /// <returns></returns>
+        Task<ResponseMessage<string>> UpdateProfileAsync(string fName,string lName, string gender, string goalId, string goalText,string picture,string address,string desciption,string dob,List<string> activitesID, List<string> ids,List<string> skillLevelIds, List<string> placeIds, List<string> locationIds);
     }
 }

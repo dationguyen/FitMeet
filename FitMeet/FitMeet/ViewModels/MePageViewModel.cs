@@ -59,7 +59,7 @@ namespace FitMeet.ViewModels
             DataSource = response?.Output?.Response;
             if ( DataSource != null )
             {
-                ActivitiesHeightRequest = DataSource.CountSkill * 30;
+                ActivitiesHeightRequest = DataSource.CountSkill * 26;
                 TrainingPlaceHeightRequest = DataSource.CountTrainPlace * 18;
             }
         }

@@ -43,6 +43,7 @@
     <Compile Include="Controls\ActivitiesStackLayout.cs" />
     <Compile Include="Controls\BorderEditor.cs" />
     <Compile Include="Controls\CheckBox.cs" />
+    <Compile Include="Controls\CustomDatePicker.cs" />
     <Compile Include="Controls\CustomPicker.cs" />
     <Compile Include="Controls\CustomSearchEntry.cs" />
     <Compile Include="Controls\ExtendedButton.cs" />

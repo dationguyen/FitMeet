@@ -100,26 +100,25 @@
                     <StackLayout Grid.Column="2">
                         <StackLayout>
                             <ListView ItemsSource="{Binding DataSource.Skill}"
-                                      RowHeight="30"
+                                      RowHeight="26"
                                       SelectedItem="{Binding NullItem,Mode=TwoWay}"
                                       HeightRequest="{Binding ActivitiesHeightRequest}"
                                       VerticalOptions="Start"
                                       SeparatorVisibility="None">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <ViewCell Height="30">
-                                            <StackLayout Orientation="Horizontal">
-                                                <StackLayout VerticalOptions="Center"
-                                                             Padding="4,2"
+                                        <ViewCell Height="26">
+                                            <StackLayout Orientation="Horizontal"
+                                                         VerticalOptions="Start">
+                                                <StackLayout Padding="4,2"
                                                              BackgroundColor="{StaticResource MainColor}"
                                                              HorizontalOptions="Start">
                                                     <Label VerticalOptions="Start"
-                                                           TextColor="White"
+                                                           TextColor="White" FontSize="Micro"
                                                            Text="{Binding LevelTitle}" />
                                                 </StackLayout>
                                                 <controls:ActivitiesStackLayout Orientation="Horizontal"
-                                                                                VerticalOptions="Center"
-                                                                                HeightRequest="14"
+                                                                                HeightRequest="12"
                                                                                 ItemsSource="{Binding Activities}"/>
                                             </StackLayout>
                                         </ViewCell>

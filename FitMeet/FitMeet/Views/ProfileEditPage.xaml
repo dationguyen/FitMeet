@@ -40,9 +40,19 @@
                                                   NumberOfTapsRequired="1" />
                         </Grid.GestureRecognizers>
                     </Grid>
-                    <Entry Text="{Binding DataSource.FullName}"></Entry>
-                    <Entry Text="{Binding DataSource.Dob}"></Entry>
-                    <Entry Text="{Binding DataSource.Address}"></Entry>
+                    <Label  Text="Full Name"></Label>
+                    <Entry Text="{Binding FullName}"
+                           Margin="0,4,0,10"></Entry>
+                    <Label  Text="Date of Birth"></Label>
+                    <controls:CustomDatePicker VerticalOptions="CenterAndExpand" 
+                                               HeightRequest="60" TextColor="{StaticResource BodyColor}"
+                                               Margin="0,4,0,10"
+                                Date="{Binding Dob, Mode=TwoWay}">
+                        <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
+                    </controls:CustomDatePicker>
+                    <Label  Text="Address"></Label>
+                    <Entry Text="{Binding DataSource.Address}"
+                           Margin="0,4,0,10"></Entry>
                     <Grid Margin="0,20">
                         <Label Text="Gender"
                                HorizontalOptions="Start"
@@ -50,11 +60,11 @@
                         <StackLayout Orientation="Horizontal"
                                      HorizontalOptions="End">
                             <controls:ToggleButton Text="Male"
-                                                   Checked="{Binding DataSource.IsMale}"
+                                                   Checked="{Binding IsMale}"
                                                    Command="{Binding GenderSwitchCommand}"
                                                    CommandParameter="male" />
                             <controls:ToggleButton Text="Female"
-                                                   Checked="{Binding DataSource.IsMale, 
+                                                   Checked="{Binding IsMale, 
                                                                  Converter={StaticResource RevertConverter}}"
                                                    Command="{Binding GenderSwitchCommand}"
                                                    CommandParameter="female"
@@ -64,7 +74,8 @@
                     <Label  Text="Describle Yourself"></Label>
                     <controls:BorderedEditor HeightRequest="120"
                                              Margin="0,10"
-                                             Text="{Binding About}"></controls:BorderedEditor>
+                                             Text="{Binding DataSource.About}"></controls:BorderedEditor>
+                    <Label Text="Activities"></Label>
                     <controls:ItemsStack ItemsSource="{Binding ActivitiesLevel,Mode=TwoWay}">
                         <controls:ItemsStack.ItemTemplate>
                             <DataTemplate>
@@ -105,6 +116,7 @@
                             BorderRadius="4"
                             Margin="0,0,0,20"
                             Text="+"></Button>
+                    <Label  Text="Training Places"></Label>
                     <controls:ItemsStack ItemsSource="{Binding Trainplaces,Mode=TwoWay}">
                         <controls:ItemsStack.ItemTemplate>
                             <DataTemplate>
@@ -113,7 +125,7 @@
                                     <controls:CustomPicker ItemsSource="{Binding BindingContext.TrainingLocations,
                                                                   Source={x:Reference Master}}"
                                                            Padding="30,0,0,0"
-                                                           SelectedItem="{Binding}"
+                                                           SelectedItem="{Binding Place}"
                                                            ItemDisplayBinding="{Binding LocationTitle}" />
                                     <controls:ExtendedButton WidthRequest="30"
                                                              HorizontalOptions="Start"
@@ -135,37 +147,53 @@
                             Command="{Binding AddPlaceCommand}"
                             TextColor="{StaticResource BodyColor}"
                             BorderRadius="4"
+                            Margin="0,0,0,20"
                             Text="+"></Button>
+                    <Label  Text="Goals"></Label>
                     <controls:CustomPicker HeightRequest="40"
-                                           Margin="0,20" 
-                                           ItemsSource="{Binding Goals}" 
+                                           Margin="0,0,0,20"
+                                           ItemsSource="{Binding Goals}"
                                            SelectedItem="{Binding SelectedGoal, Mode=TwoWay}"
                                            ItemDisplayBinding="{Binding Name}">
                         <controls:CustomPicker.Behaviors>
-                            <b:EventToCommandBehavior EventName="Unfocused" Command="{Binding GoalSelected}"></b:EventToCommandBehavior>
+                            <b:EventToCommandBehavior EventName="Unfocused"
+                                                      Command="{Binding GoalSelected}"></b:EventToCommandBehavior>
                         </controls:CustomPicker.Behaviors>
                     </controls:CustomPicker>
                     <Button Text="Apply Changes"
                             BackgroundColor="{StaticResource MainColor}"
                             TextColor="White"
+                            Command="{Binding SubmitCommand}"
                             Margin="0,0,0,30"></Button>
                 </StackLayout>
             </ScrollView>
-            <Grid BackgroundColor="#8C000000" IsVisible="{Binding IsPopupVisible}">
+            <Grid BackgroundColor="#8C000000"
+                  IsVisible="{Binding IsLoading}">
+                <ActivityIndicator IsRunning="true" HeightRequest="100" WidthRequest="100"
+                                   Color="Black"></ActivityIndicator>
+            </Grid>
+            <Grid BackgroundColor="#8C000000"
+                  IsVisible="{Binding IsPopupVisible}">
                 <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding HidePopup}" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                    <TapGestureRecognizer Command="{Binding HidePopupCommand}"
+                                          NumberOfTapsRequired="1"></TapGestureRecognizer>
                 </Grid.GestureRecognizers>
-                <StackLayout  VerticalOptions="Center" Padding="20,20,20,0" Margin="30,0" BackgroundColor="White">
+                <StackLayout  VerticalOptions="Center"
+                              Padding="20,20,20,0"
+                              Margin="30,0,30,60"
+                              BackgroundColor="White">
                     <Label Text="Set your Goal"></Label>
-                    <Entry></Entry>
+                    <Entry x:Name="goalEntry"></Entry>
                     <Grid Margin="0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Button Text="Cancel"
-                                Command="{Binding HidePopup}"></Button>
+                                Command="{Binding HidePopupCommand}"></Button>
                         <Button Grid.Column="1"
+                                Command="{Binding SetCustomGoalCommand}"
+                                CommandParameter="{Binding Text,Source={x:Reference goalEntry}}"
                                 Text="Ok"></Button>
                     </Grid>
                 </StackLayout>

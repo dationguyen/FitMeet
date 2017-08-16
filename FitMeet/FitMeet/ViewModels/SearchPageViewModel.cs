@@ -20,6 +20,7 @@ namespace FitMeet.ViewModels
         private int _pageCount = 1;
         private int _curentPage = 0;
         private bool _isRefreshing = false;
+        private bool _isLoading = false;
         private bool _hasFilter = false;
         private UpdateFilterEventArgs _updateFilterEventArgs;
         private Member _searchListSelectedItem;
@@ -29,8 +30,8 @@ namespace FitMeet.ViewModels
             get { return null; }
             set
             {
-                SetProperty(ref _searchListSelectedItem, value);
-                if (value != null)
+                SetProperty(ref _searchListSelectedItem , value);
+                if ( value != null )
                 {
                     Navigate("MemberDetailPage?id=" + ((Member)value).MemberId);
                 }
@@ -52,14 +53,14 @@ namespace FitMeet.ViewModels
             get { return _isRefreshing; }
             set
             {
-                SetProperty(ref _isRefreshing, value);
+                SetProperty(ref _isRefreshing , value);
             }
         }
         private bool HasNext
         {
             get { return _curentPage < _pageCount; }
         }
-        
+
         public DelegateCommand RefreshCommand
         {
             get
@@ -73,10 +74,12 @@ namespace FitMeet.ViewModels
 
         private void ReloadItems()
         {
+            IsRefreshing = true;
             ResultListItemsSource.Clear();
             _curentPage = 0;
             _pageCount = 1;
             LoadItems();
+            IsRefreshing = false;
         }
 
         public DelegateCommand FilterCommand
@@ -89,7 +92,7 @@ namespace FitMeet.ViewModels
                     {
                         { "agr", _updateFilterEventArgs }
                     };
-                    await _navigationService.NavigateAsync("AdvanceFilterPopup", param);
+                    await _navigationService.NavigateAsync("AdvanceFilterPopup" , param);
                 });
             }
         }
@@ -100,14 +103,20 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                if (_resultListItemsSource == null)
+                if ( _resultListItemsSource == null )
                     _resultListItemsSource = new SpeedObservableCollection<Member>();
                 return _resultListItemsSource;
             }
-            set { SetProperty(ref _resultListItemsSource, value); }
+            set { SetProperty(ref _resultListItemsSource , value); }
         }
 
-        public SearchPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestServices, IEventAggregator eventAggregator) : base(navigationService, fitMeetRestServices)
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { SetProperty(ref _isLoading , value); }
+        }
+
+        public SearchPageViewModel( INavigationService navigationService , IFitMeetRestService fitMeetRestServices , IEventAggregator eventAggregator ) : base(navigationService , fitMeetRestServices)
         {
             Title = "Search";
             ItemAppearingCommand = new DelegateCommand<object>(OnItemAppearing);
@@ -116,9 +125,9 @@ namespace FitMeet.ViewModels
             _eventAggregator.GetEvent<UpdateFilterEvent>().Subscribe(UpdateFilter);
         }
 
-        private void UpdateFilter(UpdateFilterEventArgs obj)
+        private void UpdateFilter( UpdateFilterEventArgs obj )
         {
-            if (obj != null)
+            if ( obj != null )
             {
                 _hasFilter = true;
                 _updateFilterEventArgs = obj;
@@ -133,32 +142,32 @@ namespace FitMeet.ViewModels
             ReloadItems();
         }
 
-        private void OnItemAppearing(object obj)
+        private void OnItemAppearing( object obj )
         {
-            if (IsRefreshing || ResultListItemsSource.Count == 0)
+            if ( IsLoading || ResultListItemsSource.Count == 0 )
                 return;
 
             //hit bottom!
-            if (obj == ResultListItemsSource.Last())
+            if ( obj == ResultListItemsSource.Last() )
             {
-                if (HasNext)
+                if ( HasNext )
                     LoadItems();
             }
         }
 
         private async void LoadItems()
         {
-            IsRefreshing = true;
-            if (ResultListItemsSource == null)
+            IsLoading = true;
+            if ( ResultListItemsSource == null )
             {
                 ResultListItemsSource = new SpeedObservableCollection<Member>();
             }
 
             var restResponseMessage = await GetDataFromRest(_curentPage + 1);
-            if (restResponseMessage == null)
+            if ( restResponseMessage == null )
             {
                 _curentPage++;
-                IsRefreshing = false;
+                IsLoading = false;
                 return;
             }
             var output = restResponseMessage?.Output;
@@ -166,31 +175,32 @@ namespace FitMeet.ViewModels
             _pageCount = output.Pagecount;
 
             var result = output?.Response;
-            if (result != null)
+            if ( result != null )
             {
                 ResultListItemsSource.AddRange(result);
+                //result.ForEach(ResultListItemsSource.Add);
             }
-            IsRefreshing = false;
+            IsLoading = false;
         }
 
-        private async Task<ResponseMessage<List<Member>>> GetDataFromRest(int page)
+        private async Task<ResponseMessage<List<Member>>> GetDataFromRest( int page )
         {
             ResponseMessage<List<Member>> restResponseMessage;
-            if (!_hasFilter)
+            if ( !_hasFilter )
                 restResponseMessage = await _fitMeetRestService.GetMembersAsync(page);
             else
             {
                 var distance = _updateFilterEventArgs.Distance;
                 var gender = _updateFilterEventArgs.IsMale ? "male" : "female";
                 var activities = _updateFilterEventArgs.Activities;
-                restResponseMessage = await _fitMeetRestService.SearchMembersAsync(page, distance, gender, activities);
+                restResponseMessage = await _fitMeetRestService.SearchMembersAsync(page , distance , gender , activities);
             }
             return restResponseMessage;
         }
 
-        public override void OnNavigatingTo(NavigationParameters parameters)
+        public override void OnNavigatingTo( NavigationParameters parameters )
         {
-            if (ResultListItemsSource.Count == 0)
+            if ( ResultListItemsSource.Count == 0 )
                 LoadItems();
         }
     }

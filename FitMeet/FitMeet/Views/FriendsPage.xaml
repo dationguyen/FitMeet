@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
              xmlns:behaviors="clr-namespace:FitMeet.Behaviors;assembly=FitMeet"
              mvvm:ViewModelLocator.AutowireViewModel="True" Title="{Binding Title}">
-	<ContentPage.Content>
+    <ContentPage.Content>
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"></RowDefinition>

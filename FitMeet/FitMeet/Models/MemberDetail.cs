@@ -1,11 +1,17 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FitMeet.Models
 {
     public class MemberDetail
     {
-        public string FullName => string.Format("{0} {1}" , UserFirstName , UserLastName);
+        public string FullName
+        {
+            get => string.Format("{0} {1}" , UserFirstName , UserLastName);
+          
+        }
+
 
         [JsonProperty("userId")]
         public string UserId { get; set; }

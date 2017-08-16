@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 
 namespace FitMeet.Controls
 {
@@ -15,6 +16,7 @@ namespace FitMeet.Controls
 
         public void AddRange(IEnumerable<T> range)
         {
+            int startIndex = Count;
             foreach (var item in range)
             {
                 Items.Add(item);

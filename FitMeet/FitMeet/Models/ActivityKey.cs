@@ -11,4 +11,15 @@
             Level = lvl;
         }
     }
+
+    public class PlaceKey
+    {
+        public Place Place { get; set; }
+
+        public PlaceKey( Place p )
+        {
+            Place = p;
+        }
+    }
+
 }

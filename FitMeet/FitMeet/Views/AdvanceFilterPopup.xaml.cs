@@ -10,17 +10,17 @@ namespace FitMeet.Views
         public AdvanceFilterPopup()
         {
             InitializeComponent();
-            
+
         }
 
-        private void VisualElement_OnFocused(object sender, FocusEventArgs e)
+        private void VisualElement_OnFocused( object sender , FocusEventArgs e )
         {
-            Padding = new Thickness(20, 50, 20, 0);
+            Padding = new Thickness(20 , 50 , 20 , 0);
         }
 
-        private void VisualElement_OnUnfocused(object sender, FocusEventArgs e)
+        private void VisualElement_OnUnfocused( object sender , FocusEventArgs e )
         {
-            Padding = new Thickness(20, 50);
+            Padding = new Thickness(20 , 50);
         }
     }
 }
