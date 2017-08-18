@@ -67,6 +67,7 @@
     <Compile Include="Models\ActivityKey.cs" />
     <Compile Include="Models\ActivityModel.cs" />
     <Compile Include="Models\Goal.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MemberDetail.cs" />
     <Compile Include="Models\Output.cs" />
     <Compile Include="Models\Request.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Models\Place.cs" />
     <Compile Include="Models\Trainplace.cs" />
     <Compile Include="Models\UserProfile.cs" />
+    <Compile Include="Services\ITokenServices.cs" />
     <Compile Include="Services\StaticDataService.cs" />
     <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\NewsDetail.cs" />
@@ -88,8 +90,10 @@
     <Compile Include="Services\IGeolocationServices.cs" />
     <Compile Include="Services\RestApiClient.cs" />
     <Compile Include="Services\FitMeetRestService.cs" />
+    <Compile Include="Services\TokenServices.cs" />
     <Compile Include="ViewModels\AdvanceFilterPopupViewModel.cs" />
-    <Compile Include="Services\LoginPageViewModel.cs" />
+    <Compile Include="ViewModels\LoginPageViewModel.cs" />
+    <Compile Include="ViewModels\ManualLoginPageViewModel.cs" />
     <Compile Include="ViewModels\MainTabbedPageViewModel.cs" />
     <Compile Include="ViewModels\FriendsPageViewModel.cs" />
     <Compile Include="ViewModels\MemberDetailPageViewModel.cs" />
@@ -103,7 +107,7 @@
     <Compile Include="ViewModels\SettingPageViewModel.cs" />
     <Compile Include="ViewModels\SignUpPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\ViewModelBase.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
@@ -180,6 +184,12 @@
     </Reference>
     <Reference Include="Plugin.Geolocator.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xam.Plugin.Geolocator.4.0.1\lib\netstandard1.0\Plugin.Geolocator.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.SecureStorage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\sameerIOTApps.Plugin.SecureStorage.1.2.2\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.SecureStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.SecureStorage.Abstractions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\sameerIOTApps.Plugin.SecureStorage.1.2.2\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.SecureStorage.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Prism, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Prism.Core.6.3.0\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Prism.dll</HintPath>

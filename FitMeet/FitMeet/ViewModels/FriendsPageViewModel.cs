@@ -1,7 +1,9 @@
 ﻿using FitMeet.Controls;
+using FitMeet.EventAggregator;
 using FitMeet.Models;
 using FitMeet.Services;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Navigation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,19 +12,22 @@ using System.Threading.Tasks;
 
 namespace FitMeet.ViewModels
 {
-    public class FriendsPageViewModel : ViewModelBase
+    public class FriendsPageViewModel:ViewModelBase
     {
+        private IEventAggregator _eventAggregator;
+
         private int _pageCount = 1;
         private int _curentPage = 0;
         private bool _isRefreshing = false;
+        private bool _isNoFriend = true;
         private Member _friendListSelectedItem;
         private List<Member> _friendList;
-        private ObservableCollection<GroupsCollection<string, Member>> _friendsGrouped;
+        private ObservableCollection<GroupsCollection<string,Member>> _friendsGrouped;
 
-        public ObservableCollection<GroupsCollection<string, Member>> FriendsGrouped
+        public ObservableCollection<GroupsCollection<string,Member>> FriendsGrouped
         {
             get { return _friendsGrouped; }
-            set { SetProperty(ref _friendsGrouped, value); }
+            set { SetProperty(ref _friendsGrouped,value); }
         }
 
         public Member FriendListSelectedItem
@@ -30,8 +35,8 @@ namespace FitMeet.ViewModels
             get { return null; }
             set
             {
-                SetProperty(ref _friendListSelectedItem, value);
-                if (value != null)
+                SetProperty(ref _friendListSelectedItem,value);
+                if(value != null)
                 {
                     Navigate("MemberDetailPage?id=" + ((Member)value).MemberId);
                 }
@@ -43,7 +48,7 @@ namespace FitMeet.ViewModels
             get { return _isRefreshing; }
             set
             {
-                SetProperty(ref _isRefreshing, value);
+                SetProperty(ref _isRefreshing,value);
             }
         }
         private bool HasNext
@@ -51,6 +56,24 @@ namespace FitMeet.ViewModels
             get { return _curentPage < _pageCount; }
         }
 
+        public List<Member> FriendListItemsSource
+        {
+            get
+            {
+                if(_friendList == null)
+                {
+                    _friendList = new List<Member>();
+                }
+                return _friendList;
+            }
+            set => _friendList = value;
+        }
+
+        public bool IsNoFriend
+        {
+            get { return _isNoFriend; }
+            set { SetProperty(ref _isNoFriend,value); }
+        }
 
         public DelegateCommand RefreshCommand
         {
@@ -67,37 +90,37 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>((obj) =>
+                return new DelegateCommand<object>(( obj ) =>
                 {
                     OnItemAppearing(obj);
                 });
             }
         }
 
-
-        public FriendsPageViewModel(INavigationService navigationService, IFitMeetRestService fitMeetRestServices) : base(navigationService, fitMeetRestServices)
-        {
-            Title = "Friends";
-        }
-
-        public List<Member> FriendListItemsSource
+        public DelegateCommand GoToSearchCommand
         {
             get
             {
-                if (_friendList == null)
+                return new DelegateCommand(() =>
                 {
-                    _friendList = new List<Member>();
-                }
-                return _friendList;
+                    _eventAggregator.GetEvent<ChangeTabbedEvent>().Publish(0);
+                });
             }
-            set => SetProperty(ref _friendList, value);
         }
 
-        public override void OnNavigatingTo(NavigationParameters parameters)
+        public FriendsPageViewModel( INavigationService navigationService,IFitMeetRestService fitMeetRestServices,IEventAggregator eventAggregator ) : base(navigationService,fitMeetRestServices)
+        {
+            Title = "Friends";
+            _eventAggregator = eventAggregator;
+        }
+
+
+
+        public override void OnNavigatingTo( NavigationParameters parameters )
         {
             base.OnNavigatingTo(parameters);
 
-            if (FriendListItemsSource.Count == 0)
+            if(FriendListItemsSource.Count == 0)
             {
                 LoadItems();
             }
@@ -109,7 +132,7 @@ namespace FitMeet.ViewModels
             IsRefreshing = true;
 
             var restResponseMessage = await GetDataFromRest(_curentPage + 1);
-            if (restResponseMessage == null)
+            if(restResponseMessage == null)
             {
                 _curentPage++;
                 return;
@@ -119,21 +142,23 @@ namespace FitMeet.ViewModels
             _pageCount = output.Pagecount;
 
             var result = output?.Response;
-            if (result != null)
+            if(result != null)
             {
+                IsNoFriend = false;
                 FriendListItemsSource.AddRange(result);
-            }
-            //Use linq to sorty our monkeys by name and then group them by the new name sort property
-            var sorted = from member in FriendListItemsSource
-                         orderby member.MemberFirstName
-                         group member by member.NameSort into memberGroup
-                         select new GroupsCollection<string, Member>(memberGroup.Key, memberGroup);
+                //Use linq to sorty our monkeys by name and then group them by the new name sort property
+                var sorted = from member in FriendListItemsSource
+                             orderby member.MemberFirstName
+                             group member by member.NameSort into memberGroup
+                             select new GroupsCollection<string,Member>(memberGroup.Key,memberGroup);
 
-            //create a new collection of groups
-            FriendsGrouped = new ObservableCollection<GroupsCollection<string, Member>>(sorted);
+                //create a new collection of groups
+                FriendsGrouped = new ObservableCollection<GroupsCollection<string,Member>>(sorted);
+            }
+
             IsRefreshing = false;
         }
-        private async Task<ResponseMessage<List<Member>>> GetDataFromRest(int page)
+        private async Task<ResponseMessage<List<Member>>> GetDataFromRest( int page )
         {
             ResponseMessage<List<Member>> restResponseMessage;
             restResponseMessage = await _fitMeetRestService.GetFriendsAsync(page);
@@ -149,15 +174,15 @@ namespace FitMeet.ViewModels
             LoadItems();
         }
 
-        private void OnItemAppearing(object obj)
+        private void OnItemAppearing( object obj )
         {
-            if (IsRefreshing || FriendListItemsSource.Count == 0)
+            if(IsRefreshing || FriendListItemsSource.Count == 0)
                 return;
 
             //hit bottom!
-            if (obj == FriendListItemsSource.Last())
+            if(obj == FriendListItemsSource.Last())
             {
-                if (HasNext)
+                if(HasNext)
                     LoadItems();
             }
         }

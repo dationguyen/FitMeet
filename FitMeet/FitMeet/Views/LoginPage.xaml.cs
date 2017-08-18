@@ -12,10 +12,5 @@ namespace FitMeet.Views
             InitializeComponent();
             
         }
-
-        private void TapGestureRecognizer_OnTapped(object sender, EventArgs e)
-        {
-
-        }
     }
 }

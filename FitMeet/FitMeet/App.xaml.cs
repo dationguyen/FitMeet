@@ -8,16 +8,16 @@ using Xamarin.Forms;
 
 namespace FitMeet
 {
-    public partial class App : PrismApplication
+    public partial class App:PrismApplication
     {
-        public App(IPlatformInitializer initializer = null) : base(initializer)
+        public App( IPlatformInitializer initializer = null ) : base(initializer)
         {
         }
 
-		public App()
-		{
-			
-		}
+        public App()
+        {
+
+        }
         protected override void OnInitialized()
         {
             InitializeComponent();
@@ -47,9 +47,10 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<ProfileEditPage>();
 
             //Services registration
-            Container.RegisterType<IFitMeetRestService, FitMeetRestService>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IStaticDataService, StaticDataService>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IGeolocationServices, GeolocationServices>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IFitMeetRestService,FitMeetRestService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IStaticDataService,StaticDataService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IGeolocationServices,GeolocationServices>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ITokenServices,TokenServices>(new ContainerControlledLifetimeManager());
 
             Container.RegisterPopupNavigationService();
         }

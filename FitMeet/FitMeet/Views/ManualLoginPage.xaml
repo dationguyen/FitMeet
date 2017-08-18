@@ -5,40 +5,55 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:behaviors="clr-namespace:FitMeet.Behaviors;assembly=FitMeet"
              xmlns:converters="clr-namespace:FitMeet.Converters;assembly=FitMeet"
-             xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
-             prism:ViewModelLocator.AutowireViewModel="True" Title="Login">
-	<ContentPage.Content>
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*" />
-				<RowDefinition Height="3*" />
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="12*" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
-			<Image Grid.ColumnSpan="3" Source="fitmeet_logo.png"></Image>
-
-			<StackLayout Grid.Row="1" Grid.Column="1">
-
-				<Entry Placeholder="E-mail">
-					<Entry.Behaviors>
-						<behaviors:EmailValidatorBehavior x:Name="emailValidator" />
-					</Entry.Behaviors>
-				</Entry>
-				<Entry x:Name="entPassword" Placeholder="Password" IsPassword="True">
-					<Entry.Behaviors>
-						<behaviors:PasswordValidatorBehavior x:Name="passwordValidator" />
-					</Entry.Behaviors>
-				</Entry>
-
-				<Button BackgroundColor="{StaticResource MainColor}" Margin="0,20,0,0" TextColor="White" HeightRequest="50" Text="Login"></Button>
-				<Grid>
-					<Button HorizontalOptions="Start" Text="Back to Sign Up" FontSize="12" TextColor="{StaticResource BodyColor}"></Button>
-					<Button HorizontalOptions="End" Text="Forgot Password?"  FontSize="12" TextColor="{StaticResource BodyColor}"></Button>
-				</Grid>
-			</StackLayout>
-		</Grid>
-	</ContentPage.Content>
+             xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet" x:Name="ManualLoginPage"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             Title="Login">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="12*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image Grid.ColumnSpan="3"
+                   Source="fitmeet_logo.png"></Image>
+            <StackLayout Grid.Row="1"
+                         Grid.Column="1">
+                <Entry Placeholder="E-mail" Text="{Binding Id}">
+                    <Entry.Behaviors>
+                        <behaviors:EmailValidatorBehavior x:Name="emailValidator"
+                                                          IsValid="{Binding BindingContext.IsEmailValidated,Mode=TwoWay,Source={x:Reference ManualLoginPage}}" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Entry x:Name="entPassword" Text="{Binding Password}"
+                       Placeholder="Password"
+                       IsPassword="True">
+                    <Entry.Behaviors>
+                        <behaviors:PasswordValidatorBehavior x:Name="passwordValidator" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Button BackgroundColor="{StaticResource MainColor}"
+                        Command="{Binding LoginCommand}"
+                        Margin="0,20,0,0"
+                        TextColor="White"
+                        HeightRequest="50"
+                        Text="Login"></Button>
+                <Grid>
+                    <Button HorizontalOptions="Start"
+                            Text="Back to Sign Up"
+                            FontSize="12"
+                            Command="{Binding NavigateBackCommand}"
+                            TextColor="{StaticResource BodyColor}"></Button>
+                    <Button HorizontalOptions="End"
+                            Text="Forgot Password?"
+                            FontSize="12"
+                            TextColor="{StaticResource BodyColor}"></Button>
+                </Grid>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
 </ContentPage>

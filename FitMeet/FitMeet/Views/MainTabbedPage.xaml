@@ -4,13 +4,14 @@
             x:Class="FitMeet.Views.MainTabbedPage"
             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
             xmlns:local="clr-namespace:FitMeet.Views;assembly=FitMeet"
-            prism:ViewModelLocator.AutowireViewModel="True" Title="Members" NavigationPage.BackButtonTitle="Back" >
-	<TabbedPage.Children>
-		<local:SearchPage Icon="search.png" ></local:SearchPage>
-		<local:FriendsPage Icon="friend.png"></local:FriendsPage>
-		<local:NewsPage Icon="news.png"></local:NewsPage>
-		<local:MePage Icon="me.png"></local:MePage>
-	</TabbedPage.Children>
-	
-	
+            prism:ViewModelLocator.AutowireViewModel="True"
+            SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}"
+            Title="Members"
+            NavigationPage.BackButtonTitle="Back">
+    <TabbedPage.Children>
+        <local:SearchPage Icon="search.png"></local:SearchPage>
+        <local:FriendsPage Icon="friend.png"></local:FriendsPage>
+        <local:NewsPage Icon="news.png"></local:NewsPage>
+        <local:MePage Icon="me.png"></local:MePage>
+    </TabbedPage.Children>
 </TabbedPage>
