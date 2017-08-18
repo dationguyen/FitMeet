@@ -8,8 +8,7 @@ using Xamarin.Forms.Platform.iOS;
 [assembly: ExportRenderer(typeof(CustomSearchEntry), typeof(CustomSearchEntryRenderer))]
 namespace FitMeet.iOS.Renderers
 {
-
-    class CustomSearchEntryRenderer : EntryRenderer
+    public class CustomSearchEntryRenderer : EntryRenderer
     {
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {

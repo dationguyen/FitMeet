@@ -1,5 +1,7 @@
-﻿using Plugin.SecureStorage;
+﻿using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 using System;
+using System.Threading.Tasks;
 
 namespace FitMeet.Services
 {
@@ -9,6 +11,8 @@ namespace FitMeet.Services
         private string _token;
 
         private const string tokenKey = "Token";
+        private ISettings AppSettings =>
+            CrossSettings.Current;
 
         public TokenServices(IFitMeetRestService fitMeetRestService)
         {
@@ -24,8 +28,9 @@ namespace FitMeet.Services
             return _token;
         }
 
-        public bool HasValidToken()
+        public async Task<bool> HasValidToken()
         {
+            bool valid = await _fitMeetRestService.CheckTokenAsync(_token);
             return true;
         }
 
@@ -45,17 +50,17 @@ namespace FitMeet.Services
 
         private void RemoveToken()
         {
-            CrossSecureStorage.Current.DeleteKey(tokenKey);
+            AppSettings.Remove(tokenKey);
         }
 
         private void SaveToken(string token)
         {
-            CrossSecureStorage.Current.SetValue(tokenKey,token);
+            AppSettings.AddOrUpdateValue(tokenKey,token);
         }
 
         private string LoadToken()
         {
-            return CrossSecureStorage.Current.GetValue(tokenKey);
+            return AppSettings.GetValueOrDefault(tokenKey,string.Empty);
         }
     }
 }

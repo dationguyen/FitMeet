@@ -25,20 +25,21 @@ namespace FitMeet.Services
         private const string UpdateProfileUri = "Users/edit_profile.json";
         private const string UnfriendUri = "friends/unfriend.json";
         private const string ManualLoginUri = "Users/login.json";
+        private const string CheckTokenUri = "users/check_token.json";
 
         private readonly IPageDialogService _dialogService;
         private readonly IGeolocationServices _geoService;
 
         private string _token = "r5jchztcob5698kbgdbl";
 
-        public FitMeetRestService( IPageDialogService dialogService,IGeolocationServices geoService )
+        public FitMeetRestService(IPageDialogService dialogService,IGeolocationServices geoService)
         {
             this.httpClient = new HttpClient() { BaseAddress = new Uri(baseUri) };
             _dialogService = dialogService;
             _geoService = geoService;
         }
 
-        public async Task<bool> AddFriendsAsync( string friendId )
+        public async Task<bool> AddFriendsAsync(string friendId)
         {
             var param = new Dictionary<string,string>
             {
@@ -46,6 +47,16 @@ namespace FitMeet.Services
                 { "friend",friendId }
             };
             var result = await ApiPost<ResponseMessage<string>>(addFriendUri,param);
+            return result?.Output?.Status == 1;
+        }
+
+        public async Task<bool> CheckTokenAsync(string token)
+        {
+            var param = new Dictionary<string,string>
+            {
+                { "token",_token }
+            };
+            var result = await ApiPost<ResponseMessage<string>>(CheckTokenUri,param);
             return result?.Output?.Status == 1;
         }
 
@@ -59,7 +70,7 @@ namespace FitMeet.Services
 
         }
 
-        public async Task<ResponseMessage<List<Member>>> GetFriendsAsync( int page )
+        public async Task<ResponseMessage<List<Member>>> GetFriendsAsync(int page)
         {
             var position = await _geoService.GetPosition();
 
@@ -72,7 +83,7 @@ namespace FitMeet.Services
             return await ApiPost<ResponseMessage<List<Member>>>(String.Format(getFriendUri,page),param);
         }
 
-        public async Task<ResponseMessage<MemberDetail>> GetMemberDetailAsync( string id )
+        public async Task<ResponseMessage<MemberDetail>> GetMemberDetailAsync(string id)
         {
             var param = new Dictionary<string,string>
             {
@@ -82,7 +93,7 @@ namespace FitMeet.Services
             return await ApiPost<ResponseMessage<MemberDetail>>(getMemberDetailUri,param);
         }
 
-        public async Task<ResponseMessage<List<Member>>> GetMembersAsync( int pageId )
+        public async Task<ResponseMessage<List<Member>>> GetMembersAsync(int pageId)
         {
             var position = await _geoService.GetPosition();
 
@@ -108,7 +119,7 @@ namespace FitMeet.Services
             return await ApiPost<ResponseMessage<List<News>>>(getNewsUri,param);
         }
 
-        public async Task<ResponseMessage<NewsDetail>> GetNewsDetailAsync( string id )
+        public async Task<ResponseMessage<NewsDetail>> GetNewsDetailAsync(string id)
         {
             var param = new Dictionary<string,string>
             {
@@ -118,7 +129,7 @@ namespace FitMeet.Services
             return await ApiPost<ResponseMessage<NewsDetail>>(getNewsDetailUri,param);
         }
 
-        public async Task<ResponseMessage<WebPageInfo>> GetPageDetailAsync( string pageName )
+        public async Task<ResponseMessage<WebPageInfo>> GetPageDetailAsync(string pageName)
         {
             var param = new Dictionary<string,string>
             {
@@ -143,7 +154,7 @@ namespace FitMeet.Services
             return await ApiPost<ResponseMessage<UserProfile>>(getProfileUri,param);
         }
 
-        public async Task<ResponseMessage<LoginModel>> ManualLoginAsync( string id,string password )
+        public async Task<ResponseMessage<LoginModel>> ManualLoginAsync(string id,string password)
         {
             var param = new Dictionary<string,string>
             {
@@ -155,7 +166,7 @@ namespace FitMeet.Services
             return await ApiPost<ResponseMessage<LoginModel>>(ManualLoginUri,param);
         }
 
-        public async Task<ResponseMessage<List<Member>>> SearchMembersAsync( int page,int distance,string gender,List<int> activities )
+        public async Task<ResponseMessage<List<Member>>> SearchMembersAsync(int page,int distance,string gender,List<int> activities)
         {
             var position = await _geoService.GetPosition();
 
@@ -175,12 +186,12 @@ namespace FitMeet.Services
 
         }
 
-        public void SetToken( string token )
+        public void SetToken(string token)
         {
             this._token = token;
         }
 
-        public async Task<ResponseMessage<string>> UnfriendAsync( string id )
+        public async Task<ResponseMessage<string>> UnfriendAsync(string id)
         {
             var param = new Dictionary<string,string>
             {
@@ -190,10 +201,10 @@ namespace FitMeet.Services
             return await ApiPost<ResponseMessage<string>>(UnfriendUri,param);
         }
 
-        public async Task<ResponseMessage<string>> UpdateProfileAsync( string fName,string lName,
+        public async Task<ResponseMessage<string>> UpdateProfileAsync(string fName,string lName,
             string gender,string goalId,string goalText,string picture,
             string address,string desciption,string dob,List<string> activitesID,
-            List<string> ids,List<string> skillLevelIds,List<string> placeIds,List<string> locationIds )
+            List<string> ids,List<string> skillLevelIds,List<string> placeIds,List<string> locationIds)
         {
             var param = new Dictionary<string,string>
             {

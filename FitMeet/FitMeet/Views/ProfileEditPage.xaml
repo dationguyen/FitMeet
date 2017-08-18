@@ -8,6 +8,7 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Name="Master"
              BackgroundColor="{StaticResource NavBackgroundColor}">
+  
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">

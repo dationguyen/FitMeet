@@ -96,6 +96,7 @@
                 </ListView>
             </Grid>
             <Grid Grid.RowSpan="2"
+                  IsVisible="{Binding IsNoFriend}"
                   BackgroundColor="White">
                 <StackLayout VerticalOptions="Center"
                              HorizontalOptions="Center">

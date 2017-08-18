@@ -55,7 +55,24 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads </key>
 		<true/>
-	</dict>
+	  <key>NSExceptionDomains</key>
+	  <dict>
+	    <key>facebook.com</key>
+	    <dict>
+	      <key>NSIncludesSubdomains</key>
+	      <true/>
+	      <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+	      <false/>
+	    </dict>
+	    <key>fbcdn.net</key>
+	    <dict>
+	      <key>NSIncludesSubdomains</key>
+	      <true/>
+	      <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+	      <false/>
+	    </dict>
+	  </dict>
+  </dict>
 	<key>CFBundleName</key>
 	<string>FitMeet</string>
 	<key>UIStatusBarStyle</key>
@@ -65,5 +82,25 @@
 		<string>Fonts/MyriadPro-Regular.ttf</string>
     <string>Fonts/MyriadPro-Bold.otf</string>
 	</array>
+  <key>LSApplicationQueriesSchemes</key>
+  <array>
+    <string>fbapi</string>
+    <string>fb-messenger-api</string>
+    <string>fbauth2</string>
+    <string>fbshareextension</string>
+  </array>
+  <key>CFBundleURLTypes</key>
+  <array>
+    <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>fb306989955995811</string>
+      </array>
+    </dict>
+  </array>
+  <key>FacebookAppID</key>
+  <string>306989955995811</string>
+  <key>FacebookDisplayName</key>
+  <string>Roor</string>
 </dict>
 </plist>

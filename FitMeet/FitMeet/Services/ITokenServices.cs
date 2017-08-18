@@ -1,10 +1,12 @@
-﻿namespace FitMeet.Services
+﻿using System.Threading.Tasks;
+
+namespace FitMeet.Services
 {
     public interface ITokenServices
     {
-        bool HasValidToken();
+        Task<bool> HasValidToken();
 
-        void SetToken( string token );
+        void SetToken(string token);
 
         string GetToken();
     }

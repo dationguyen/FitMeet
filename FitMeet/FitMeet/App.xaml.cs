@@ -3,6 +3,7 @@ using FitMeet.Views;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
 using Rg.Plugins.Popup.Services;
+using System;
 using Xamarin.Forms;
 
 
@@ -10,7 +11,9 @@ namespace FitMeet
 {
     public partial class App:PrismApplication
     {
-        public App( IPlatformInitializer initializer = null ) : base(initializer)
+        public static Action<string> PostSuccessFacebookAction { get; set; }
+
+        public App(IPlatformInitializer initializer = null) : base(initializer)
         {
         }
 
@@ -21,7 +24,7 @@ namespace FitMeet
         protected override void OnInitialized()
         {
             InitializeComponent();
-            NavigationService.NavigateAsync("NavigationPage/LoginPage");
+            NavigationService.NavigateAsync("StartupPage");
         }
 
         protected override void RegisterTypes()
@@ -45,6 +48,7 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<AdvanceFilterPopup>();
             Container.RegisterTypeForNavigation<MemberDetailPage>();
             Container.RegisterTypeForNavigation<ProfileEditPage>();
+            Container.RegisterTypeForNavigation<StartupPage>();
 
             //Services registration
             Container.RegisterType<IFitMeetRestService,FitMeetRestService>(new ContainerControlledLifetimeManager());

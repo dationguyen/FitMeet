@@ -16,25 +16,25 @@ namespace FitMeet.Services
         /// Get the news detail
         /// </summary>
         /// <returns></returns>
-        Task<ResponseMessage<NewsDetail>> GetNewsDetailAsync( string id );
+        Task<ResponseMessage<NewsDetail>> GetNewsDetailAsync(string id);
 
         /// <summary>
         /// Get the news detail
         /// </summary>
         /// <returns></returns>
-        Task<ResponseMessage<WebPageInfo>> GetPageDetailAsync( string id );
+        Task<ResponseMessage<WebPageInfo>> GetPageDetailAsync(string id);
 
         /// <summary>
         /// Get the members list
         /// </summary>
         /// <returns></returns>
-        Task<ResponseMessage<List<Member>>> GetMembersAsync( int page );
+        Task<ResponseMessage<List<Member>>> GetMembersAsync(int page);
 
         /// <summary>
         /// advance search member
         /// </summary>
         /// <returns></returns>
-        Task<ResponseMessage<List<Member>>> SearchMembersAsync( int page,int distance,string gender,List<int> activities );
+        Task<ResponseMessage<List<Member>>> SearchMembersAsync(int page,int distance,string gender,List<int> activities);
 
         /// <summary>
         /// advance search member
@@ -46,19 +46,19 @@ namespace FitMeet.Services
         /// get member Detail
         /// </summary>
         /// <returns></returns>
-        Task<ResponseMessage<MemberDetail>> GetMemberDetailAsync( string id );
+        Task<ResponseMessage<MemberDetail>> GetMemberDetailAsync(string id);
 
         /// <summary>
         /// Get the friends list
         /// </summary>
         /// <returns></returns>
-        Task<ResponseMessage<List<Member>>> GetFriendsAsync( int page );
+        Task<ResponseMessage<List<Member>>> GetFriendsAsync(int page);
 
         /// <summary>
         /// Add Friend
         /// </summary>
         /// <returns></returns>
-        Task<bool> AddFriendsAsync( string friendId );
+        Task<bool> AddFriendsAsync(string friendId);
 
         /// <summary>
         /// Add Friend
@@ -76,19 +76,26 @@ namespace FitMeet.Services
         /// Edit Profile
         /// </summary>
         /// <returns></returns>
-        Task<ResponseMessage<string>> UpdateProfileAsync( string fName,string lName,string gender,string goalId,string goalText,string picture,string address,string desciption,string dob,List<string> activitesID,List<string> ids,List<string> skillLevelIds,List<string> placeIds,List<string> locationIds );
+        Task<ResponseMessage<string>> UpdateProfileAsync(string fName,string lName,string gender,string goalId,string goalText,string picture,string address,string desciption,string dob,List<string> activitesID,List<string> ids,List<string> skillLevelIds,List<string> placeIds,List<string> locationIds);
 
         /// <summary>
         /// Unfriend
         /// </summary>
         /// <returns></returns>
-        Task<ResponseMessage<string>> UnfriendAsync( string id );
+        Task<ResponseMessage<string>> UnfriendAsync(string id);
 
         /// <summary>
         /// Manual Login
         /// </summary>
         /// <returns></returns>
-        Task<ResponseMessage<LoginModel>> ManualLoginAsync( string id,string password );
+        Task<ResponseMessage<LoginModel>> ManualLoginAsync(string id,string password);
+
+
+        /// <summary>
+        /// Check token
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> CheckTokenAsync(string token);
 
         /// <summary>
         /// Set current token
