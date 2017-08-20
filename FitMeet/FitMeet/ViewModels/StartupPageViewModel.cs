@@ -13,19 +13,18 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return new DelegateCommand(() =>
+                return new DelegateCommand(async () =>
                 {
-                     NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
-                    //var token = _tokenServices.GetToken();
-                    //if(!String.IsNullOrEmpty(token) && await _tokenServices.HasValidToken())
-                    //{
-                    //    _fitMeetRestService.SetToken(token);
-                    //    NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
-                    //}
-                    //else
-                    //{
-                    //    NavigateCommand.Execute("app:///NavigationPage/LoginPage");
-                    //}
+                    var token = _tokenServices.GetToken();
+                    if(!String.IsNullOrEmpty(token) && await _tokenServices.HasValidToken())
+                    {
+                        _fitMeetRestService.SetToken(token);
+                        NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
+                    }
+                    else
+                    {
+                        NavigateCommand.Execute("app:///NavigationPage/LoginPage");
+                    }
                 });
             }
         }

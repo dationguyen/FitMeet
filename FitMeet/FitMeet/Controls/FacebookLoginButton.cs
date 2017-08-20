@@ -1,5 +1,6 @@
 ﻿using FitMeet.EventAggregator;
 using System;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace FitMeet.Controls
@@ -14,6 +15,18 @@ namespace FitMeet.Controls
 
         public static readonly BindableProperty LoggedInProperty = BindableProperty.Create<FacebookLoginButton,bool>(p => p.LoggedIn,false,BindingMode.OneWayToSource);
         public bool LoggedIn { get { return (bool)GetValue(LoggedInProperty); } internal set { SetValue(LoggedInProperty,value); } }
+
+
+        // BindableProperty implementation
+        public static readonly BindableProperty CompletedCommandProperty =
+            BindableProperty.Create(nameof(CompletedCommand),typeof(ICommand),typeof(FacebookLoginButton),null);
+
+        public ICommand CompletedCommand
+        {
+            get { return (ICommand)GetValue(CompletedCommandProperty); }
+            set { SetValue(CompletedCommandProperty,value); }
+        }
+
 
         public event EventHandler<FacebookLoginEventArgs> ShowingLoggedInUser;
         public event EventHandler ShowingLoggedOutUser;

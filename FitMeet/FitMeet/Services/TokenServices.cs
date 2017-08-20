@@ -31,7 +31,7 @@ namespace FitMeet.Services
         public async Task<bool> HasValidToken()
         {
             bool valid = await _fitMeetRestService.CheckTokenAsync(_token);
-            return true;
+            return valid;
         }
 
         public void SetToken(string token)

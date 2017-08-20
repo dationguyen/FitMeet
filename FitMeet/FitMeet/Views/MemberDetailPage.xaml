@@ -4,9 +4,11 @@
              x:Class="FitMeet.Views.MemberDetailPage"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
-             prism:ViewModelLocator.AutowireViewModel="True"
+             prism:ViewModelLocator.AutowireViewModel="True" 
+             IsFriend ="{Binding IsFriend}"
              Title="Member">
-    <ContentPage.ToolbarItems>
+        
+    <ContentPage.ToolbarItems >
         <ToolbarItem x:Name="MainToolbarItem"
                      Order="Primary"
                      IsDestructive="True"
@@ -22,7 +24,7 @@
                      Priority="0" />
         <ToolbarItem x:Name="ReportToolbarItem"
                      Order="Secondary"
-                     Clicked="TapGestureRecognizer_OnTapped"
+                     Clicked="ReportToolbarItem_OnClicked"
                      Command="{Binding ReportCommand}"
                      Text="Report"
                      Priority="0" />
@@ -218,6 +220,26 @@
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_OnTapped"></TapGestureRecognizer>
                 </Grid.GestureRecognizers>
+            </Grid>
+            <Grid x:Name="PopupLayout" BackgroundColor="#8C000000" IsVisible="{Binding IsShowInputDialog}" >
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="InputDialog_OnTapped"></TapGestureRecognizer>
+                </Grid.GestureRecognizers>
+                <StackLayout BackgroundColor="White" VerticalOptions="Center">
+                    <controls:BorderedEditor x:Name="ReportEditor" HeightRequest="100" Margin="10,20,10,0"  Placeholder="Please tell us why you want to report this person"></controls:BorderedEditor>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Text="Cancel" Clicked="InputDialog_OnTapped"></Button>
+                        <Button Grid.Column="1" Text="Report and Block" Command="{Binding ReportAndBlockCommand}"
+                                CommandParameter="{Binding Text, Source={x:Reference ReportEditor}}"></Button>
+                    </Grid>
+                </StackLayout>
+            </Grid>
+            <Grid  BackgroundColor="#8CFFFFFF" IsVisible="{Binding IsLoading}">
+                <ActivityIndicator IsRunning="True"></ActivityIndicator>
             </Grid>
         </Grid>
     </ContentPage.Content>

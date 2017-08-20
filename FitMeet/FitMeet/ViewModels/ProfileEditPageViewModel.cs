@@ -6,11 +6,12 @@ using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 
 namespace FitMeet.ViewModels
 {
-    public class ProfileEditPageViewModel : ViewModelBase
+    public class ProfileEditPageViewModel:ViewModelBase
     {
         private readonly IStaticDataService _staticDataServices;
         private readonly IPageDialogService _dialogService;
@@ -34,8 +35,8 @@ namespace FitMeet.ViewModels
         private DateTime _dob;
 
 
-        public ProfileEditPageViewModel( INavigationService navigationService , IPageDialogService dialogService ,
-            IFitMeetRestService fitMeetRestServices , IStaticDataService staticDataServices ) : base(navigationService , fitMeetRestServices)
+        public ProfileEditPageViewModel(INavigationService navigationService,IPageDialogService dialogService,
+            IFitMeetRestService fitMeetRestServices,IStaticDataService staticDataServices) : base(navigationService,fitMeetRestServices)
         {
             _staticDataServices = staticDataServices;
             _dialogService = dialogService;
@@ -44,7 +45,7 @@ namespace FitMeet.ViewModels
         public UserProfile DataSource
         {
             get => _dataSource;
-            set => SetProperty(ref _dataSource , value);
+            set => SetProperty(ref _dataSource,value);
         }
 
         public bool IsMale
@@ -52,7 +53,7 @@ namespace FitMeet.ViewModels
             get { return _isMale; }
             set
             {
-                SetProperty(ref _isMale , value);
+                SetProperty(ref _isMale,value);
             }
         }
         public ObservableCollection<ActivityKey> ActivitiesLevel
@@ -63,7 +64,7 @@ namespace FitMeet.ViewModels
             }
             set
             {
-                SetProperty(ref _activitiesLevel , value);
+                SetProperty(ref _activitiesLevel,value);
             }
         }
 
@@ -73,7 +74,7 @@ namespace FitMeet.ViewModels
             {
                 return new DelegateCommand(() =>
                 {
-                    ActivitiesLevel.Add(new ActivityKey(ActivitiesData.First() , LevelsData.First()));
+                    ActivitiesLevel.Add(new ActivityKey(ActivitiesData.First(),LevelsData.First()));
 
                 });
             }
@@ -82,7 +83,7 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(( a ) =>
+                return new DelegateCommand<object>((a) =>
                 {
                     var item = (ActivityKey)a;
                     ActivitiesLevel.Remove(item);
@@ -105,7 +106,7 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(( a ) =>
+                return new DelegateCommand<object>((a) =>
                 {
                     var item = (PlaceKey)a;
                     Trainplaces.Remove(item);
@@ -116,9 +117,9 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(( a ) =>
+                return new DelegateCommand<object>((a) =>
                 {
-                    if ( _selectedGoal == Goals.Last() )
+                    if(_selectedGoal == Goals.Last())
                     {
                         IsPopupVisible = true;
                     }
@@ -148,25 +149,25 @@ namespace FitMeet.ViewModels
                     List<string> ids = new List<string>();
                     List<string> placeIds = new List<string>();
                     List<string> locationIds = new List<string>();
-                    foreach ( var activityKey in ActivitiesLevel )
+                    foreach(var activityKey in ActivitiesLevel)
                     {
                         actIds.Add(activityKey.Activity.Id);
                         skillIds.Add(activityKey.Level.Id);
                     }
-                    if ( DataSource.Skill != null )
-                        foreach ( var skill in DataSource.Skill )
+                    if(DataSource.Skill != null)
+                        foreach(var skill in DataSource.Skill)
                         {
-                            foreach ( var act in skill.Activities )
+                            foreach(var act in skill.Activities)
                             {
                                 ids.Add(act.ActivityUserId);
                             }
                         }
-                    if ( DataSource.TrainPlace != null )
-                        foreach ( var place in DataSource.TrainPlace )
+                    if(DataSource.TrainPlace != null)
+                        foreach(var place in DataSource.TrainPlace)
                         {
                             placeIds.Add(place.TrainPlaceId);
                         }
-                    foreach ( var place in Trainplaces )
+                    foreach(var place in Trainplaces)
                     {
                         locationIds.Add(place.Place.LocationId);
                     }
@@ -174,24 +175,24 @@ namespace FitMeet.ViewModels
                     string fName = "", lName = "";
                     string[] nameParts = FullName.ToString().Trim().Split(' ');
                     lName = nameParts.Last();
-                    for ( int i = 0 ; i < nameParts.Length - 1 ; i++ )
+                    for(int i = 0 ; i < nameParts.Length - 1 ; i++)
                     {
                         fName += nameParts[i] + " ";
                     }
 
-                    var a = await _fitMeetRestService.UpdateProfileAsync(fName.Trim() ,
-                        lName.Trim() , IsMale ? "Male" : "Female" ,
-                        SelectedGoal.Id , SelectedGoal.Name , DataSource.UserPhoto ,
-                        DataSource.Address , DataSource.About , Dob.ToString("yyyy-MM-dd") , actIds , ids , skillIds , placeIds , locationIds);
+                    var a = await _fitMeetRestService.UpdateProfileAsync(fName.Trim(),
+                        lName.Trim(),IsMale ? "Male" : "Female",
+                        SelectedGoal.Id,SelectedGoal.Name,DataSource.UserPhoto,
+                        DataSource.Address,DataSource.About,Dob.ToString("yyyy-MM-dd"),actIds,ids,skillIds,placeIds,locationIds);
 
-                    if ( a?.Output.Status == 1 )
+                    if(a?.Output.Status == 1)
                     {
-                        await _dialogService.DisplayAlertAsync("Success" , "Update Successfully" , "Ok");
+                        await _dialogService.DisplayAlertAsync("Success","Update Successfully","Ok");
                         await _navigationService.GoBackAsync();
                     }
                     else
                     {
-                        await _dialogService.DisplayAlertAsync("Error" , "Update unsuccessful" , "Ok");
+                        await _dialogService.DisplayAlertAsync("Error","Update unsuccessful","Ok");
                     }
                     IsLoading = false;
                 });
@@ -202,16 +203,16 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return new DelegateCommand<string>(( s ) =>
+                return new DelegateCommand<string>((s) =>
                 {
-                    var g = new Goal() { Id = "6" , Name = s };
+                    var g = new Goal() { Id = "6",Name = s };
 
-                    if ( _hasCustomGoal )
+                    if(_hasCustomGoal)
                     {
                         Goals.RemoveAt(Goals.Count - 2);
                     }
 
-                    Goals.Insert(Goals.Count - 1 , g);
+                    Goals.Insert(Goals.Count - 1,g);
                     _hasCustomGoal = true;
                     IsPopupVisible = false;
                 });
@@ -222,7 +223,7 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return new DelegateCommand<string>(( string isMale ) =>
+                return new DelegateCommand<string>((string isMale) =>
                 {
 
                     IsMale = (isMale == "male");
@@ -233,30 +234,30 @@ namespace FitMeet.ViewModels
         public List<Level> LevelsData
         {
             get => _levelsData;
-            set => SetProperty(ref _levelsData , value);
+            set => SetProperty(ref _levelsData,value);
         }
         public List<Activity> ActivitiesData
         {
             get => _activitiesData;
-            set => SetProperty(ref _activitiesData , value);
+            set => SetProperty(ref _activitiesData,value);
         }
 
         public List<Place> TrainingLocations
         {
             get => _trainingLocations;
-            set => SetProperty(ref _trainingLocations , value);
+            set => SetProperty(ref _trainingLocations,value);
         }
 
         public ObservableCollection<PlaceKey> Trainplaces
         {
             get { return _trainplaces; }
-            set { SetProperty(ref _trainplaces , value); }
+            set { SetProperty(ref _trainplaces,value); }
         }
 
         public ObservableCollection<Goal> Goals
         {
             get { return _goals; }
-            set { SetProperty(ref _goals , value); }
+            set { SetProperty(ref _goals,value); }
         }
 
         public Goal SelectedGoal
@@ -264,43 +265,45 @@ namespace FitMeet.ViewModels
             get { return _selectedGoal; }
             set
             {
-                if ( value == Goals.Last() )
+                if(value == Goals.Last())
                     _lastedGoal = _selectedGoal;
-                SetProperty(ref _selectedGoal , value);
+                SetProperty(ref _selectedGoal,value);
             }
         }
 
         public bool IsPopupVisible
         {
             get { return _isPopupVisible; }
-            set { SetProperty(ref _isPopupVisible , value); }
+            set { SetProperty(ref _isPopupVisible,value); }
         }
 
         public DateTime Dob
         {
             get { return _dob; }
-            set { SetProperty(ref _dob , value); }
+            set { SetProperty(ref _dob,value); }
         }
 
         public string FullName
         {
             get => _fullName;
-            set => SetProperty(ref _fullName , value);
+            set => SetProperty(ref _fullName,value);
         }
-        public bool IsLoading { get => _isLoading; set => SetProperty(ref _isLoading , value); }
+        public bool IsLoading { get => _isLoading; set => SetProperty(ref _isLoading,value); }
 
-        public override async void OnNavigatingTo( NavigationParameters parameters )
+        public override async void OnNavigatingTo(NavigationParameters parameters)
         {
             base.OnNavigatingTo(parameters);
             DataSource = (UserProfile)parameters["data"];
-
+            if(DataSource == null)
+                return;
             IsMale = DataSource.IsMale;
 
             await _staticDataServices.UpdateAsync();
             UpdateStaticResource();
 
             FullName = DataSource.FullName;
-            Dob = DateTime.ParseExact(DataSource.Dob , "yyyy-MM-dd" , System.Globalization.CultureInfo.InvariantCulture);
+            DateTime.TryParseExact(DataSource.Dob ?? "1990-01-01","yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture,DateTimeStyles.None,out _dob);
+            Dob = _dob;
         }
 
         private void UpdateStaticResource()
@@ -310,33 +313,33 @@ namespace FitMeet.ViewModels
             TrainingLocations = _staticDataServices.TrainingLocationData;
             Trainplaces = new ObservableCollection<PlaceKey>();
             ActivitiesLevel = new ObservableCollection<ActivityKey>();
-            if ( DataSource.Skill != null )
-                foreach ( var skillData in DataSource.Skill )
+            if(DataSource.Skill != null)
+                foreach(var skillData in DataSource.Skill)
                 {
                     var skill = _staticDataServices.GetLevel(skillData.LevelId);
-                    foreach ( var activityData in skillData.Activities )
+                    foreach(var activityData in skillData.Activities)
                     {
                         var activity = _staticDataServices.GetActivity(activityData.ActivityId);
-                        ActivitiesLevel.Add(new ActivityKey(activity , skill));
+                        ActivitiesLevel.Add(new ActivityKey(activity,skill));
                     }
                 }
-            if ( DataSource.TrainPlace != null )
-                foreach ( var place in DataSource.TrainPlace )
+            if(DataSource.TrainPlace != null)
+                foreach(var place in DataSource.TrainPlace)
                 {
                     var p = _staticDataServices.GetTrainingLocation(place.LocationId);
-                    if ( p != null )
+                    if(p != null)
                         Trainplaces.Add(new PlaceKey(p));
                 }
             Goals = new ObservableCollection<Goal>(_staticDataServices.Goals);
-            if ( DataSource.GoalId != "6" )
+            if(DataSource.GoalId != "6")
             {
                 SelectedGoal = Goals.First(t => t.Id == DataSource.GoalId);
             }
             else
             {
                 _hasCustomGoal = true;
-                var g = new Goal() { Id = "6" , Name = DataSource.Goal };
-                Goals.Insert(Goals.Count - 1 , g);
+                var g = new Goal() { Id = "6",Name = DataSource.Goal };
+                Goals.Insert(Goals.Count - 1,g);
                 SelectedGoal = g;
             }
         }

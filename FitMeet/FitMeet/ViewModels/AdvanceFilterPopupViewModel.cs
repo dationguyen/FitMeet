@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 
 namespace FitMeet.ViewModels
 {
-    public class AdvanceFilterPopupViewModel : ViewModelBase
+    public class AdvanceFilterPopupViewModel:ViewModelBase
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IStaticDataService _staticDataService;
@@ -26,14 +26,14 @@ namespace FitMeet.ViewModels
             get { return _selectedActivities; }
             set
             {
-                SetProperty(ref _selectedActivities, value);
+                SetProperty(ref _selectedActivities,value);
             }
         }
 
         public int DistanceIndex
         {
             get { return _distanceIndex; }
-            set { SetProperty(ref _distanceIndex, value); }
+            set { SetProperty(ref _distanceIndex,value); }
         }
 
         public bool IsMale
@@ -41,18 +41,22 @@ namespace FitMeet.ViewModels
             get { return _isMale; }
             set
             {
-                SetProperty(ref _isMale, value);
+                SetProperty(ref _isMale,value);
             }
         }
 
         private int GetDistance()
         {
-            switch (DistanceIndex)
+            switch(DistanceIndex)
             {
-                case 0: return 10;
-                case 1: return 20;
-                case 2: return 30;
-                default: return 10;
+                case 0:
+                    return 10;
+                case 1:
+                    return 20;
+                case 2:
+                    return 30;
+                default:
+                    return 10;
             }
         }
 
@@ -74,14 +78,14 @@ namespace FitMeet.ViewModels
             {
                 return new DelegateCommand(async () =>
                 {
-                    if (SelectedActivities.Count == 0)
+                    if(SelectedActivities.Count == 0)
                     {
-                        await _dialogService.DisplayAlertAsync("Alert", "Please select as least one activity", "Ok");
+                        await _dialogService.DisplayAlertAsync("Alert","Please select as least one activity","Ok");
                         return;
                     }
                     _eventAggregator.GetEvent<UpdateFilterEvent>().Publish(GetArgs());
 #pragma warning disable CS0618 // Type or member is obsolete
-                    await _navigationService.PopupGoBackAsync(null, false, false);
+                    await _navigationService.PopupGoBackAsync(null,false,false);
 #pragma warning restore CS0618 // Type or member is obsolete
                 });
             }
@@ -95,7 +99,7 @@ namespace FitMeet.ViewModels
                 {
                     _eventAggregator.GetEvent<UpdateFilterEvent>().Publish(null);
 #pragma warning disable CS0618 // Type or member is obsolete
-                    await _navigationService.PopupGoBackAsync(null, false, false);
+                    await _navigationService.PopupGoBackAsync(null,false,false);
 #pragma warning restore CS0618 // Type or member is obsolete
                 });
             }
@@ -108,7 +112,7 @@ namespace FitMeet.ViewModels
                 return new DelegateCommand(async () =>
                    {
 #pragma warning disable CS0618 // Type or member is obsolete
-                       await _navigationService.PopupGoBackAsync(null, false, false);
+                       await _navigationService.PopupGoBackAsync(null,false,false);
 #pragma warning restore CS0618 // Type or member is obsolete
                    });
             }
@@ -119,29 +123,24 @@ namespace FitMeet.ViewModels
             get { return _activitiesSource; }
             set
             {
-                SetProperty(ref _activitiesSource, value);
+                SetProperty(ref _activitiesSource,value);
             }
         }
 
-        public override void OnNavigatedFrom(NavigationParameters parameters)
-        {
-            System.Diagnostics.Debug.WriteLine($"{GetType().Name} Navigated From");
-        }
-
-        public override async void OnNavigatingTo(NavigationParameters parameters)
+        public override async void OnNavigatedTo(NavigationParameters parameters)
         {
             await _staticDataService.UpdateAsync();
             ActivitiesSource = _staticDataService.Activities;
 
             var filterAgr = (UpdateFilterEventArgs)parameters["agr"];
-            if (filterAgr != null)
+            if(filterAgr != null)
             {
                 this.IsMale = filterAgr.IsMale;
                 this.DistanceIndex = filterAgr.Distance / 10 - 1;
                 var activitise = new List<Activity>();
-                foreach (var item in ActivitiesSource)
+                foreach(var item in ActivitiesSource)
                 {
-                    if (filterAgr.Activities.Contains(int.Parse(item.Id)))
+                    if(filterAgr.Activities.Contains(int.Parse(item.Id)))
                         activitise.Add(item);
                 }
                 SelectedActivities = new ObservableCollection<Activity>(activitise);
@@ -155,7 +154,7 @@ namespace FitMeet.ViewModels
             IFitMeetRestService fitMeetRestService,
             IPageDialogService dialogService,
             IEventAggregator eventAggregator,
-            IStaticDataService staticDataService) : base(navigationService, fitMeetRestService)
+            IStaticDataService staticDataService) : base(navigationService,fitMeetRestService)
         {
             _eventAggregator = eventAggregator;
             _staticDataService = staticDataService;
@@ -167,11 +166,11 @@ namespace FitMeet.ViewModels
             var distance = (DistanceIndex + 1) * 10;
             var gender = IsMale;
             var activities = new List<int>();
-            foreach (var item in SelectedActivities)
+            foreach(var item in SelectedActivities)
             {
                 activities.Add(int.Parse(item.Id));
             }
-            return new UpdateFilterEventArgs(distance, gender, activities);
+            return new UpdateFilterEventArgs(distance,gender,activities);
         }
 
 

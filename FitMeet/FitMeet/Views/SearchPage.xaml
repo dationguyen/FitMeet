@@ -7,69 +7,73 @@
              xmlns:converters="clr-namespace:FitMeet.Converters;assembly=FitMeet"
              xmlns:b="clr-namespace:FitMeet.Behaviors;assembly=FitMeet"
              prism:ViewModelLocator.AutowireViewModel="True" Title="{Binding Title}" >
-	<ContentPage.Content>
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"></RowDefinition>
-				<RowDefinition Height="*"></RowDefinition>
-			</Grid.RowDefinitions>
-			<StackLayout>
-				<Grid Padding="30,20,30,0">
-					<controls:CustomSearchEntry HeightRequest="48" 
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackLayout>
+                <Grid Padding="30,20,30,0">
+                    <controls:CustomSearchEntry HeightRequest="48" 
 					                            VerticalOptions="Center" 
 					                            Placeholder="Search Suburb or Postcode"		               
 					                            HorizontalOptions="Fill" ></controls:CustomSearchEntry>
-					<Button Image="{Binding FilterImageSource}"
+                    <Button Image="{Binding FilterImageSource}"
 					        Command="{Binding FilterCommand}"
 					        HeightRequest="20" 
 					        HorizontalOptions="End" 
 					        VerticalOptions="Center"></Button>
-				</Grid>
-				<Grid HeightRequest="1" Margin="0,20,0,0" BackgroundColor="{StaticResource BorderColor}" ></Grid>
-			</StackLayout>
-			<Grid Grid.Row="1" Margin="0,10,0,0"
+                </Grid>
+                <Grid HeightRequest="1" Margin="0,20,0,0" BackgroundColor="{StaticResource BorderColor}" ></Grid>
+            </StackLayout>
+            <Grid Grid.Row="1" Margin="0,10,0,0"
 			      HorizontalOptions="Fill" VerticalOptions="Fill">
-				<ListView  ItemsSource="{Binding ResultListItemsSource}" 
-				           SeparatorVisibility="None" HasUnevenRows="True" RowHeight="-1" 
-				           IsPullToRefreshEnabled="True"
+                <ListView  ItemsSource="{Binding ResultListItemsSource}" 
+				           SeparatorVisibility="None" 
+                           RowHeight="70" 
+                           IsRefreshing="{Binding IsRefreshing}"
+				           IsPullToRefreshEnabled="True" 
 				           SelectedItem="{Binding SearchListSelectedItem,Mode=TwoWay}"
-				           RefreshCommand="{Binding RefreshCommand}"
-				           IsRefreshing="{Binding IsRefreshing}">
-					<ListView.Behaviors>
-						<b:ItemAppearingBehavior Command="{Binding ItemAppearingCommand}" />
-					</ListView.Behaviors>
-					<ListView.ItemTemplate>
-						<DataTemplate>
-							<ViewCell>
-								<StackLayout  Padding="0,10,0,0" >
-									<Grid Margin="30,0">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="80" ></ColumnDefinition>
-											<ColumnDefinition Width="*" ></ColumnDefinition>
-										</Grid.ColumnDefinitions>
-										<Image Source="{Binding MemberPhoto}" WidthRequest="60" HeightRequest="60" HorizontalOptions="Start" Aspect="AspectFill" ></Image>
-										<StackLayout Grid.Column="1" >
-											<StackLayout Orientation="Horizontal">
-												<Label Text="{Binding FullName}" FontSize="15" />
-												<Image Source="{Binding GenderLogoUrl}" Margin="10,-1,0,0" HeightRequest="14"></Image>
-											</StackLayout>
+				           RefreshCommand="{Binding RefreshCommand}">
+                    <ListView.Behaviors>
+                        <b:ItemAppearingBehavior Command="{Binding ItemAppearingCommand}" />
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout  Padding="0,10,0,0" >
+                                    <Grid Margin="30,0" HeightRequest="60" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80" ></ColumnDefinition>
+                                            <ColumnDefinition Width="*" ></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Image Source="{Binding MemberPhoto}" WidthRequest="60" 
+                                               HorizontalOptions="Start" 
+                                               VerticalOptions="Fill" 
+                                               Aspect="AspectFill" ></Image>
+                                        <StackLayout Grid.Column="1" >
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding FullName}" FontSize="15" />
+                                                <Image Source="{Binding GenderLogoUrl}" Margin="10,-1,0,0" HeightRequest="14"></Image>
+                                            </StackLayout>
                                             <StackLayout Orientation="Horizontal"
                                                          HeightRequest="14">
-												<Label Text="{Binding Distance}" FontSize="Micro" />
-												<controls:ActivitiesPanel ItemSource="{Binding Skills}" Margin="10,0" HeightRequest="14" Orientation="Horizontal"></controls:ActivitiesPanel>
-											</StackLayout>
-										</StackLayout>
+                                                <Label Text="{Binding Distance}" FontSize="Micro" />
+                                                <controls:ActivitiesPanel ItemSource="{Binding Skills}" Margin="10,0" HeightRequest="14" Orientation="Horizontal"></controls:ActivitiesPanel>
+                                            </StackLayout>
+                                        </StackLayout>
 
-									</Grid>
+                                    </Grid>
 
-									<Grid HeightRequest="1" BackgroundColor="{StaticResource BorderColor}" Margin="0,10,0,0"></Grid>
-								</StackLayout>
-							</ViewCell>
+                                    <Grid HeightRequest="1" BackgroundColor="{StaticResource BorderColor}" Margin="0,10,0,0"></Grid>
+                                </StackLayout>
+                            </ViewCell>
 
-						</DataTemplate>
-					</ListView.ItemTemplate>
-				</ListView>
-			</Grid>
-		</Grid>
-	</ContentPage.Content>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
 </ContentPage>

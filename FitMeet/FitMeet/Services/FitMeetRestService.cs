@@ -26,11 +26,12 @@ namespace FitMeet.Services
         private const string UnfriendUri = "friends/unfriend.json";
         private const string ManualLoginUri = "Users/login.json";
         private const string CheckTokenUri = "users/check_token.json";
+        private const string BlockFriendUri = "Users/block.json";
 
         private readonly IPageDialogService _dialogService;
         private readonly IGeolocationServices _geoService;
 
-        private string _token = "r5jchztcob5698kbgdbl";
+        private string _token = "";
 
         public FitMeetRestService(IPageDialogService dialogService,IGeolocationServices geoService)
         {
@@ -50,11 +51,26 @@ namespace FitMeet.Services
             return result?.Output?.Status == 1;
         }
 
+        public async Task<bool> BlockfriendAsync(string id,string message = null)
+        {
+            var param = new Dictionary<string,string>
+            {
+                { "token",_token },
+                { "friend",id }
+            };
+            if(!String.IsNullOrEmpty(message))
+            {
+                param.Add("message",message);
+            }
+            var result = await ApiPost<ResponseMessage<string>>(addFriendUri,param);
+            return result?.Output?.Status == 1;
+        }
+
         public async Task<bool> CheckTokenAsync(string token)
         {
             var param = new Dictionary<string,string>
             {
-                { "token",_token }
+                { "token",token }
             };
             var result = await ApiPost<ResponseMessage<string>>(CheckTokenUri,param);
             return result?.Output?.Status == 1;

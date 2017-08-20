@@ -96,6 +96,7 @@
     <Compile Include="Services\TokenServices.cs" />
     <Compile Include="ViewModels\AdvanceFilterPopupViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
+    <Compile Include="ViewModels\MessagePageViewModel.cs" />
     <Compile Include="ViewModels\StartupPageViewModel.cs" />
     <Compile Include="ViewModels\ManualLoginPageViewModel.cs" />
     <Compile Include="ViewModels\MainTabbedPageViewModel.cs" />
@@ -138,6 +139,9 @@
     </Compile>
     <Compile Include="Views\MePage.xaml.cs">
       <DependentUpon>MePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MessagePage.xaml.cs">
+      <DependentUpon>MessagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewsDetailPage.xaml.cs">
       <DependentUpon>NewsDetailPage.xaml</DependentUpon>
@@ -340,6 +344,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\StartupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MessagePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -7,6 +7,12 @@
              xmlns:behaviors="clr-namespace:FitMeet.Behaviors;assembly=FitMeet"
              mvvm:ViewModelLocator.AutowireViewModel="True"
              Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="message_logo.png"
+                     Command="{Binding NavigateCommand}"
+                     CommandParameter="MessagePage" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>

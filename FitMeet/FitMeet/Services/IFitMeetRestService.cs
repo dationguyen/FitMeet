@@ -85,6 +85,12 @@ namespace FitMeet.Services
         Task<ResponseMessage<string>> UnfriendAsync(string id);
 
         /// <summary>
+        /// Block
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> BlockfriendAsync(string id,string message = null);
+
+        /// <summary>
         /// Manual Login
         /// </summary>
         /// <returns></returns>

@@ -1,5 +1,4 @@
-﻿
-using Facebook.CoreKit;
+﻿using Facebook.CoreKit;
 using Foundation;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
@@ -13,8 +12,8 @@ namespace FitMeet.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate:global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
-        string appId = "306989955995811";
-        string appName = "Roor";
+        //string appId = "306989955995811";
+        //string appName = "Roor";
 
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
@@ -36,7 +35,7 @@ namespace FitMeet.iOS
             UITabBar.Appearance.SelectedImageTintColor =
                 new UIColor(red: 0.30f,green: 0.75f,blue: 0.63f,alpha: 1.0f);
 
-            return ApplicationDelegate.SharedInstance.FinishedLaunching(app,options);
+            return base.FinishedLaunching(app,options);
         }
         public override bool OpenUrl(UIApplication application,NSUrl url,string sourceApplication,NSObject annotation)
         {

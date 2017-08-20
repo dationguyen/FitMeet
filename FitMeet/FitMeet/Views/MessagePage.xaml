@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             x:Class="FitMeet.Views.MessagePage"
+             mvvm:ViewModelLocator.AutowireViewModel="True" Title="Message">
+    <ContentPage.Content>
+        <Grid BackgroundColor="White">
+            <StackLayout VerticalOptions="Center"
+                         HorizontalOptions="Center">
+                <Image Source="message_big.png"
+                       HeightRequest="120"
+                       Margin="0,10"></Image>
+                <Label Text="You don't have any message yet"
+                       Margin="20"
+                       TextColor="{StaticResource PlaceHolderColor}"></Label>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

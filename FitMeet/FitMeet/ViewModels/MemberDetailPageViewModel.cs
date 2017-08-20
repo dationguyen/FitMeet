@@ -14,6 +14,9 @@ namespace FitMeet.ViewModels
         private double _activitiesHeightRequest;
         private double _trainingPlaceHeightRequest;
         private bool _isAdding = false;
+        private bool _isLoading = true;
+        private bool _isShowInputDialog = false;
+        private bool _isFriend = true;
 
         public DelegateCommand AddFriendCommand
         {
@@ -54,9 +57,35 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return new DelegateCommand(() =>
+                return new DelegateCommand(async () =>
+               {
+                   var action = await _pageDialogService?.DisplayActionSheetAsync("","Cancel",null,
+                       "Report",
+                       "Report and Block");
+                   switch(action)
+                   {
+                       case "Report":
+                           await _fitMeetRestService.BlockfriendAsync(DataSource.UserId);
+                           await _navigationService.GoBackAsync();
+                           break;
+                       case "Report and Block":
+                           IsShowInputDialog = true;
+                           break;
+                       default:
+                           break;
+                   }
+               });
+            }
+        }
+        public DelegateCommand<string> ReportAndBlockCommand
+        {
+            get
+            {
+                return new DelegateCommand<string>(async (s) =>
                 {
-
+                    await _fitMeetRestService.BlockfriendAsync(DataSource.UserId,s);
+                    IsShowInputDialog = false;
+                    await _navigationService.GoBackAsync();
                 });
             }
         }
@@ -88,20 +117,41 @@ namespace FitMeet.ViewModels
             get { return _isAdding; }
             set { SetProperty(ref _isAdding,value); }
         }
-        public MemberDetailPageViewModel( INavigationService navigationService,IFitMeetRestService fitMeetRestService,IPageDialogService pageDialogService ) : base(navigationService,fitMeetRestService)
+
+        public bool IsShowInputDialog
+        {
+            get { return _isShowInputDialog; }
+            set { SetProperty(ref _isShowInputDialog,value); }
+        }
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { SetProperty(ref _isLoading,value); }
+        }
+
+        public bool IsFriend
+        {
+            get => _isFriend;
+            set => SetProperty(ref _isFriend,value);
+        }
+
+        public MemberDetailPageViewModel(INavigationService navigationService,IFitMeetRestService fitMeetRestService,IPageDialogService pageDialogService) : base(navigationService,fitMeetRestService)
         {
             _pageDialogService = pageDialogService;
         }
 
-        public override async void OnNavigatingTo( NavigationParameters parameters )
+        public override async void OnNavigatingTo(NavigationParameters parameters)
         {
-            base.OnNavigatingTo(parameters);
+            IsLoading = true;
             var id = parameters["id"].ToString();
-
             var restResponseMessage = await _fitMeetRestService.GetMemberDetailAsync(id);
             DataSource = restResponseMessage?.Output?.Response;
             ActivitiesHeightRequest = DataSource.CountSkill * 30;
             TrainingPlaceHeightRequest = DataSource.CountTrainPlace * 18;
+            IsFriend = DataSource.IsFriend == "Friends";
+            IsLoading = false;
+            base.OnNavigatingTo(parameters);
         }
     }
 }

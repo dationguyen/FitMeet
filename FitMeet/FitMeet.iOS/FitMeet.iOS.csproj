@@ -289,6 +289,12 @@
   <ItemGroup>
     <BundleResource Include="Resources\big_friend.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\message_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\message_big.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

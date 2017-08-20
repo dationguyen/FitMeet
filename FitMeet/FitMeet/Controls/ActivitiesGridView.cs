@@ -5,14 +5,14 @@ using Xamarin.Forms;
 
 namespace FitMeet.Controls
 {
-    public class ActivitiesGridView : StackLayout
+    public class ActivitiesGridView:StackLayout
     {
         public static BindableProperty ItemSourceProperty = BindableProperty.Create(
             propertyName: "ItemSource",
             returnType: typeof(List<Activity>),
             declaringType: typeof(ActivitiesGridView),
-            defaultValue: new List<Activity>(),
-            defaultBindingMode: BindingMode.OneWay,
+            defaultValue: null,
+            defaultBindingMode: BindingMode.TwoWay,
             propertyChanged: ItemSourceValueChanged);
         public static BindableProperty SelectedItemsProperty = BindableProperty.Create(
             propertyName: "SelectedItems",
@@ -22,12 +22,12 @@ namespace FitMeet.Controls
             defaultBindingMode: BindingMode.OneWay,
             propertyChanged: SelectedItemsChanged);
 
-        private static void SelectedItemsChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void SelectedItemsChanged(BindableObject bindable,object oldValue,object newValue)
         {
             var pannel = ((ActivitiesGridView)bindable);
             pannel.SelectedItems = (ObservableCollection<Activity>)newValue;
         }
-        private static void ItemSourceValueChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void ItemSourceValueChanged(BindableObject bindable,object oldValue,object newValue)
         {
             var pannel = ((ActivitiesGridView)bindable);
             pannel.ItemSource = (List<Activity>)newValue;
@@ -38,8 +38,7 @@ namespace FitMeet.Controls
             get { return (List<Activity>)GetValue(ItemSourceProperty); }
             set
             {
-                SetValue(ItemSourceProperty, value);
-                OnPropertyChanged();
+                SetValue(ItemSourceProperty,value);
                 AddItemToPannel();
             }
         }
@@ -49,18 +48,18 @@ namespace FitMeet.Controls
             get { return (ObservableCollection<Activity>)GetValue(SelectedItemsProperty); }
             set
             {
-                SetValue(SelectedItemsProperty, value);
+                SetValue(SelectedItemsProperty,value);
                 TriggerSelectedItems();
             }
         }
 
         private void TriggerSelectedItems()
         {
-            foreach (StackLayout panel in this.Children)
+            foreach(StackLayout panel in this.Children)
             {
-                foreach (ToggleButton item in panel.Children)
+                foreach(ToggleButton item in panel.Children)
                 {
-                    if (SelectedItems.Contains((Activity)item.CommandParameter))
+                    if(SelectedItems.Contains((Activity)item.CommandParameter))
                     {
                         item.Checked = true;
                     }
@@ -74,17 +73,21 @@ namespace FitMeet.Controls
 
         private void AddItemToPannel()
         {
-            this.Children.Clear();
-            if (ItemSource != null)
+            if(ItemSource != null)
             {
+                this.Children.Clear();
                 int row = -1;
                 List<StackLayout> listStackLayouts = new List<StackLayout>();
-                for (int i = 0; i < ItemSource.Count; i++)
+                for(int i = 0 ; i < ItemSource.Count ; i++)
                 {
-                    if (i % 3 == 0)
+                    if(i % 3 == 0)
                     {
-                        listStackLayouts.Add(new StackLayout()
-                        { Orientation = StackOrientation.Horizontal, Spacing = 20 });
+                        var layout = new StackLayout()
+                        {
+                            Orientation = StackOrientation.Horizontal,
+                            Spacing = 20
+                        };
+                        listStackLayouts.Add(layout);
                         row++;
                     }
                     var button = new ToggleButton()
@@ -97,12 +100,12 @@ namespace FitMeet.Controls
                         Checked = false,
                         CommandParameter = ItemSource[i]
                     };
-                    button.Clicked += (sender, args) =>
+                    button.Clicked += (sender,args) =>
                     {
                         var b = (ToggleButton)sender;
                         var activity = (Activity)b.CommandParameter;
                         b.Checked = !b.Checked;
-                        if (b.Checked == true)
+                        if(b.Checked == true)
                         {
                             SelectedItems.Add(activity);
                         }
@@ -112,10 +115,8 @@ namespace FitMeet.Controls
                         }
                     };
                     listStackLayouts[row].Children.Add(button);
-
-
                 }
-                foreach (var panel in listStackLayouts)
+                foreach(var panel in listStackLayouts)
                 {
                     this.Children.Add(panel);
                 }
