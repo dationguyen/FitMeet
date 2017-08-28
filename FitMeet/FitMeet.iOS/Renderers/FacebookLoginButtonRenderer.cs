@@ -1,9 +1,9 @@
 ﻿using CoreGraphics;
-using Facebook.CoreKit;
 using Facebook.LoginKit;
 using FitMeet.Controls;
 using FitMeet.iOS.Renderers;
 using Foundation;
+using System.Diagnostics;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -13,12 +13,17 @@ namespace FitMeet.iOS.Renderers
 {
     public class FacebookLoginButtonRenderer:ViewRenderer<FacebookLoginButton,LoginButton>
     {
-        string[] readPermissions = { "public_profile" };
+        string[] readPermissions = { "public_profile","email" };
 
         protected override void OnElementChanged(ElementChangedEventArgs<FacebookLoginButton> e)
         {
             base.OnElementChanged(e);
             var element = (FacebookLoginButton)Element;
+            if(element == null)
+            {
+                return;
+            }
+
             var control = new LoginButton(new CGRect(0,0,element.WidthRequest,element.HeightRequest))
             {
                 LoginBehavior = LoginBehavior.Native,
@@ -33,21 +38,32 @@ namespace FitMeet.iOS.Renderers
             control.SetAttributedTitle(facebookLoginButtonText,UIControlState.Normal);
             control.BackgroundColor = UIColor.Gray;
             control.Completed += ControlOnCompleted;
-
+            
             SetNativeControl(control);
         }
 
-        private void ControlOnCompleted(object sender,LoginButtonCompletedEventArgs loginButtonCompletedEventArgs)
+        private void ControlOnCompleted(object sender,LoginButtonCompletedEventArgs e)
         {
-           
-            var element = (FacebookLoginButton)Element;
-            if(element.CompletedCommand != null && element.CompletedCommand.CanExecute(loginButtonCompletedEventArgs))
+            if(e.Error != null)
             {
-                element.CompletedCommand.Execute(loginButtonCompletedEventArgs);
+                Debug.WriteLine(e.Error);
+                return;
+            }
+
+            if(e.Result.IsCancelled)
+            {
+                Debug.WriteLine("Canceled");
+                return;
+            }
+
+            var token = e.Result.Token.TokenString;
+
+            var element = Element;
+            if(element.CompletedCommand != null && element.CompletedCommand.CanExecute(token))
+            {
+                element.CompletedCommand.Execute(token);
             }
 
         }
     }
-
-
 }

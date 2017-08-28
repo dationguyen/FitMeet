@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace FitMeet.Services
 {
-    public interface IGeolocationServices
+    public interface IGeoLocationService
     {
         /// <summary>
         /// get current position

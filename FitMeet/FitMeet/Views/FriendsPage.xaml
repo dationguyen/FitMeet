@@ -1,16 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="FitMeet.Views.FriendsPage"
-             xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
-             xmlns:behaviors="clr-namespace:FitMeet.Behaviors;assembly=FitMeet"
-             mvvm:ViewModelLocator.AutowireViewModel="True"
-             Title="{Binding Title}">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        x:Class="FitMeet.Views.FriendsPage" xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+        xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
+        xmlns:behaviors="clr-namespace:FitMeet.Behaviors;assembly=FitMeet"
+        xmlns:plugin="clr-namespace:Plugin.Badge.Abstractions;assembly=Plugin.Badge.Abstractions"
+        plugin:TabBadge.BadgeText="{Binding MessageCount}" mvvm:ViewModelLocator.AutowireViewModel="True"
+        Title="{Binding Title}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="message_logo.png"
-                     Command="{Binding NavigateCommand}"
-                     CommandParameter="MessagePage" />
+        <ToolbarItem Icon="message_logo.png" Command="{Binding NavigateCommand}" Text="(2)"
+                CommandParameter="MessagePage" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
@@ -21,41 +19,27 @@
             </Grid.RowDefinitions>
             <StackLayout>
                 <Grid Padding="30,20,30,0">
-                    <controls:CustomSearchEntry HeightRequest="48"
-                                                VerticalOptions="Center"
-                                                Placeholder="Search Suburb or Postcode"
-                                                HorizontalOptions="Fill"></controls:CustomSearchEntry>
+                    <controls:CustomSearchEntry HeightRequest="48" Text="{Binding SearchKeyword}" VerticalOptions="Center" Placeholder="Search Friend"
+                            HorizontalOptions="Fill"></controls:CustomSearchEntry>
                 </Grid>
-                <Grid HeightRequest="1"
-                      Margin="0,20,0,0"
-                      BackgroundColor="{StaticResource BorderColor}"></Grid>
+                <Grid HeightRequest="1" Margin="0,20,0,0" BackgroundColor="{StaticResource BorderColor}"></Grid>
             </StackLayout>
-            <Grid Grid.Row="1"
-                  Margin="0,10,0,0"
-                  HorizontalOptions="Fill"
-                  VerticalOptions="Fill">
-                <ListView  ItemsSource="{Binding FriendsGrouped}"
-                           IsGroupingEnabled="True"
-                           GroupDisplayBinding="{Binding Key}"
-                           SeparatorVisibility="None"
-                           HasUnevenRows="True"
-                           RowHeight="-1"
-                           IsPullToRefreshEnabled="True"
-                           SelectedItem="{Binding FriendListSelectedItem,Mode=TwoWay}"
-                           RefreshCommand="{Binding RefreshCommand}"
-                           IsRefreshing="{Binding IsRefreshing}">
+            <Grid Grid.Row="1" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="Fill">
+                <ListView ItemsSource="{Binding FriendsGrouped}" IsGroupingEnabled="True"
+                        GroupDisplayBinding="{Binding Key}" SeparatorVisibility="None" HasUnevenRows="True"
+                        RowHeight="-1" IsPullToRefreshEnabled="True"
+                        SelectedItem="{Binding FriendListSelectedItem,Mode=TwoWay}"
+                        RefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
                     <ListView.Behaviors>
                         <behaviors:ItemAppearingBehavior Command="{Binding ItemAppearingCommand}" />
                     </ListView.Behaviors>
                     <ListView.GroupHeaderTemplate>
                         <DataTemplate>
                             <ViewCell Height="25">
-                                <StackLayout VerticalOptions="FillAndExpand"
-                                             Padding="5"
-                                             BackgroundColor="{StaticResource BorderColor}">
-                                    <Label Text="{Binding Key}"
-                                           TextColor="{StaticResource BodyColor}"
-                                           VerticalOptions="Center" />
+                                <StackLayout VerticalOptions="FillAndExpand" Padding="5"
+                                        BackgroundColor="{StaticResource BorderColor}">
+                                    <Label Text="{Binding Key}" TextColor="{StaticResource BodyColor}"
+                                            VerticalOptions="Center" />
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
@@ -63,60 +47,43 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout  Padding="0,10,0,0">
+                                <StackLayout Padding="0,10,0,0">
                                     <Grid Margin="30,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="80"></ColumnDefinition>
                                             <ColumnDefinition Width="*"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
-                                        <Image Source="{Binding MemberPhoto}"
-                                               WidthRequest="60"
-                                               HeightRequest="60"
-                                               HorizontalOptions="Start"
-                                               Aspect="AspectFill"></Image>
+                                        <Image Source="{Binding MemberPhoto}" WidthRequest="60" HeightRequest="60"
+                                                HorizontalOptions="Start" Aspect="AspectFill"></Image>
                                         <StackLayout Grid.Column="1">
                                             <StackLayout Orientation="Horizontal">
-                                                <Label Text="{Binding FullName}"
-                                                       FontSize="15" />
-                                                <Image Source="{Binding GenderLogoUrl}"
-                                                       Margin="10,-1,0,0"
-                                                       HeightRequest="14"></Image>
+                                                <Label Text="{Binding FullName}" FontSize="15" />
+                                                <Image Source="{Binding GenderLogoUrl}" Margin="10,-1,0,0"
+                                                        HeightRequest="14"></Image>
                                             </StackLayout>
                                             <StackLayout Orientation="Horizontal">
-                                                <Label Text="{Binding Distance}"
-                                                       FontSize="Micro" />
-                                                <controls:ActivitiesPanel ItemSource="{Binding Skills}"
-                                                                          Margin="10,0"
-                                                                          HeightRequest="14"
-                                                                          Orientation="Horizontal"></controls:ActivitiesPanel>
+                                                <Label Text="{Binding Distance}" FontSize="Micro" />
+                                                <controls:ActivitiesPanel ItemSource="{Binding Skills}" Margin="10,0"
+                                                        HeightRequest="14" Orientation="Horizontal"></controls:ActivitiesPanel>
                                             </StackLayout>
                                         </StackLayout>
                                     </Grid>
-                                    <Grid HeightRequest="1"
-                                          BackgroundColor="{StaticResource BorderColor}"
-                                          Margin="0,10,0,0"></Grid>
+                                    <Grid HeightRequest="1" BackgroundColor="{StaticResource BorderColor}"
+                                            Margin="0,10,0,0"></Grid>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
-            <Grid Grid.RowSpan="2"
-                  IsVisible="{Binding IsNoFriend}"
-                  BackgroundColor="White">
-                <StackLayout VerticalOptions="Center"
-                             HorizontalOptions="Center">
-                    <Image Source="big_friend.png"
-                           HeightRequest="120"
-                           Margin="0,10"></Image>
-                    <Label Text="You don't have any friend yet"
-                           Margin="20"
-                           TextColor="{StaticResource PlaceHolderColor}"></Label>
-                    <Button TextColor="White"
-                            IsVisible="{Binding IsNoFriend}"
-                            Text="Search for Friends"
-                            Command="{Binding GoToSearchCommand}"
-                            BackgroundColor="{StaticResource MainColor}"></Button>
+
+            <Grid Grid.RowSpan="2" IsVisible="{Binding IsNoFriend}" BackgroundColor="White">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Image Source="big_friend.png" HeightRequest="120" Margin="0,10"></Image>
+                    <Label Text="You don't have any friend yet" Margin="20"
+                            TextColor="{StaticResource PlaceHolderColor}"></Label>
+                    <Button TextColor="White" IsVisible="{Binding IsNoFriend}" Text="Search for Friends"
+                            Command="{Binding GoToSearchCommand}" BackgroundColor="{StaticResource MainColor}"></Button>
                 </StackLayout>
             </Grid>
         </Grid>

@@ -1,9 +1,12 @@
 ﻿using Facebook.CoreKit;
 using Foundation;
 using Microsoft.Practices.Unity;
+using Plugin.Badge.iOS;
 using Prism.Unity;
 using UIKit;
+using Xamarin.Forms;
 
+[assembly: ExportRenderer(typeof(TabbedPage),typeof(BadgedTabbedPageRenderer))]
 namespace FitMeet.iOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 

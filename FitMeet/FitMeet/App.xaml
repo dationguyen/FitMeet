@@ -94,7 +94,7 @@
       </Style>
       <!-- Styles -->
 
-      <converter:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+      <converter:StringToBoolConverter x:Key="StringToBoolConverter"/>
       <converter:BoolRevertConverter x:Key="RevertConverter"/>
       <converter:BoolToColorConverter x:Key="BoolToColorConverter"/>
       <converter:ViewsToColorConverter x:Key="ViewsToColorConverter"/>

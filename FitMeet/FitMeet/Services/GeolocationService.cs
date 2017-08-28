@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace FitMeet.Services
 {
-    public class GeolocationServices : IGeolocationServices
+    public class GeolocationService : IGeoLocationService
     {
         private Position _position;
         private TimeSpan _timeOut = TimeSpan.FromSeconds(20);
         private DateTime lastUpdateTime;
 
-        public GeolocationServices()
+        public GeolocationService()
         {
             lastUpdateTime = DateTime.Now;
         }

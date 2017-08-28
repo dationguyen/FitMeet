@@ -7,7 +7,7 @@
              prism:ViewModelLocator.AutowireViewModel="True" 
              IsFriend ="{Binding IsFriend}"
              Title="Member">
-        
+
     <ContentPage.ToolbarItems >
         <ToolbarItem x:Name="MainToolbarItem"
                      Order="Primary"
@@ -190,22 +190,35 @@
                             </StackLayout.Resources>
                             <Button Text="Message"
                                     IsVisible="{Binding DataSource.IsFriend, 
-    												Converter={StaticResource StringToVisibilityConverter}, 
-    												ConverterParameter=Friends}" />
+    												Converter={StaticResource StringToBoolConverter}, 
+    												ConverterParameter=Friends}" 
+                                    Command="{Binding MessageCommand}"/>
                             <Button Text="Request to Connect"
                                     IsVisible="{Binding DataSource.IsFriend, 
-    												Converter={StaticResource StringToVisibilityConverter}, 
+    												Converter={StaticResource StringToBoolConverter}, 
     												ConverterParameter=Connect}"
                                     Command="{Binding AddFriendCommand}" />
                             <Button Text="Friend Request Pending"
                                     IsVisible="{Binding DataSource.IsFriend, 
-    												Converter={StaticResource StringToVisibilityConverter}, 
+    												Converter={StaticResource StringToBoolConverter}, 
     												ConverterParameter=Pending}"
                                     BackgroundColor="{StaticResource RedColor}"></Button>
                             <Button Text="Friend Request Sent"
                                     IsVisible="{Binding DataSource.IsFriend, 
-                                                    Converter={StaticResource StringToVisibilityConverter}, 
+                                                    Converter={StaticResource StringToBoolConverter}, 
                                                     ConverterParameter=Sent}"
+                                    BackgroundColor="{StaticResource RedColor}"></Button>
+                            
+                            <Button Text="Accept" IsVisible="{Binding DataSource.IsFriend, 
+    										        Converter={StaticResource StringToBoolConverter}, 
+    												ConverterParameter=Accept}" CommandParameter="1"
+                                    Command="{Binding ResponseCommand}"
+                                    ></Button>
+                            <Button Text="Reject" IsVisible="{Binding DataSource.IsFriend, 
+                                                    Converter={StaticResource StringToBoolConverter}, 
+                                                    ConverterParameter=Accept}"
+                                    CommandParameter="2"
+                                    Command="{Binding ResponseCommand}"
                                     BackgroundColor="{StaticResource RedColor}"></Button>
                         </StackLayout>
                         <Grid BackgroundColor="#8CFFFFFF"

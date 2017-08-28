@@ -15,6 +15,7 @@ namespace FitMeet.ViewModels
     {
         private readonly IStaticDataService _staticDataServices;
         private readonly IPageDialogService _dialogService;
+        private readonly IGoogleLocationService _googleLocation;
 
         private ObservableCollection<ActivityKey> _activitiesLevel;
         private ObservableCollection<PlaceKey> _trainplaces;
@@ -33,39 +34,18 @@ namespace FitMeet.ViewModels
         //private bool _hasChange = false;
         private bool _isMale = true;
         private DateTime _dob;
-
+        private List<string> _autoCompleteCollection;
+        private int _autoCompleteHeight;
+        private string _autoCompleteResult;
+        private string _address;
+        private bool _isSearching;
 
         public ProfileEditPageViewModel(INavigationService navigationService,IPageDialogService dialogService,
-            IFitMeetRestService fitMeetRestServices,IStaticDataService staticDataServices) : base(navigationService,fitMeetRestServices)
+            IFitMeetRestService fitMeetRestServices,IStaticDataService staticDataServices,IGoogleLocationService googleLocationService) : base(navigationService,fitMeetRestServices)
         {
             _staticDataServices = staticDataServices;
             _dialogService = dialogService;
-        }
-
-        public UserProfile DataSource
-        {
-            get => _dataSource;
-            set => SetProperty(ref _dataSource,value);
-        }
-
-        public bool IsMale
-        {
-            get { return _isMale; }
-            set
-            {
-                SetProperty(ref _isMale,value);
-            }
-        }
-        public ObservableCollection<ActivityKey> ActivitiesLevel
-        {
-            get
-            {
-                return _activitiesLevel;
-            }
-            set
-            {
-                SetProperty(ref _activitiesLevel,value);
-            }
+            _googleLocation = googleLocationService;
         }
 
         public DelegateCommand AddActivityCommand
@@ -90,7 +70,6 @@ namespace FitMeet.ViewModels
                 });
             }
         }
-
         public DelegateCommand AddPlaceCommand
         {
             get
@@ -183,7 +162,7 @@ namespace FitMeet.ViewModels
                     var a = await _fitMeetRestService.UpdateProfileAsync(fName.Trim(),
                         lName.Trim(),IsMale ? "Male" : "Female",
                         SelectedGoal.Id,SelectedGoal.Name,DataSource.UserPhoto,
-                        DataSource.Address,DataSource.About,Dob.ToString("yyyy-MM-dd"),actIds,ids,skillIds,placeIds,locationIds);
+                        Address,DataSource.About,Dob.ToString("yyyy-MM-dd"),actIds,ids,skillIds,placeIds,locationIds);
 
                     if(a?.Output.Status == 1)
                     {
@@ -198,7 +177,6 @@ namespace FitMeet.ViewModels
                 });
             }
         }
-
         public DelegateCommand<string> SetCustomGoalCommand
         {
             get
@@ -218,7 +196,6 @@ namespace FitMeet.ViewModels
                 });
             }
         }
-
         public DelegateCommand<string> GenderSwitchCommand
         {
             get
@@ -231,6 +208,30 @@ namespace FitMeet.ViewModels
             }
         }
 
+        public UserProfile DataSource
+        {
+            get => _dataSource;
+            set => SetProperty(ref _dataSource,value);
+        }
+        public bool IsMale
+        {
+            get { return _isMale; }
+            set
+            {
+                SetProperty(ref _isMale,value);
+            }
+        }
+        public ObservableCollection<ActivityKey> ActivitiesLevel
+        {
+            get
+            {
+                return _activitiesLevel;
+            }
+            set
+            {
+                SetProperty(ref _activitiesLevel,value);
+            }
+        }
         public List<Level> LevelsData
         {
             get => _levelsData;
@@ -241,25 +242,21 @@ namespace FitMeet.ViewModels
             get => _activitiesData;
             set => SetProperty(ref _activitiesData,value);
         }
-
         public List<Place> TrainingLocations
         {
             get => _trainingLocations;
             set => SetProperty(ref _trainingLocations,value);
         }
-
         public ObservableCollection<PlaceKey> Trainplaces
         {
             get { return _trainplaces; }
             set { SetProperty(ref _trainplaces,value); }
         }
-
         public ObservableCollection<Goal> Goals
         {
             get { return _goals; }
             set { SetProperty(ref _goals,value); }
         }
-
         public Goal SelectedGoal
         {
             get { return _selectedGoal; }
@@ -270,25 +267,85 @@ namespace FitMeet.ViewModels
                 SetProperty(ref _selectedGoal,value);
             }
         }
-
         public bool IsPopupVisible
         {
             get { return _isPopupVisible; }
             set { SetProperty(ref _isPopupVisible,value); }
         }
-
         public DateTime Dob
         {
             get { return _dob; }
             set { SetProperty(ref _dob,value); }
         }
-
         public string FullName
         {
             get => _fullName;
             set => SetProperty(ref _fullName,value);
         }
         public bool IsLoading { get => _isLoading; set => SetProperty(ref _isLoading,value); }
+        public string Address
+        {
+            get { return _address; }
+            set
+            {
+                if(_address != value)
+                {
+                    SetProperty(ref _address,value);
+
+                    if(!String.IsNullOrEmpty(_address))
+                    {
+                        IsSearching = true;
+                        GetAutoComplete(_address);
+
+                    }
+                    else
+                    {
+                        IsSearching = false;
+                        AutoCompleteCollection.Clear();
+                    }
+
+                }
+            }
+        }
+        public bool IsSearching
+        {
+            get => _isSearching;
+            set
+            {
+                SetProperty(ref _isSearching,value);
+            }
+        }
+        public List<string> AutoCompleteCollection
+        {
+            get
+            {
+                if(_autoCompleteCollection == null)
+                    _autoCompleteCollection = new List<string>();
+                return _autoCompleteCollection;
+            }
+            set => SetProperty(ref _autoCompleteCollection,value);
+        }
+
+        public string AutoCompleteResult
+        {
+            get { return null; }
+            set
+            {
+                if(value != null)
+                {
+                    SetProperty(ref _autoCompleteResult,value);
+                    _address = value;
+                    RaisePropertyChanged("Address");
+                    IsSearching = false;
+                }
+            }
+        }
+
+        public int AutoCompleteHeight
+        {
+            get { return _autoCompleteHeight; }
+            set { SetProperty(ref _autoCompleteHeight,value); }
+        }
 
         public override async void OnNavigatingTo(NavigationParameters parameters)
         {
@@ -300,6 +357,9 @@ namespace FitMeet.ViewModels
 
             await _staticDataServices.UpdateAsync();
             UpdateStaticResource();
+
+            _address = DataSource.Address;
+            RaisePropertyChanged("Address");
 
             FullName = DataSource.FullName;
             DateTime.TryParseExact(DataSource.Dob ?? "1990-01-01","yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture,DateTimeStyles.None,out _dob);
@@ -343,6 +403,16 @@ namespace FitMeet.ViewModels
                 SelectedGoal = g;
             }
         }
+        private async void GetAutoComplete(string searchKeyWord)
+        {
+            var result = await _googleLocation.AutoComplete(searchKeyWord);
+            if(result != null && result.Count > 0)
+            {
+                AutoCompleteHeight = 36 * result.Count;
+                AutoCompleteCollection = result;
+            }
+        }
+
         ~ProfileEditPageViewModel()
         {
         }

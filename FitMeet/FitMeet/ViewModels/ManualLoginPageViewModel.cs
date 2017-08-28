@@ -8,17 +8,17 @@ namespace FitMeet.ViewModels
     public class ManualLoginPageViewModel:ViewModelBase
     {
         private IPageDialogService _dialogService;
-        private ITokenServices _tokenServices;
+        private ITokenService _tokenService;
 
         private string _id;
         private string _password;
 
         private bool _isEmailValidated;
 
-        public ManualLoginPageViewModel( ITokenServices tokenServices,INavigationService navigationService,IFitMeetRestService fitMeetRestServices,IPageDialogService dialogService ) : base(navigationService,fitMeetRestServices)
+        public ManualLoginPageViewModel( ITokenService tokenService,INavigationService navigationService,IFitMeetRestService fitMeetRestServices,IPageDialogService dialogService ) : base(navigationService,fitMeetRestServices)
         {
             _dialogService = dialogService;
-            _tokenServices = tokenServices;
+            _tokenService = tokenService;
         }
 
         public string Id
@@ -49,7 +49,7 @@ namespace FitMeet.ViewModels
                         {
                             if(res.Output?.Status == 1 && res.Output?.Response != null)
                             {
-                                _tokenServices.SetToken(res.Output.Response.Token);
+                                _tokenService.SetToken(res.Output.Response.Token);
                                 NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
                                 return;
                             }

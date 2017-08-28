@@ -7,7 +7,7 @@ namespace FitMeet.ViewModels
 {
     public class StartupPageViewModel:ViewModelBase
     {
-        private ITokenServices _tokenServices;
+        private ITokenService _tokenService;
 
         public DelegateCommand OnAppearingCommand
         {
@@ -15,8 +15,8 @@ namespace FitMeet.ViewModels
             {
                 return new DelegateCommand(async () =>
                 {
-                    var token = _tokenServices.GetToken();
-                    if(!String.IsNullOrEmpty(token) && await _tokenServices.HasValidToken())
+                    var token = _tokenService.GetToken();
+                    if(!String.IsNullOrEmpty(token) && await _tokenService.HasValidToken())
                     {
                         _fitMeetRestService.SetToken(token);
                         NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
@@ -29,9 +29,9 @@ namespace FitMeet.ViewModels
             }
         }
 
-        public StartupPageViewModel(INavigationService navigationService,IFitMeetRestService fitMeetRestServices,ITokenServices tokenServices) : base(navigationService,fitMeetRestServices)
+        public StartupPageViewModel(INavigationService navigationService,IFitMeetRestService fitMeetRestServices,ITokenService tokenService) : base(navigationService,fitMeetRestServices)
         {
-            _tokenServices = tokenServices;
+            _tokenService = tokenService;
         }
 
     }

@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace FitMeet.Controls
 {
-    public class CheckBox : ContentView
+    public class CheckBox:ContentView
     {
         protected Grid ContentGrid;
         protected ContentView ContentContainer;
@@ -23,8 +23,8 @@ namespace FitMeet.Controls
             };
 
             ContentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(36) });
-            ContentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            ContentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+            ContentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1,GridUnitType.Star) });
+            ContentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1,GridUnitType.Auto) });
 
             ImageContainer = new Image
             {
@@ -41,13 +41,13 @@ namespace FitMeet.Controls
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
             };
-            Grid.SetColumn(ContentContainer, 1);
+            Grid.SetColumn(ContentContainer,1);
 
             TextContainer = new Label
             {
                 TextColor = Color.FromHex("#5a5a5a"),
                 FontSize = 11,
-                Margin = new Thickness(0, 2, 0, 0),
+                Margin = new Thickness(0,2,0,0),
                 VerticalOptions = LayoutOptions.Center,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
             };
@@ -63,9 +63,9 @@ namespace FitMeet.Controls
 
         public static BindableProperty CheckedProperty = BindableProperty.Create(
             propertyName: "Checked",
-            returnType: typeof(Boolean?),
+            returnType: typeof(Boolean),
             declaringType: typeof(CheckBox),
-            defaultValue: null,
+            defaultValue: false,
             defaultBindingMode: BindingMode.TwoWay,
             propertyChanged: CheckedValueChanged);
 
@@ -77,25 +77,25 @@ namespace FitMeet.Controls
             defaultBindingMode: BindingMode.TwoWay,
             propertyChanged: TextValueChanged);
 
-        public Boolean? Checked
+        public Boolean Checked
         {
             get
             {
-                if (GetValue(CheckedProperty) == null)
-                    return null;
+                if(GetValue(CheckedProperty) == null)
+                    return false;
                 return (Boolean)GetValue(CheckedProperty);
             }
             set
             {
-                SetValue(CheckedProperty, value);
+                SetValue(CheckedProperty,value);
                 OnPropertyChanged();
                 RaiseCheckedChanged();
             }
         }
 
-        private static void CheckedValueChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void CheckedValueChanged(BindableObject bindable,object oldValue,object newValue)
         {
-            if (newValue != null && (Boolean)newValue == true)
+            if(newValue != null && (Boolean)newValue == true)
                 ((CheckBox)bindable).Image.Source = "Image_Checked.png";
             else
                 ((CheckBox)bindable).Image.Source = "Image_Unchecked.png";
@@ -104,7 +104,7 @@ namespace FitMeet.Controls
         public event EventHandler CheckedChanged;
         private void RaiseCheckedChanged()
         {
-            CheckedChanged?.Invoke(this, EventArgs.Empty);
+            CheckedChanged?.Invoke(this,EventArgs.Empty);
         }
 
         private Boolean _IsEnabled = true;
@@ -121,16 +121,16 @@ namespace FitMeet.Controls
         }
 
         public event EventHandler Clicked;
-        private void TapGestureOnTapped(object sender, EventArgs eventArgs)
+        private void TapGestureOnTapped(object sender,EventArgs eventArgs)
         {
-            if (IsEnabled)
+            if(IsEnabled)
             {
                 Checked = !Checked;
-                Clicked?.Invoke(this, new EventArgs());
+                Clicked?.Invoke(this,new EventArgs());
             }
         }
 
-        private static void TextValueChanged(BindableObject bindable, object oldValue, object newValue)
+        private static void TextValueChanged(BindableObject bindable,object oldValue,object newValue)
         {
             ((CheckBox)bindable).TextContainer.Text = (String)newValue;
         }
@@ -138,7 +138,7 @@ namespace FitMeet.Controls
         public event EventHandler TextChanged;
         private void RaiseTextChanged()
         {
-            TextChanged?.Invoke(this, EventArgs.Empty);
+            TextChanged?.Invoke(this,EventArgs.Empty);
         }
 
         public Image Image
@@ -152,7 +152,7 @@ namespace FitMeet.Controls
             get { return (String)GetValue(TextProperty); }
             set
             {
-                SetValue(TextProperty, value);
+                SetValue(TextProperty,value);
                 OnPropertyChanged();
                 RaiseTextChanged();
             }

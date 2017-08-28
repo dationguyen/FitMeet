@@ -1,5 +1,7 @@
 ﻿using FitMeet.Controls;
 using FitMeet.iOS.Renderers;
+using System;
+using System.ComponentModel;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -22,16 +24,27 @@ namespace FitMeet.iOS.Renderers
                 Control.Layer.BorderColor = Color.FromHex("c2c2c2").ToCGColor();
                 Control.Layer.BorderWidth = 0.5f;
 
-                Placeholder = element.Placeholder;
-                Control.TextColor = UIColor.LightGray;
-                Control.Text = Placeholder;
+                Control.TextContainerInset = new UIEdgeInsets(
+                    (int)element.Padding.Top,
+                    (int)element.Padding.Left,
+                    (int)element.Padding.Bottom,
+                    (int)element.Padding.Right
+                    );
 
+                Control.TextColor = element.TextColor.ToUIColor();
+
+                Placeholder = element.Placeholder;
+                if(String.IsNullOrEmpty(element.Text))
+                {
+                    Control.Text = Placeholder;
+                    Control.TextColor = UIColor.LightGray;
+                }
                 Control.ShouldBeginEditing += (UITextView textView) =>
                 {
                     if(textView.Text == Placeholder)
                     {
                         textView.Text = "";
-                        textView.TextColor = UIColor.Black; // Text Color
+                        //textView.TextColor = UIColor.Black; // Text Color
                     }
 
                     return true;
@@ -42,12 +55,34 @@ namespace FitMeet.iOS.Renderers
                     if(textView.Text == "")
                     {
                         textView.Text = Placeholder;
-                        textView.TextColor = UIColor.LightGray; 
+                        //textView.TextColor = UIColor.LightGray;
                     }
 
                     return true;
                 };
             }
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+            var element = this.Element as BorderedEditor;
+
+            if (Control != null && element != null)
+            {
+                if (e.PropertyName == Editor.TextProperty.PropertyName)
+                {
+                    if (element.Text == Placeholder)
+                    {
+                        Control.TextColor = Color.FromHex("7e7e7e").ToUIColor();
+                    }
+                    else
+                    {
+                        Control.TextColor = element.TextColor.ToUIColor();
+                    }
+                }
+            }
+
         }
     }
 }

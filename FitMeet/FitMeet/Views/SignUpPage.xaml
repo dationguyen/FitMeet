@@ -19,11 +19,16 @@
 				<ColumnDefinition Width="12*" />
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
-			<Image Grid.ColumnSpan="3" Source="fitmeet_logo.png"></Image>
+		    <StackLayout Orientation="Horizontal" Grid.ColumnSpan="2" Padding="10,10,0,10" VerticalOptions="Start" HorizontalOptions="End">
+		        <Label Text="Step" TextColor="{StaticResource MainColor}"></Label>
+		        <Image Source="step1.png" HeightRequest="12"></Image>
+
+		    </StackLayout>
+            <Image Grid.ColumnSpan="3" Source="fitmeet_logo.png"></Image>
 
 			<StackLayout Grid.Row="1" Grid.Column="1">
 				<Grid>
-					<Entry Placeholder="E-mail">
+					<Entry Placeholder="E-mail" Text="{Binding Email}" Completed="Entry_OnCompleted" Unfocused="Entry_OnCompleted">
 						<Entry.Behaviors>
 							<behaviors:EmailValidatorBehavior x:Name="emailValidator" />
 						</Entry.Behaviors>
@@ -37,9 +42,10 @@
 					       VerticalOptions="Center"></Label>
 				</Grid>
 				<Grid>
-					<Entry x:Name="entPassword" Placeholder="New Password" IsPassword="True" TextChanged="EntPassword_OnTextChanged" >
+                    <Entry x:Name="entPassword" Text="{Binding Password}" Placeholder="New Password" Unfocused="Entry_OnCompleted"
+                            IsPassword="True" TextChanged="EntPassword_OnTextChanged" Completed="Entry_OnCompleted" >
 						<Entry.Behaviors>
-							<behaviors:PasswordValidatorBehavior x:Name="passwordValidator" />
+                            <behaviors:PasswordValidatorBehavior x:Name="passwordValidator"/>
 						</Entry.Behaviors>
 					</Entry>
 					<Label Text="✓" 
@@ -52,7 +58,8 @@
 					       VerticalOptions="Center"></Label>
 				</Grid>
 				<Grid>
-					<Entry x:Name="entRePassword" Placeholder="Retype New Password" IsPassword="True">
+					<Entry x:Name="entRePassword" Placeholder="Retype New Password" Unfocused="Entry_OnCompleted"
+                            IsPassword="True" Completed="Entry_OnCompleted">
 						<Entry.Behaviors>
 							<behaviors:ConfirmPasswordBehavior CompareToEntry="{Binding Source={x:Reference entPassword}}" x:Name="confirmPasswordValidator" />
 						</Entry.Behaviors>
@@ -69,12 +76,14 @@
 				
 
 				<StackLayout Orientation="Vertical">
-					<controls:CheckBox Text="Sign up for emails to learn about lastest news, activities and special offers from Fitmeet." 
-					                   Checked="True" Margin="0,8,0,0" />
+					<controls:CheckBox Text="Sign up for emails to learn about lastest news, activities and special offers from Fitmeet."
+                            Checked="{Binding IsSubscrible}" Margin="0,8,0,0" />
 					<controls:CheckBox Text="I Understand that by connecting my accounts, Fitmeet may access my basic information from Facebook, and I will be able to share my Fitmeet activity to Facebook" 
-					                   Checked="True" Margin="0,8,0,0" />
+					                   Checked="True" Margin="0,8,0,0" CheckedChanged="ConfirmCheckBox_OnCheckedChanged"
+                                       x:Name="ConfirmCheckBox" />
 				</StackLayout>
-				<Button BackgroundColor="{StaticResource MainColor}" Margin="0,20,0,0" TextColor="White" HeightRequest="50" Text="Build profile"></Button>
+				<Button BackgroundColor="{StaticResource MainColor}" x:Name="SignUpButton" Command="{Binding SignUpCommand}"
+                        Margin="0,20,0,0" TextColor="White" IsEnabled="False" HeightRequest="50" Text="Build profile"></Button>
 			</StackLayout>
 		</Grid>
 	</ContentPage.Content>

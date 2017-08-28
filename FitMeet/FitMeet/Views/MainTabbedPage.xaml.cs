@@ -30,7 +30,7 @@ namespace FitMeet.Views
             }
         }
 
-        private static void SelectedIndexChanged( BindableObject bindable,object oldValue,object newValue )
+        private static void SelectedIndexChanged(BindableObject bindable,object oldValue,object newValue)
         {
             ((MainTabbedPage)bindable).SelectedIndex = (int)newValue;
         }
@@ -41,7 +41,7 @@ namespace FitMeet.Views
             this.CurrentPageChanged += CurrentPageHasChanged;
         }
 
-        private void CurrentPageHasChanged( object sender,EventArgs e )
+        private void CurrentPageHasChanged(object sender,EventArgs e)
         {
             var title = this.CurrentPage.Title;
             if(title == "Search")
@@ -52,7 +52,7 @@ namespace FitMeet.Views
                 SelectedIndex = Children.IndexOf(CurrentPage);
             }
         }
-        public void OnNavigatingTo( NavigationParameters parameters )
+        public void OnNavigatingTo(NavigationParameters parameters)
         {
             foreach(var child in Children)
             {
@@ -61,12 +61,16 @@ namespace FitMeet.Views
             }
         }
 
-        public void OnNavigatedFrom( NavigationParameters parameters )
+        public void OnNavigatedFrom(NavigationParameters parameters)
         {
-
+            foreach(var child in Children)
+            {
+                (child as INavigatedAware)?.OnNavigatedFrom(parameters);
+                (child?.BindingContext as INavigatedAware)?.OnNavigatedFrom(parameters);
+            }
         }
 
-        public void OnNavigatedTo( NavigationParameters parameters )
+        public void OnNavigatedTo(NavigationParameters parameters)
         {
             foreach(var child in Children)
             {

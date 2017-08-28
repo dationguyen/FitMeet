@@ -1,20 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             x:Class="FitMeet.Views.MessagePage"
-             mvvm:ViewModelLocator.AutowireViewModel="True" Title="Message">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" x:Class="FitMeet.Views.MessagePage"
+        mvvm:ViewModelLocator.AutowireViewModel="True" Title="Message">
     <ContentPage.Content>
         <Grid BackgroundColor="White">
-            <StackLayout VerticalOptions="Center"
-                         HorizontalOptions="Center">
-                <Image Source="message_big.png"
-                       HeightRequest="120"
-                       Margin="0,10"></Image>
-                <Label Text="You don't have any message yet"
-                       Margin="20"
-                       TextColor="{StaticResource PlaceHolderColor}"></Label>
+            <StackLayout VerticalOptions="Center" IsVisible="{Binding HasNoData}" HorizontalOptions="Center">
+                <Image Source="message_big.png" HeightRequest="120" Margin="0,10"></Image>
+                <Label Text="You don't have any message yet" Margin="20" TextColor="{StaticResource PlaceHolderColor}"></Label>
             </StackLayout>
+            <ListView ItemsSource="{Binding ItemsDataSource}" SeparatorVisibility="None"
+                      SelectedItem="{Binding SelectedItem,Mode=TwoWay}"
+                    RowHeight="80">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <StackLayout Padding="10,4,10,10" Orientation="Horizontal">
+                                    <Grid>
+                                        <Image Margin="10,6,10,0" HorizontalOptions="Start" WidthRequest="60"
+                                                Aspect="AspectFill" Source="{Binding UserPhoto}"></Image>
+                                        <Frame CornerRadius="8" WidthRequest="16" Padding="0" HeightRequest="16"
+                                                VerticalOptions="Start" HorizontalOptions="End" HasShadow="False"
+                                                BackgroundColor="{StaticResource RedColor}">
+                                            <Frame.Triggers>
+                                                <DataTrigger TargetType="Frame" Binding="{Binding Count}" Value="0">
+                                                    <Setter Property="IsVisible" Value="false"></Setter>
+                                                </DataTrigger>
+                                            </Frame.Triggers>
+                                            <Label Text="{Binding Count}" FontSize="Micro" TextColor="White"
+                                                    Margin="0,2,0,0" VerticalTextAlignment="Center"
+                                                    HorizontalTextAlignment="Center"></Label>
+                                        </Frame>
+                                    </Grid>
+
+                                    <StackLayout VerticalOptions="Center" Margin="0,6,0,0">
+                                        <Label Text="{Binding UserName}"></Label>
+                                        <Label Text="{Binding Message}" FontSize="Micro"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+                                <Grid HeightRequest="1" BackgroundColor="{StaticResource BorderColor}"></Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

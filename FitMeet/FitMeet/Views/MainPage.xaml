@@ -39,9 +39,7 @@
 				<controls:ExtendedButton  Text="About Fitmeet" 
 				        Command="{Binding NavigateCommand}" 
 				        CommandParameter="NavigationPage/MainTabbedPage/AboutPage"/>
-				<controls:ExtendedButton  Text="Log out" Margin="0,30" 
-				        Command="{Binding NavigateCommand}" 
-				        CommandParameter="app:///NavigationPage/LoginPage"/>
+				<controls:ExtendedButton  Text="Log out" Margin="0,30" Command="{Binding LogOutCommand}"/>
 			</StackLayout>
 		</ContentPage>
 	</MasterDetailPage.Master>

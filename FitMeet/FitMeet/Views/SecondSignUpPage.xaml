@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
+        xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" prism:ViewModelLocator.AutowireViewModel="True"
+        x:Class="FitMeet.Views.SecondSignUpPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView x:Name="ScrollView">
+            <StackLayout Padding="30,10">
+                <StackLayout Orientation="Horizontal" Padding="10,10,0,10" HorizontalOptions="End">
+                    <Label Text="Step" TextColor="{StaticResource MainColor}"></Label>
+                    <Image Source="step2.png" HeightRequest="12"></Image>
+
+                </StackLayout>
+
+                <Label Text="Full Name"></Label>
+                <Entry Text="{Binding FullName}" Margin="0,4,0,10" x:Name="FullNameEntry"></Entry>
+                <Label Text="Date of Birth"></Label>
+                <controls:CustomDatePicker VerticalOptions="CenterAndExpand" HeightRequest="60" 
+                        TextColor="{StaticResource BodyColor}" Margin="0,4,0,10" Date="{Binding Dob, Mode=TwoWay}">
+                    <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
+                </controls:CustomDatePicker>
+                <Label Text="Address" x:Name="AddressLabel"></Label>
+                <Entry Text="{Binding Address}" x:Name="AddressEntry" Unfocused="AddressEntry_OnUnfocused" Focused="AddressEntry_OnFocused"
+                        Margin="0,4,0,10"></Entry>
+
+                <Grid IsVisible="{Binding IsSearching,Mode=TwoWay}" HeightRequest="{Binding AutoCompleteHeight}" 
+                        x:Name="AutoCompleteGrid">
+                    <ListView BackgroundColor="{StaticResource NavBackgroundColor}" RowHeight="36"
+                            SeparatorVisibility="None" SelectedItem="{Binding AutoCompleteResult,Mode=TwoWay}"
+                            ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding AutoCompleteCollection}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="20,0">
+                                        <Label Text="{Binding}" VerticalTextAlignment="Center" LineBreakMode="NoWrap"></Label>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+
+                <Grid Margin="0,20">
+                    <Label Text="Gender" HorizontalOptions="Start" VerticalOptions="Center"></Label>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                        <controls:ToggleButton Text="Male" Checked="{Binding IsMale}"
+                                Command="{Binding GenderSwitchCommand}" CommandParameter="male" />
+                        <controls:ToggleButton Text="Female" Checked="{Binding IsMale, 
+                                                                 Converter={StaticResource RevertConverter}}"
+                                Command="{Binding GenderSwitchCommand}" CommandParameter="female" Margin="8,0,2,0" />
+                    </StackLayout>
+                </Grid>
+                
+                <Label Text="Describle Yourself"></Label>
+                <controls:BorderedEditor HeightRequest="120" Placeholder="Tell us something about you" x:Name="DescribleEditor"
+                        Margin="0,10,0,10" Padding="10" TextColor="{StaticResource BodyColor}"
+                        Text="{Binding Describle}"></controls:BorderedEditor>
+
+
+                <Button Margin="0,10,0,20" Text="Next Step" HeightRequest="60" Command="{Binding MoveNextCommand}"
+                        BackgroundColor="{StaticResource MainColor}" Clicked="Button_OnClicked" TextColor="White"></Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

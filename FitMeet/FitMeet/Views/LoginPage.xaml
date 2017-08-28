@@ -54,7 +54,9 @@
 					</Grid>
 				</StackLayout>
 			</Grid>
-			
+            <Grid Grid.RowSpan="2" IsVisible="{Binding IsLoading}" BackgroundColor="#8CFFFFFF">
+                <ActivityIndicator IsRunning="True"></ActivityIndicator>
+            </Grid>
 		</Grid>
     </ContentPage.Content>
 </ContentPage>

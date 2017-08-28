@@ -16,6 +16,7 @@ namespace FitMeet.iOS.Renderers
             if (this.Control == null) return;
 
             this.Control.TableFooterView = new UIView();
+            this.Control.KeyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag;
         }
     }
 }

@@ -46,9 +46,49 @@ namespace FitMeet.ViewModels
                         "Unfriend","Cancel");
                     if(action)
                     {
-                        await _fitMeetRestService.UnfriendAsync(DataSource.UserId);
+                        var result = await _fitMeetRestService.UnfriendAsync(DataSource.UserId);
+                        if(result?.Output?.Status == 1)
+                        {
+                            NavigateBackCommand.Execute();
+                        }
                     }
 
+                });
+            }
+        }
+
+        public DelegateCommand MessageCommand
+        {
+            get
+            {
+                return new DelegateCommand(async () =>
+                {
+                    var param = new NavigationParameters()
+                    {
+                        {"id",_dataSource.UserId},
+                        { "name",_dataSource.FullName}
+                    };
+                    await _navigationService.NavigateAsync("ChatPage",param,false,true);
+                });
+            }
+        }
+
+        public DelegateCommand<string> ResponseCommand
+        {
+            get
+            {
+                return new DelegateCommand<string>(async (status) =>
+                {
+                    var success = await _fitMeetRestService.ResponseToFriendAsync(DataSource.UserId,status);
+                    if(success)
+                    {
+                        NavigateBackCommand.Execute();
+                    }
+                    else
+                    {
+                        await _pageDialogService.DisplayAlertAsync("Error","Can't response to this person\nPlease try later",
+                             "Ok");
+                    }
                 });
             }
         }

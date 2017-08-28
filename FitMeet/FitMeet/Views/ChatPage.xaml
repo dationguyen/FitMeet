@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" x:Class="FitMeet.Views.ChatPage"
+        LastItem="{Binding LastItem}" Title="{Binding Title}" mvvm:ViewModelLocator.AutowireViewModel="True">
+    <ContentPage.Content>
+        <ScrollView x:Name="Container">
+            <Grid HeightRequest="{Binding Height,Source={x:Reference Container}}">
+                <ListView ItemsSource="{Binding Messages}" x:Name="MessageListView"
+                        SelectedItem="{Binding SelectedItem,Mode=TwoWay}" HorizontalOptions="Start" Margin="0,0,0,64"
+                        VerticalOptions="Fill" HasUnevenRows="True" SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell >
+                                <Grid Padding="20,10" HorizontalOptions="Fill">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"
+                                                              NumberOfTapsRequired="1"></TapGestureRecognizer>
+                                    </Grid.GestureRecognizers>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="60"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image HeightRequest="60" WidthRequest="60" Aspect="AspectFill"
+                                            VerticalOptions="Start" Source="{Binding SenderImage}">
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image" Binding="{Binding IsClient}" Value="True">
+                                                <Setter Property="Grid.Column" Value="2"></Setter>
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                    <Frame Grid.ColumnSpan="2" Grid.Column="1" Padding="10" Margin="10,0"
+                                            HasShadow="False" OutlineColor="{StaticResource BorderColor}"
+                                            BackgroundColor="{StaticResource NavBackgroundColor}"
+                                            HorizontalOptions="Start">
+                                        <Frame.Triggers>
+                                            <DataTrigger TargetType="Frame" Binding="{Binding IsClient}" Value="True">
+                                                <Setter Property="Grid.Column" Value="0"></Setter>
+                                                <Setter Property="HorizontalOptions" Value="End"></Setter>
+                                                <Setter Property="BackgroundColor" Value="{StaticResource MainColor}"></Setter>
+                                            </DataTrigger>
+                                        </Frame.Triggers>
+                                        <Label Text="{Binding Message}" FontSize="Small" VerticalTextAlignment="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsClient}"
+                                                        Value="True">
+                                                    <Setter Property="TextColor" Value="White"></Setter>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </Frame>
+
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.Footer></ListView.Footer>
+                </ListView>
+
+                <Grid HeightRequest="60" VerticalOptions="End" BackgroundColor="{StaticResource NavBackgroundColor}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Entry Margin="10,10,0,10" x:Name="Input" Text="{Binding Message}" Completed="Input_OnCompleted" Keyboard="Chat"></Entry>
+                    <Button Grid.Column="1" x:Name="SendButton"
+                            Command="{Binding SendMessageCommand}" Text="Send"
+                            IsEnabled="{Binding IsAbleToSend}"></Button>
+                </Grid>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

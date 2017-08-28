@@ -50,12 +50,17 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<ProfileEditPage>();
             Container.RegisterTypeForNavigation<StartupPage>();
             Container.RegisterTypeForNavigation<MessagePage>();
+            Container.RegisterTypeForNavigation<ChatPage>();
+            Container.RegisterTypeForNavigation<SecondSignUpPage>();
+            Container.RegisterTypeForNavigation<ThirdSignUpPage>();
 
             //Services registration
             Container.RegisterType<IFitMeetRestService,FitMeetRestService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IStaticDataService,StaticDataService>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IGeolocationServices,GeolocationServices>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<ITokenServices,TokenServices>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IGeoLocationService,GeolocationService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ITokenService,TokenService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IFacebookService,FacebookService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IGoogleLocationService,GoogleLocationService>(new ContainerControlledLifetimeManager());
 
             Container.RegisterPopupNavigationService();
         }

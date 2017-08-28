@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FitMeet.Services
 {
-    public class TokenServices:ITokenServices
+    public class TokenService:ITokenService
     {
         private IFitMeetRestService _fitMeetRestService;
         private string _token;
@@ -14,7 +14,7 @@ namespace FitMeet.Services
         private ISettings AppSettings =>
             CrossSettings.Current;
 
-        public TokenServices(IFitMeetRestService fitMeetRestService)
+        public TokenService(IFitMeetRestService fitMeetRestService)
         {
             _fitMeetRestService = fitMeetRestService;
         }

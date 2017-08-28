@@ -2,7 +2,7 @@
 
 namespace FitMeet.Services
 {
-    public interface ITokenServices
+    public interface ITokenService
     {
         Task<bool> HasValidToken();
 

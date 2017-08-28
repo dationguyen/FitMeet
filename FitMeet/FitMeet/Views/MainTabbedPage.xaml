@@ -1,13 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" 
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            x:Class="FitMeet.Views.MainTabbedPage"
+            x:Class="FitMeet.Views.MainTabbedPage" 
             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
             xmlns:local="clr-namespace:FitMeet.Views;assembly=FitMeet"
             prism:ViewModelLocator.AutowireViewModel="True"
-            SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}"
-            Title="Members"
-            NavigationPage.BackButtonTitle="Back">
+            SelectedIndex="{Binding SelectedIndex,Mode=TwoWay}" 
+            Title="Members" NavigationPage.BackButtonTitle="Back">
     <TabbedPage.Children>
         <local:SearchPage Icon="search.png"></local:SearchPage>
         <local:FriendsPage Icon="friend.png"></local:FriendsPage>

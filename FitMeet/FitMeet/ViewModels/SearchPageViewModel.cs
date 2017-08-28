@@ -5,6 +5,7 @@ using FitMeet.Services;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,16 +15,21 @@ namespace FitMeet.ViewModels
     public class SearchPageViewModel:ViewModelBase
     {
         private IEventAggregator _eventAggregator;
-
+        private IGoogleLocationService _googleLocationService;
 
         private SpeedObservableCollection<Member> _resultListItemsSource;
         private int _pageCount = 1;
         private int _curentPage = 0;
+        private bool _isSearching = false;
         private bool _isRefreshing = false;
         private bool _isLoading = false;
         private bool _hasFilter = false;
+        private string _searchKeyWord;
         private UpdateFilterEventArgs _updateFilterEventArgs;
         private Member _searchListSelectedItem;
+        private List<string> _autoCompleteCollection;
+        private int _autoCompleteHeight;
+        private string _autoCompleteResult;
 
         public Member SearchListSelectedItem
         {
@@ -37,8 +43,6 @@ namespace FitMeet.ViewModels
                 }
             }
         }
-
-
         public string FilterImageSource
         {
             get
@@ -46,8 +50,6 @@ namespace FitMeet.ViewModels
                 return _hasFilter ? "filter_enabled.png" : "filter_disabled.png";
             }
         }
-
-
         public bool IsRefreshing
         {
             get { return _isRefreshing; }
@@ -60,7 +62,6 @@ namespace FitMeet.ViewModels
         {
             get { return _curentPage < _pageCount; }
         }
-
         public DelegateCommand RefreshCommand
         {
             get
@@ -71,7 +72,6 @@ namespace FitMeet.ViewModels
                 });
             }
         }
-
         private void ReloadItems()
         {
             IsRefreshing = true;
@@ -80,6 +80,73 @@ namespace FitMeet.ViewModels
             _pageCount = 1;
             LoadItems();
         }
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { SetProperty(ref _isLoading,value); }
+        }
+        public bool IsSearching
+        {
+            get => _isSearching;
+            set
+            {
+                SetProperty(ref _isSearching,value);
+            }
+        }
+        public string SearchKeyWord
+        {
+            get { return _searchKeyWord; }
+            set
+            {
+                if(_searchKeyWord != value)
+                {
+                    SetProperty(ref _searchKeyWord,value);
+
+                    if(!String.IsNullOrEmpty(_searchKeyWord))
+                    {
+                        IsSearching = true;
+                        GetAutoComplete(_searchKeyWord);
+
+                    }
+                    else
+                    {
+                        IsSearching = false;
+                        AutoCompleteCollection.Clear();
+                    }
+
+                }
+            }
+        }
+        public List<string> AutoCompleteCollection
+        {
+            get
+            {
+                if(_autoCompleteCollection == null)
+                    _autoCompleteCollection = new List<string>();
+                return _autoCompleteCollection;
+            }
+            set { SetProperty(ref _autoCompleteCollection,value); }
+        }
+        public string AutoCompleteResult
+        {
+            get { return null; }
+            set
+            {
+                if(value != null)
+                {
+                    SetProperty(ref _autoCompleteResult,value);
+                    _searchKeyWord = value;
+                    RaisePropertyChanged("SearchKeyWord");
+                    IsSearching = false;
+                }
+            }
+        }
+        public int AutoCompleteHeight
+        {
+            get { return _autoCompleteHeight; }
+            set { SetProperty(ref _autoCompleteHeight,value); }
+        }
+
 
         public DelegateCommand FilterCommand
         {
@@ -95,9 +162,7 @@ namespace FitMeet.ViewModels
                 });
             }
         }
-
         public DelegateCommand<object> ItemAppearingCommand { get; set; }
-
         public SpeedObservableCollection<Member> ResultListItemsSource
         {
             get
@@ -109,16 +174,17 @@ namespace FitMeet.ViewModels
             set { SetProperty(ref _resultListItemsSource,value); }
         }
 
-        public bool IsLoading
-        {
-            get { return _isLoading; }
-            set { SetProperty(ref _isLoading,value); }
-        }
 
-        public SearchPageViewModel(INavigationService navigationService,IFitMeetRestService fitMeetRestServices,IEventAggregator eventAggregator) : base(navigationService,fitMeetRestServices)
+
+
+
+
+        public SearchPageViewModel(INavigationService navigationService,IGoogleLocationService googleLocationService,IFitMeetRestService fitMeetRestServices,IEventAggregator eventAggregator) : base(navigationService,fitMeetRestServices)
         {
             Title = "Search";
             ItemAppearingCommand = new DelegateCommand<object>(OnItemAppearing);
+
+            _googleLocationService = googleLocationService;
 
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<UpdateFilterEvent>().Subscribe(UpdateFilter);
@@ -203,6 +269,16 @@ namespace FitMeet.ViewModels
         {
             if(ResultListItemsSource.Count == 0)
                 LoadItems();
+        }
+
+        private async void GetAutoComplete(string searchKeyWord)
+        {
+            var result = await _googleLocationService.AutoComplete(searchKeyWord);
+            if(result != null && result.Count > 0)
+            {
+                AutoCompleteHeight = 36 * result.Count;
+                AutoCompleteCollection = result;
+            }
         }
     }
 }

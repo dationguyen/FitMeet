@@ -5,10 +5,13 @@ using FitMeet.Services;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace FitMeet.ViewModels
 {
@@ -22,7 +25,11 @@ namespace FitMeet.ViewModels
         private bool _isNoFriend = true;
         private Member _friendListSelectedItem;
         private List<Member> _friendList;
+        private string _messageCount;
+        private string _searchKeyword;
         private ObservableCollection<GroupsCollection<string,Member>> _friendsGrouped;
+
+        private bool _isChecking = false;
 
         public ObservableCollection<GroupsCollection<string,Member>> FriendsGrouped
         {
@@ -90,7 +97,7 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return new DelegateCommand<object>(( obj ) =>
+                return new DelegateCommand<object>((obj) =>
                 {
                     OnItemAppearing(obj);
                 });
@@ -108,23 +115,89 @@ namespace FitMeet.ViewModels
             }
         }
 
-        public FriendsPageViewModel( INavigationService navigationService,IFitMeetRestService fitMeetRestServices,IEventAggregator eventAggregator ) : base(navigationService,fitMeetRestServices)
+        public string MessageCount
+        {
+            get => _messageCount;
+            set
+            {
+                if(value != _messageCount)
+                {
+                    SetProperty(ref _messageCount,value);
+                }
+            }
+        }
+
+        public string SearchKeyword
+        {
+            get { return _searchKeyword; }
+            set
+            {
+                SetProperty(ref _searchKeyword,value);
+
+                //Use linq to sorty our monkeys by name and then group them by the new name sort property
+                var sorted = from member in FriendListItemsSource
+                             where member.FullName.ToLower().Contains(_searchKeyword.ToLower())
+                             orderby member.MemberFirstName
+                             group member by member.NameSort into memberGroup
+                             select new GroupsCollection<string,Member>(memberGroup.Key,memberGroup);
+
+                //create a new collection of groups
+                FriendsGrouped = new ObservableCollection<GroupsCollection<string,Member>>(sorted);
+
+            }
+        }
+
+        public FriendsPageViewModel(INavigationService navigationService,IFitMeetRestService fitMeetRestServices,IEventAggregator eventAggregator) : base(navigationService,fitMeetRestServices)
         {
             Title = "Friends";
             _eventAggregator = eventAggregator;
         }
 
-
-
-        public override void OnNavigatingTo( NavigationParameters parameters )
+        public override void OnNavigatedTo(NavigationParameters parameters)
         {
-            base.OnNavigatingTo(parameters);
-
+            base.OnNavigatedTo(parameters);
+            _isChecking = true;
+            Device.StartTimer(TimeSpan.FromSeconds(5),Callback);
             if(FriendListItemsSource.Count == 0)
             {
                 LoadItems();
             }
+        }
 
+        private bool Callback()
+        {
+            if(_isChecking)
+            {
+                checkMessage();
+            }
+            return _isChecking;
+        }
+
+        private async void checkMessage()
+        {
+            var count = await _fitMeetRestService.CheckMessage();
+            Debug.WriteLine("there are {0} message",count);
+            if(count == 0)
+            {
+                MessageCount = String.Empty;
+            }
+            else
+            {
+                MessageCount = count.ToString();
+            }
+        }
+
+        public override void OnNavigatedFrom(NavigationParameters parameters)
+        {
+            _isChecking = false;
+            base.OnNavigatedFrom(parameters);
+
+        }
+
+
+        public override void OnNavigatingTo(NavigationParameters parameters)
+        {
+            base.OnNavigatingTo(parameters);
         }
 
         private async void LoadItems()
@@ -158,7 +231,7 @@ namespace FitMeet.ViewModels
 
             IsRefreshing = false;
         }
-        private async Task<ResponseMessage<List<Member>>> GetDataFromRest( int page )
+        private async Task<ResponseMessage<List<Member>>> GetDataFromRest(int page)
         {
             ResponseMessage<List<Member>> restResponseMessage;
             restResponseMessage = await _fitMeetRestService.GetFriendsAsync(page);
@@ -174,7 +247,7 @@ namespace FitMeet.ViewModels
             LoadItems();
         }
 
-        private void OnItemAppearing( object obj )
+        private void OnItemAppearing(object obj)
         {
             if(IsRefreshing || FriendListItemsSource.Count == 0)
                 return;
