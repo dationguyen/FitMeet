@@ -25,24 +25,6 @@
 	<string>com.yourcompany.FitMeet</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>CFBundleIconFiles</key>
-	<array>
-		<string>Icon-60@2x</string>
-		<string>Icon-60@3x</string>
-		<string>Icon-76</string>
-		<string>Icon-76@2x</string>
-		<string>Default</string>
-		<string>Default@2x</string>
-		<string>Default-568h@2x</string>
-		<string>Default-Portrait</string>
-		<string>Default-Portrait@2x</string>
-		<string>Icon-Small-40</string>
-		<string>Icon-Small-40@2x</string>
-		<string>Icon-Small-40@3x</string>
-		<string>Icon-Small</string>
-		<string>Icon-Small@2x</string>
-		<string>Icon-Small@3x</string>
-	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleDocumentTypes</key>
@@ -55,24 +37,24 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads </key>
 		<true/>
-	  <key>NSExceptionDomains</key>
-	  <dict>
-	    <key>facebook.com</key>
-	    <dict>
-	      <key>NSIncludesSubdomains</key>
-	      <true/>
-	      <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-	      <false/>
-	    </dict>
-	    <key>fbcdn.net</key>
-	    <dict>
-	      <key>NSIncludesSubdomains</key>
-	      <true/>
-	      <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-	      <false/>
-	    </dict>
-	  </dict>
-  </dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>facebook.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+			<key>fbcdn.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+		</dict>
+	</dict>
 	<key>CFBundleName</key>
 	<string>FitMeet</string>
 	<key>UIStatusBarStyle</key>
@@ -80,27 +62,11 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fonts/MyriadPro-Regular.ttf</string>
-    <string>Fonts/MyriadPro-Bold.otf</string>
+		<string>Fonts/MyriadPro-Bold.otf</string>
 	</array>
-  <key>LSApplicationQueriesSchemes</key>
-  <array>
-    <string>fbapi</string>
-    <string>fb-messenger-api</string>
-    <string>fbauth2</string>
-    <string>fbshareextension</string>
-  </array>
-  <key>CFBundleURLTypes</key>
-  <array>
-    <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb306989955995811</string>
-      </array>
-    </dict>
-  </array>
-  <key>FacebookAppID</key>
-  <string>306989955995811</string>
-  <key>FacebookDisplayName</key>
-  <string>Roor</string>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>XSLaunchImageAssets</key>
+	<string>Assets.xcassets/LaunchImage.launchimage</string>
 </dict>
 </plist>
