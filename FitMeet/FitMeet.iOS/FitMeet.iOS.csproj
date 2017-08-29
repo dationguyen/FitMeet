@@ -313,11 +313,6 @@
     <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Default-568h%402x.png" />
     <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Default-Portrait.png" />
     <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Default-Portrait%402x.png" />
-    <ImageAsset Include="Assets.xcassets\female.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\female.imageset\female.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets.xcassets\female.imageset\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
