@@ -191,7 +191,7 @@ namespace FitMeet.ViewModels
             else
             {
                 MessageCount = count.ToString();
-                MessageLogo = "female.png";
+                MessageLogo = "female";
             }
         }
 
