@@ -7,7 +7,7 @@
         plugin:TabBadge.BadgeText="{Binding MessageCount}" mvvm:ViewModelLocator.AutowireViewModel="True"
         Title="{Binding Title}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="message_logo.png" Command="{Binding NavigateCommand}" Text="(2)"
+        <ToolbarItem Icon="{Binding MessageLogo}" Command="{Binding NavigateCommand}"
                 CommandParameter="MessagePage" />
     </ContentPage.ToolbarItems>
 

@@ -33,7 +33,7 @@ namespace FitMeet.ViewModels
         }
 
 
-        private async void NavigateModal( string path )
+        protected async void NavigateModal( string path )
         {
             await _navigationService.NavigateAsync(path,null,true,false);
         }

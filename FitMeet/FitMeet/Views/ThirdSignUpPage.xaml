@@ -1,12 +1,104 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             x:Class="FitMeet.Views.ThirdSignUpPage"
-             mvvm:ViewModelLocator.AutowireViewModel="True">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+        xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
+        xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+        x:Class="FitMeet.Views.ThirdSignUpPage" x:Name="Master"
+        mvvm:ViewModelLocator.AutowireViewModel="True">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="Small" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin Forms!" />
-        </StackLayout>
+        <Grid>
+            <ScrollView>
+                <StackLayout Padding="30,10">
+                    <StackLayout Orientation="Horizontal" Padding="10,10,0,10" HorizontalOptions="End">
+                        <Label Text="Step" TextColor="{StaticResource MainColor}"></Label>
+                        <Image Source="step3.png" HeightRequest="12"></Image>
+                    </StackLayout>
+                    <Grid>
+                        <Label Text="Activities"></Label>
+                        <Label Text="Level" HorizontalOptions="End"></Label>
+                    </Grid>
+                    <controls:ItemsStack ItemsSource="{Binding ActivitiesLevel,Mode=TwoWay}">
+                        <controls:ItemsStack.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HeightRequest="40">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <controls:CustomPicker ItemsSource="{Binding BindingContext.ActivitiesData,
+                                                                  Source={x:Reference Master}}" Padding="30,0,0,0"
+                                                           SelectedItem="{Binding Activity}" ItemDisplayBinding="{Binding Name}" />
+                                    <controls:ExtendedButton WidthRequest="30" HorizontalOptions="Start"
+                                                             VerticalContentAlignment="Center" VerticalOptions="Fill" Padding="10,0,4,0" Command="{Binding BindingContext.DeleteActivityCommand,
+                                                                               Source={x:Reference Master}}"
+                                                             CommandParameter="{Binding }" Image="remove.png"></controls:ExtendedButton>
+                                    <controls:CustomPicker Grid.Column="1" ItemsSource="{Binding BindingContext.LevelsData,
+                                                                  Source={x:Reference Master}}"
+                                                           SelectedItem="{Binding Level}" ItemDisplayBinding="{Binding Name}" />
+                                </Grid>
+                            </DataTemplate>
+                        </controls:ItemsStack.ItemTemplate>
+                    </controls:ItemsStack>
+                    <Button BackgroundColor="White" BorderColor="{StaticResource BorderColor}" BorderWidth="0.5"
+                            Command="{Binding AddActivityCommand}" TextColor="{StaticResource BodyColor}"
+                            BorderRadius="4" Margin="0,0,0,20" Text="+"></Button>
+                    <Label Text="Training Places"></Label>
+                    <controls:ItemsStack ItemsSource="{Binding Trainplaces,Mode=TwoWay}">
+                        <controls:ItemsStack.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HeightRequest="40" >
+                                    <controls:CustomPicker ItemsSource="{Binding BindingContext.TrainingLocations,
+                                                                  Source={x:Reference Master}}" Padding="30,0,0,0"
+                                                           SelectedItem="{Binding Place}" ItemDisplayBinding="{Binding LocationTitle}" />
+                                    <controls:ExtendedButton WidthRequest="30" HorizontalOptions="Start"
+                                                             VerticalContentAlignment="Center" VerticalOptions="Fill" Padding="10,0,4,0" Command="{Binding BindingContext.DeletePlaceCommand,
+                                                                  Source={x:Reference Master}}"
+                                                             CommandParameter="{Binding }" HeightRequest="20" Image="remove.png"></controls:ExtendedButton>
+                                </Grid>
+                            </DataTemplate>
+                        </controls:ItemsStack.ItemTemplate>
+                    </controls:ItemsStack>
+                    <Button BackgroundColor="White" BorderColor="{StaticResource BorderColor}" BorderWidth="0.5"
+                            Command="{Binding AddPlaceCommand}" TextColor="{StaticResource BodyColor}" BorderRadius="4"
+                            Margin="0,0,0,20" Text="+"></Button>
+                    <Label Text="Goals"></Label>
+                    <controls:CustomPicker HeightRequest="40" Margin="0,0,0,20" ItemsSource="{Binding Goals}"
+                                           SelectedItem="{Binding SelectedGoal, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}">
+                        <controls:CustomPicker.Behaviors>
+                            <behaviors:EventToCommandBehavior EventName="Unfocused" Command="{Binding GoalSelected}"></behaviors:EventToCommandBehavior>
+                        </controls:CustomPicker.Behaviors>
+                    </controls:CustomPicker>
+                    <Button Text="Apply Changes" BackgroundColor="{StaticResource MainColor}" TextColor="White"
+                            Command="{Binding SubmitCommand}" Margin="0,0,0,30"></Button>
+                </StackLayout>
+            </ScrollView>
+
+            <Grid BackgroundColor="#8C000000" IsVisible="{Binding IsPopupVisible}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding HidePopupCommand}" NumberOfTapsRequired="1"></TapGestureRecognizer>
+                </Grid.GestureRecognizers>
+                <StackLayout VerticalOptions="Center" Padding="20,20,20,0" Margin="30,0,30,60" BackgroundColor="White">
+                    <Label Text="Set your Goal"></Label>
+                    <Entry x:Name="goalEntry"></Entry>
+                    <Grid Margin="0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Text="Cancel" Command="{Binding HidePopupCommand}"></Button>
+                        <Button Grid.Column="1" Command="{Binding SetCustomGoalCommand}"
+                                CommandParameter="{Binding Text,Source={x:Reference goalEntry}}" Text="Ok"></Button>
+                    </Grid>
+                </StackLayout>
+            </Grid>
+        </Grid>
+     
     </ContentPage.Content>
 </ContentPage>

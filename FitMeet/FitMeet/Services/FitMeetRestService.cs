@@ -36,7 +36,9 @@ namespace FitMeet.Services
         private const string CheckRequestUri = "users/check_request.json";
         private const string ResponseFriendUri = "Friends/respond_friend_request.json";
         private const string EmailSignUpUri = "users/signup_email.json";
-        private const string SignUpStep2Uri = "users/signup_email.json";
+        private const string SignUpStep2Uri = "Users/signup_step2.json";
+        private const string SignUpStep3Uri = "Users/signup_step3.json";
+        private const string VerifyUri = "Users/signup_step3.json";
 
 
 
@@ -353,6 +355,29 @@ namespace FitMeet.Services
             return (result != null && result.Output?.Status == 1);
         }
 
+        public async Task<ResponseMessage<string>> SignUpStep3Async(List<ActivityKey> activities,List<Place> places,Goal goal)
+        {
+            var param = new Dictionary<string,string>
+            {
+                {"token", _token},
+                {"goal_id", goal.Id}
+            };
+            for(int i = 0 ; i < activities.Count ; i++)
+            {
+                param.Add(String.Format("activity[{0}][skill_level_id]",i),activities[i].Level.Id);
+                param.Add(String.Format("activity[{0}][activity_id]",i),activities[i].Activity.Id);
+            }
+            for(int i = 0 ; i < places.Count ; i++)
+            {
+                param.Add(String.Format("placesToTrain[{0}][location_id]",i),places[i].LocationId);
+            }
+            if(goal.Id == "6")
+            {
+                param.Add("goal_text",goal.Name);
+            }
+            return await ApiPost<ResponseMessage<string>>(SignUpStep3Uri,param);
+        }
+
         public async Task<ResponseMessage<string>> UnfriendAsync(string id)
         {
             var param = new Dictionary<string,string>
@@ -409,6 +434,17 @@ namespace FitMeet.Services
                 param.Add(String.Format("placesToTrain[{0}][location_id]",i),locationIds[i]);
             }
             return await ApiPost<ResponseMessage<string>>(UpdateProfileUri,param);
+        }
+
+        public async Task<bool> VerifyAsync()
+        {
+            var param = new Dictionary<string,string>
+            {
+                {"token", _token}
+            };
+            var result = await ApiPost<ResponseMessage<string>>(VerifyUri,param);
+            return (result != null && result.Output?.Status == 1);
+
         }
     }
 }

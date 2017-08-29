@@ -20,6 +20,7 @@ namespace FitMeet.ViewModels
         private string _address;
         private bool _isSearching;
 
+
         private readonly IGoogleLocationService _googleLocation;
 
         public DateTime Dob { get; set; }

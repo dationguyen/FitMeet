@@ -28,7 +28,7 @@ namespace FitMeet.ViewModels
         private string _messageCount;
         private string _searchKeyword;
         private ObservableCollection<GroupsCollection<string,Member>> _friendsGrouped;
-
+        private string _messageLogo = "message_logo.png";
         private bool _isChecking = false;
 
         public ObservableCollection<GroupsCollection<string,Member>> FriendsGrouped
@@ -147,6 +147,12 @@ namespace FitMeet.ViewModels
             }
         }
 
+        public string MessageLogo
+        {
+            get { return _messageLogo; }
+            set { SetProperty(ref _messageLogo , value); }
+        }
+
         public FriendsPageViewModel(INavigationService navigationService,IFitMeetRestService fitMeetRestServices,IEventAggregator eventAggregator) : base(navigationService,fitMeetRestServices)
         {
             Title = "Friends";
@@ -158,6 +164,7 @@ namespace FitMeet.ViewModels
             base.OnNavigatedTo(parameters);
             _isChecking = true;
             Device.StartTimer(TimeSpan.FromSeconds(5),Callback);
+           
             if(FriendListItemsSource.Count == 0)
             {
                 LoadItems();
@@ -184,6 +191,7 @@ namespace FitMeet.ViewModels
             else
             {
                 MessageCount = count.ToString();
+                MessageLogo = "female.png";
             }
         }
 
@@ -245,6 +253,11 @@ namespace FitMeet.ViewModels
             _curentPage = 0;
             _pageCount = 1;
             LoadItems();
+        }
+
+        ~FriendsPageViewModel()
+        {
+            
         }
 
         private void OnItemAppearing(object obj)

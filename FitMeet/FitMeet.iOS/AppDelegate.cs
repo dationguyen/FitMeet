@@ -38,6 +38,8 @@ namespace FitMeet.iOS
             UITabBar.Appearance.SelectedImageTintColor =
                 new UIColor(red: 0.30f,green: 0.75f,blue: 0.63f,alpha: 1.0f);
 
+
+
             return base.FinishedLaunching(app,options);
         }
         public override bool OpenUrl(UIApplication application,NSUrl url,string sourceApplication,NSObject annotation)

@@ -1,8 +1,8 @@
-﻿using System;
-using FitMeet.Services;
+﻿using FitMeet.Services;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
+using System;
 
 namespace FitMeet.ViewModels
 {
@@ -14,6 +14,12 @@ namespace FitMeet.ViewModels
 
 
         private bool _isLoading;
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { SetProperty(ref _isLoading,value); }
+        }
 
         public LoginPageViewModel(INavigationService navigationService,
             IPageDialogService dialogService,
@@ -36,21 +42,16 @@ namespace FitMeet.ViewModels
                     if(userProfile != null)
                     {
                         var response = await _fitMeetRestService.FacebookLoginAsync(userProfile);
-                        if(response != null && response?.Output?.Status == 1)
+                        if(response != null && response.Output?.Status == 1 && response.Output?.Response?.token != null)
                         {
-                            var token = response?.Output?.Response?.token;
-                            if(token != null)
+                            _tokenService.SetToken(response.Output.Response.token);
+                            if((response?.Output?.Validation).Equals("User already exists",StringComparison.CurrentCultureIgnoreCase))
                             {
-                                _tokenService.SetToken(token);
-                                if((response?.Output?.Validation).Equals("User already exists",StringComparison.CurrentCultureIgnoreCase))
-                                {
-                                    NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
-                                }
-                                else
-                                {
-                                    NavigateCommand.Execute("SecondSignUpPage");
-                                }
-
+                                NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
+                            }
+                            else
+                            {
+                                NavigateCommand.Execute("SecondSignUpPage");
                             }
                         }
                         else
@@ -66,10 +67,6 @@ namespace FitMeet.ViewModels
             }
         }
 
-        public bool IsLoading
-        {
-            get { return _isLoading; }
-            set { SetProperty(ref _isLoading,value); }
-        }
+       
     }
 }

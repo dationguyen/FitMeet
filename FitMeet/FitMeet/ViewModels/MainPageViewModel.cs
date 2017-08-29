@@ -29,7 +29,7 @@ namespace FitMeet.ViewModels
                     {
                         _fitMeetRestService.LogOut();
                         _tokenService.SetToken(null);
-                        NavigateCommand.Execute("app:///NavigationPage/LoginPage");
+                        Navigate("app:///NavigationPage/LoginPage");
                     }
                 });
             }

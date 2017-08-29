@@ -116,6 +116,25 @@ namespace FitMeet.ViewModels
                 });
             }
         }
+        public DelegateCommand<string> SetCustomGoalCommand
+        {
+            get
+            {
+                return new DelegateCommand<string>((s) =>
+                {
+                    var g = new Goal() { Id = "6",Name = s };
+
+                    if(_hasCustomGoal)
+                    {
+                        Goals.RemoveAt(Goals.Count - 2);
+                    }
+
+                    Goals.Insert(Goals.Count - 1,g);
+                    _hasCustomGoal = true;
+                    IsPopupVisible = false;
+                });
+            }
+        }
         public DelegateCommand SubmitCommand
         {
             get
@@ -174,25 +193,6 @@ namespace FitMeet.ViewModels
                         await _dialogService.DisplayAlertAsync("Error","Update unsuccessful","Ok");
                     }
                     IsLoading = false;
-                });
-            }
-        }
-        public DelegateCommand<string> SetCustomGoalCommand
-        {
-            get
-            {
-                return new DelegateCommand<string>((s) =>
-                {
-                    var g = new Goal() { Id = "6",Name = s };
-
-                    if(_hasCustomGoal)
-                    {
-                        Goals.RemoveAt(Goals.Count - 2);
-                    }
-
-                    Goals.Insert(Goals.Count - 1,g);
-                    _hasCustomGoal = true;
-                    IsPopupVisible = false;
                 });
             }
         }

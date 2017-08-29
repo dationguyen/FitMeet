@@ -135,9 +135,16 @@ namespace FitMeet.Services
         Task<ResponseMessage<SignUpResponse>> EmailSignUpAsync(string email,string password,bool isSubscibleNews,bool isShareInfo);
 
         /// <summary>
-        /// Send Message
+        /// Sign Up Step 2 Async
         /// </summary>
         Task<bool> SignUpStep2Async(string address,string description,string fname,string lname,string dob,bool gender);
+
+        /// <summary>
+        /// Sign Up Step 3 Async
+        /// </summary>
+        /// <returns></returns>
+        Task<ResponseMessage<string>> SignUpStep3Async(List<ActivityKey> activities,List<Place> places,Goal goal);
+
 
         /// <summary>
         /// Send Message
@@ -153,6 +160,11 @@ namespace FitMeet.Services
         /// Send Message
         /// </summary>
         Task<bool> ResponseToFriendAsync(string friendId,string status);
+
+        /// <summary>
+        /// Verify account
+        /// </summary>
+        Task<bool> VerifyAsync();
 
         /// <summary>
         /// Set current token

@@ -44,7 +44,7 @@ namespace FitMeet.ViewModels
                         NewsListItemsSource.Insert(index, _newsListSelectedItem);
                     }
                     RaisePropertyChanged("NewsListItemsSource");
-                    NavigateCommand.Execute("NewsDetailPage?id=" + ((News)value).Id);
+                    Navigate("NewsDetailPage?id=" + ((News)value).Id);
                 }
 
             }

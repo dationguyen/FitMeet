@@ -1,46 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
-             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             x:Class="FitMeet.Views.MePage"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             Title="Me">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
+        xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" x:Class="FitMeet.Views.MePage"
+        prism:ViewModelLocator.AutowireViewModel="True" Title="Me">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="edit.png"
-                     Command="{Binding EditCommand}"></ToolbarItem>
+        <ToolbarItem Icon="edit.png" Command="{Binding EditCommand}"></ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
-                <Setter Property="FontSize"
-                        Value="Small" />
+                <Setter Property="FontSize" Value="Small" />
             </Style>
             <Style TargetType="Grid">
-                <Setter Property="BackgroundColor"
-                        Value="White" />
-                <Setter Property="Padding"
-                        Value="10" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Padding" Value="10" />
             </Style>
             <x:Double x:Key="BorderThickness">1</x:Double>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Spacing="{StaticResource BorderThickness}"
-                         VerticalOptions="Start"
-                         BackgroundColor="{StaticResource BorderColor}">
+            <StackLayout Spacing="{StaticResource BorderThickness}" VerticalOptions="Start"
+                    BackgroundColor="{StaticResource BorderColor}">
                 <StackLayout BackgroundColor="White">
-                    <Image Source="{Binding DataSource.UserPhoto}"
-                           HeightRequest="100"
-                           WidthRequest="100"
-                           HorizontalOptions="Center"
-                           Margin="0,20,0,10"
-                           Aspect="AspectFill" />
-                    <Label Text="{Binding DataSource.FullName}"
-                           FontSize="Small"
-                           Margin="0,0,0,10"
-                           HorizontalOptions="Center"></Label>
+                    <StackLayout Orientation="Horizontal" Padding="10,10,20,0" HorizontalOptions="End">
+                        <Label Text="Step" TextColor="{StaticResource MainColor}"></Label>
+                        <Image Source="{Binding DataSource.Profile, StringFormat='step{0:N}.png'}" HeightRequest="12"></Image>
+                    </StackLayout>
+                    <Image Source="{Binding DataSource.UserPhoto}" HeightRequest="100" WidthRequest="100"
+                            HorizontalOptions="Center" Margin="0,10 ,0,10" Aspect="AspectFill" />
+                    <Label Text="{Binding DataSource.FullName}" FontSize="Small" Margin="0,0,0,10"
+                            HorizontalOptions="Center"></Label>
                 </StackLayout>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -48,10 +38,8 @@
                         <ColumnDefinition Width="16"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Text="Gender"
-                           HorizontalTextAlignment="End"></Label>
-                    <Label Grid.Column="2"
-                           Text="{Binding DataSource.Gender}"></Label>
+                    <Label Text="Gender" HorizontalTextAlignment="End"></Label>
+                    <Label Grid.Column="2" Text="{Binding DataSource.Gender}"></Label>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -59,10 +47,8 @@
                         <ColumnDefinition Width="16"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Text="Age"
-                           HorizontalTextAlignment="End"></Label>
-                    <Label Grid.Column="2"
-                           Text="{Binding DataSource.Age}"></Label>
+                    <Label Text="Age" HorizontalTextAlignment="End"></Label>
+                    <Label Grid.Column="2" Text="{Binding DataSource.Age}"></Label>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -70,10 +56,8 @@
                         <ColumnDefinition Width="16"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Text="About"
-                           HorizontalTextAlignment="End"></Label>
-                    <Label Grid.Column="2"
-                           Text="{Binding DataSource.About}"></Label>
+                    <Label Text="About" HorizontalTextAlignment="End"></Label>
+                    <Label Grid.Column="2" Text="{Binding DataSource.About}"></Label>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -81,10 +65,8 @@
                         <ColumnDefinition Width="16"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Text="Address"
-                           HorizontalTextAlignment="End"></Label>
-                    <Label Grid.Column="2"
-                           Text="{Binding DataSource.Address}"></Label>
+                    <Label Text="Address" HorizontalTextAlignment="End"></Label>
+                    <Label Grid.Column="2" Text="{Binding DataSource.Address}"></Label>
                 </Grid>
                 <Grid>
                     <Label Text=""></Label>
@@ -95,31 +77,24 @@
                         <ColumnDefinition Width="16"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Text="Activity"
-                           HorizontalTextAlignment="End"></Label>
+                    <Label Text="Activity" HorizontalTextAlignment="End"></Label>
                     <StackLayout Grid.Column="2">
                         <StackLayout>
-                            <ListView ItemsSource="{Binding DataSource.Skill}"
-                                      RowHeight="26"
-                                      SelectedItem="{Binding NullItem,Mode=TwoWay}"
-                                      HeightRequest="{Binding ActivitiesHeightRequest}"
-                                      VerticalOptions="Start"
-                                      SeparatorVisibility="None">
+                            <ListView ItemsSource="{Binding DataSource.Skill}" RowHeight="26"
+                                    SelectedItem="{Binding NullItem,Mode=TwoWay}"
+                                    HeightRequest="{Binding ActivitiesHeightRequest}" VerticalOptions="Start"
+                                    SeparatorVisibility="None">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <ViewCell Height="26">
-                                            <StackLayout Orientation="Horizontal"
-                                                         VerticalOptions="Start">
-                                                <StackLayout Padding="4,2"
-                                                             BackgroundColor="{StaticResource MainColor}"
-                                                             HorizontalOptions="Start">
-                                                    <Label VerticalOptions="Start"
-                                                           TextColor="White" FontSize="Micro"
-                                                           Text="{Binding LevelTitle}" />
+                                        <ViewCell Height="26" IsEnabled="False">
+                                            <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                                                <StackLayout Padding="4,2" BackgroundColor="{StaticResource MainColor}"
+                                                        HorizontalOptions="Start">
+                                                    <Label VerticalOptions="Start" TextColor="White" FontSize="Micro"
+                                                            Text="{Binding LevelTitle}" />
                                                 </StackLayout>
                                                 <controls:ActivitiesStackLayout Orientation="Horizontal"
-                                                                                HeightRequest="12"
-                                                                                ItemsSource="{Binding Activities}"/>
+                                                        HeightRequest="12" ItemsSource="{Binding Activities}" />
                                             </StackLayout>
                                         </ViewCell>
                                     </DataTemplate>
@@ -134,10 +109,8 @@
                         <ColumnDefinition Width="16"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Text="Goal"
-                           HorizontalTextAlignment="End"></Label>
-                    <Label Grid.Column="2"
-                           Text="{Binding DataSource.Goal}"></Label>
+                    <Label Text="Goal" HorizontalTextAlignment="End"></Label>
+                    <Label Grid.Column="2" Text="{Binding DataSource.Goal}"></Label>
                 </Grid>
                 <Grid VerticalOptions="Start">
                     <Grid.ColumnDefinitions>
@@ -145,23 +118,37 @@
                         <ColumnDefinition Width="16"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Text="Training Place"
-                           HorizontalTextAlignment="End"></Label>
-                    <ListView Grid.Column="2"
-                              ItemsSource="{Binding DataSource.TrainPlace}"
-                              SelectedItem="{Binding NullItem,Mode=TwoWay}"
-                              HasUnevenRows="True"
-                              RowHeight="18"
-                              SeparatorVisibility="None"
-                              HeightRequest="{Binding TrainingPlaceHeightRequest}">
+                    <Label Text="Training Place" HorizontalTextAlignment="End"></Label>
+                    <ListView Grid.Column="2" ItemsSource="{Binding DataSource.TrainPlace}"
+                            SelectedItem="{Binding NullItem,Mode=TwoWay}" HasUnevenRows="True" RowHeight="18"
+                            SeparatorVisibility="None" HeightRequest="{Binding TrainingPlaceHeightRequest}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <ViewCell>
+                                <ViewCell IsEnabled="False">
                                     <Label Text="{Binding LocationTitle}"></Label>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                </Grid>
+
+                <Grid BackgroundColor="White" Padding="30" IsVisible="{Binding DataSource.IsVerified, 
+    												Converter={StaticResource StringToBoolConverter}, 
+    												ConverterParameter='0'}">
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <Style TargetType="Button">
+                                <Setter Property="TextColor" Value="White" />
+                                <Setter Property="BorderWidth" Value="{StaticResource BorderThickness}" />
+                                <Setter Property="BorderColor" Value="{StaticResource BorderColor}" />
+                            </Style>
+                        </ResourceDictionary>
+                    </Grid.Resources>
+                    <Button Text="Verify your account" Command="{Binding VerifyCommand}" BackgroundColor="{StaticResource RedColor}" />
+
+                    <Grid BackgroundColor="#8CFFFFFF" IsVisible="{Binding IsVerifying}">
+                        <ActivityIndicator IsRunning="true" Color="Black"></ActivityIndicator>
+                    </Grid>
                 </Grid>
             </StackLayout>
         </ScrollView>

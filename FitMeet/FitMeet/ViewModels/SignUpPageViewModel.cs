@@ -19,26 +19,26 @@ namespace FitMeet.ViewModels
         {
             get
             {
-                return new DelegateCommand(() =>
+                return new DelegateCommand(async () =>
                 {
-                    Navigate("SecondSignUpPage");
-                    //var result = await _fitMeetRestService.EmailSignUpAsync(Email,Password,IsSubscrible,true);
-                    //if(result != null)
-                    //{
-                    //    if(result.Output.Status == 1 && result.Output.Response.token != null)
-                    //    {
-                    //        _tokenService.SetToken(result.Output.Response.token);
-                    //        Navigate("SecondSignUpPage");
-                    //    }
-                    //    else
-                    //    {
-                    //        await _dialogService.DisplayAlertAsync("Error",result.Output.Validation,"Ok");
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    await _dialogService.DisplayAlertAsync("Error","There are some error, Please try again later","Ok");
-                    //}
+                    //Navigate("ThirdSignUpPage");
+                    var result = await _fitMeetRestService.EmailSignUpAsync(Email,Password,IsSubscrible,true);
+                    if(result != null)
+                    {
+                        if(result.Output.Status == 1 && result.Output.Response.token != null)
+                        {
+                            _tokenService.SetToken(result.Output.Response.token);
+                            Navigate("SecondSignUpPage");
+                        }
+                        else
+                        {
+                            await _dialogService.DisplayAlertAsync("Error",result.Output.Validation,"Ok");
+                        }
+                    }
+                    else
+                    {
+                        await _dialogService.DisplayAlertAsync("Error","There are some error, Please try again later","Ok");
+                    }
                 });
             }
         }
