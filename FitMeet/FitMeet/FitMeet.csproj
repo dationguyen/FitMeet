@@ -88,6 +88,7 @@
     <Compile Include="Services\GoogleLocationService.cs" />
     <Compile Include="Services\IFacebookService.cs" />
     <Compile Include="Services\IGoogleLocationService.cs" />
+    <Compile Include="Services\ISettingServices.cs" />
     <Compile Include="Services\ITokenService.cs" />
     <Compile Include="Services\StaticDataService.cs" />
     <Compile Include="Models\MemberModel.cs" />

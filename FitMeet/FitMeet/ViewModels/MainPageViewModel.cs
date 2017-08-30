@@ -29,6 +29,7 @@ namespace FitMeet.ViewModels
                     {
                         _fitMeetRestService.LogOut();
                         _tokenService.SetToken(null);
+
                         Navigate("app:///NavigationPage/LoginPage");
                     }
                 });

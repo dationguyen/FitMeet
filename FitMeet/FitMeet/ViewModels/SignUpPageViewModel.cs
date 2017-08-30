@@ -27,7 +27,9 @@ namespace FitMeet.ViewModels
                     {
                         if(result.Output.Status == 1 && result.Output.Response.token != null)
                         {
-                            _tokenService.SetToken(result.Output.Response.token);
+                            var token = result.Output.Response.token;
+                            _tokenService.SetToken(token);
+                            _fitMeetRestService.SetToken(token);
                             Navigate("SecondSignUpPage");
                         }
                         else

@@ -1,23 +1,17 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using System;
-using System.Threading.Tasks;
 
 namespace FitMeet.Services
 {
     public class TokenService:ITokenService
     {
-        private IFitMeetRestService _fitMeetRestService;
         private string _token;
 
         private const string tokenKey = "Token";
         private ISettings AppSettings =>
             CrossSettings.Current;
 
-        public TokenService(IFitMeetRestService fitMeetRestService)
-        {
-            _fitMeetRestService = fitMeetRestService;
-        }
 
         public string GetToken()
         {
@@ -27,19 +21,11 @@ namespace FitMeet.Services
             }
             return _token;
         }
-
-        public async Task<bool> HasValidToken()
-        {
-            bool valid = await _fitMeetRestService.CheckTokenAsync(_token);
-            return valid;
-        }
-
         public void SetToken(string token)
         {
             if(!String.IsNullOrEmpty(token))
             {
                 _token = token;
-                _fitMeetRestService.SetToken(token);
                 SaveToken(_token);
             }
             else

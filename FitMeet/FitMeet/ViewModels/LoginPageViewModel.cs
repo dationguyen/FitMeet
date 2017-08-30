@@ -44,7 +44,9 @@ namespace FitMeet.ViewModels
                         var response = await _fitMeetRestService.FacebookLoginAsync(userProfile);
                         if(response != null && response.Output?.Status == 1 && response.Output?.Response?.token != null)
                         {
-                            _tokenService.SetToken(response.Output.Response.token);
+                            var token = response.Output.Response.token;
+                            _tokenService.SetToken(token);
+                            _fitMeetRestService.SetToken(token);
                             if((response?.Output?.Validation).Equals("User already exists",StringComparison.CurrentCultureIgnoreCase))
                             {
                                 NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
@@ -67,6 +69,6 @@ namespace FitMeet.ViewModels
             }
         }
 
-       
+
     }
 }

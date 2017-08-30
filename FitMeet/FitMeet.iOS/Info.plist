@@ -101,5 +101,13 @@
 	<string>306989955995811</string>
 	<key>FacebookDisplayName</key>
 	<string>Roor</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>XSLaunchImageAssets</key>
+	<string>Resources/Media.xcassets/LaunchImage.launchimage</string>
+	<key>XSAppIconAssets</key>
+	<string>Resources/Media.xcassets/AppIcon.appiconset</string>
 </dict>
 </plist>

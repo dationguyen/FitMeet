@@ -16,7 +16,7 @@ namespace FitMeet.ViewModels
                 return new DelegateCommand(async () =>
                 {
                     var token = _tokenService.GetToken();
-                    if(!String.IsNullOrEmpty(token) && await _tokenService.HasValidToken())
+                    if(!String.IsNullOrEmpty(token) && await _fitMeetRestService.CheckTokenAsync(token))
                     {
                         _fitMeetRestService.SetToken(token);
                         NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");

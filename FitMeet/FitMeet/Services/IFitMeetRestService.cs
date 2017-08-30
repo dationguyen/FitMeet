@@ -173,9 +173,15 @@ namespace FitMeet.Services
         void SetToken(string token);
 
         /// <summary>
-        /// Set current token
+        /// Logout
         /// </summary>
         /// <param name="token"></param>
         void LogOut();
+
+        /// <summary>
+        /// check if use has connected to facebook or not
+        /// 
+        /// </summary>
+        bool HasFacebook { get; set; }
     }
 }

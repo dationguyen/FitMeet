@@ -55,6 +55,8 @@ namespace FitMeet.Services
             _geoService = geoService;
         }
 
+        public bool HasFacebook { get; set; }
+
         public async Task<bool> AddFriendsAsync(string friendId)
         {
             var param = new Dictionary<string,string>
@@ -263,7 +265,9 @@ namespace FitMeet.Services
             {
                 { "token",_token }
             };
-            return await ApiPost<ResponseMessage<UserProfile>>(getProfileUri,param);
+            var profile = await ApiPost<ResponseMessage<UserProfile>>(getProfileUri,param);
+            HasFacebook = profile?.Output?.Response?.HasFacebook == "No";
+            return profile;
         }
 
         public async void LogOut()
@@ -272,6 +276,7 @@ namespace FitMeet.Services
             {
                 { "token",_token }
             };
+            SetToken(null);
             await ApiPost<ResponseMessage<string>>(LogOutUri,param);
         }
 

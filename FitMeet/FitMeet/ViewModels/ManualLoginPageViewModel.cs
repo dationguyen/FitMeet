@@ -15,7 +15,7 @@ namespace FitMeet.ViewModels
 
         private bool _isEmailValidated;
 
-        public ManualLoginPageViewModel( ITokenService tokenService,INavigationService navigationService,IFitMeetRestService fitMeetRestServices,IPageDialogService dialogService ) : base(navigationService,fitMeetRestServices)
+        public ManualLoginPageViewModel(ITokenService tokenService,INavigationService navigationService,IFitMeetRestService fitMeetRestServices,IPageDialogService dialogService) : base(navigationService,fitMeetRestServices)
         {
             _dialogService = dialogService;
             _tokenService = tokenService;
@@ -49,7 +49,9 @@ namespace FitMeet.ViewModels
                         {
                             if(res.Output?.Status == 1 && res.Output?.Response != null)
                             {
-                                _tokenService.SetToken(res.Output.Response.Token);
+                                var token = res.Output.Response.Token;
+                                _tokenService.SetToken(token);
+                                _fitMeetRestService.SetToken(token);
                                 NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
                                 return;
                             }
