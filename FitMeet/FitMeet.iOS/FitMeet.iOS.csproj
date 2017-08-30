@@ -136,11 +136,7 @@
       <InProject>false</InProject>
     </ImageAsset>
     <None Include="app.config" />
-    <ImageAsset Include="Assets.xcassets\female.imageset\Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\female.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Contents.json" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist">
@@ -156,6 +152,10 @@
     <BundleResource Include="Resources\Fonts\MyriadPro-Bold.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\message_logo_1.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\message_logo_1.imageset\message_logo_1.png" />
+    <ImageAsset Include="Assets.xcassets\message_logo_1.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\message_logo_1.imageset\message_logo_1.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FitMeet\FitMeet.csproj">
@@ -349,11 +349,6 @@
     </ImageAsset>
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\female.imageset\female.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\message_logo_0.png" />
   </ItemGroup>
   <ItemGroup>
@@ -367,9 +362,6 @@
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-Small%402x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\female.imageset\female.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\Default-568h%402x.png" />
@@ -388,6 +380,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\message_logo_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets.xcassets\.imageset\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
