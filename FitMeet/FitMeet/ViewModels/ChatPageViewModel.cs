@@ -78,22 +78,26 @@ namespace FitMeet.ViewModels
         public override async void OnNavigatedTo(NavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-
+            Messages = new ObservableCollection<MessageModel>();
             Title = parameters["name"]?.ToString();
             _id = parameters["id"].ToString();
             if(_id != null)
             {
                 var api = await _fitMeetRestService.GetMessagesAsync(_id);
                 var mesages = api.Output.Response;
-                foreach(var message in mesages)
+                if (mesages != null)
                 {
-                    message.IsClient = !(message.SenderId == _id);
+                    foreach(var message in mesages)
+                    {
+                        message.IsClient = !(message.SenderId == _id);
+                    }
+               
+                    Messages = new ObservableCollection<MessageModel>(mesages);
+                    var last = Messages.Last();
+                    _currentIndex = last.MessageId;
+                    LastItem = last;
                 }
                
-                Messages = new ObservableCollection<MessageModel>(mesages);
-                var last = Messages.Last();
-                _currentIndex = last.MessageId;
-                LastItem = last;
                 _isTimerTick = true;
                 Device.StartTimer(TimeSpan.FromSeconds(2),TimerOnTick);
             }

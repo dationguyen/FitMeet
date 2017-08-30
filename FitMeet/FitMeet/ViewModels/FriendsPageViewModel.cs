@@ -28,7 +28,7 @@ namespace FitMeet.ViewModels
         private string _messageCount;
         private string _searchKeyword;
         private ObservableCollection<GroupsCollection<string,Member>> _friendsGrouped;
-        private string _messageLogo = "message_logo.png";
+        private string _messageLogo = "message_logo_0.png";
         private bool _isChecking = false;
 
         public ObservableCollection<GroupsCollection<string,Member>> FriendsGrouped
@@ -115,6 +115,20 @@ namespace FitMeet.ViewModels
             }
         }
 
+        public DelegateCommand ReloadFriend
+        {
+            get
+            {
+                return new DelegateCommand(() =>
+                {
+                    if(FriendListItemsSource.Count == 0)
+                    {
+                        LoadItems();
+                    }
+                });
+            }
+        }
+
         public string MessageCount
         {
             get => _messageCount;
@@ -150,7 +164,7 @@ namespace FitMeet.ViewModels
         public string MessageLogo
         {
             get { return _messageLogo; }
-            set { SetProperty(ref _messageLogo , value); }
+            set { SetProperty(ref _messageLogo,value); }
         }
 
         public FriendsPageViewModel(INavigationService navigationService,IFitMeetRestService fitMeetRestServices,IEventAggregator eventAggregator) : base(navigationService,fitMeetRestServices)
@@ -164,7 +178,7 @@ namespace FitMeet.ViewModels
             base.OnNavigatedTo(parameters);
             _isChecking = true;
             Device.StartTimer(TimeSpan.FromSeconds(5),Callback);
-           
+
             if(FriendListItemsSource.Count == 0)
             {
                 LoadItems();
@@ -189,9 +203,8 @@ namespace FitMeet.ViewModels
                 MessageCount = String.Empty;
             }
             else
-            {
+            {   
                 MessageCount = count.ToString();
-                MessageLogo = "female";
             }
         }
 
@@ -250,6 +263,7 @@ namespace FitMeet.ViewModels
         private void ReloadItems()
         {
             FriendListItemsSource.Clear();
+            FriendsGrouped.Clear();
             _curentPage = 0;
             _pageCount = 1;
             LoadItems();
@@ -257,7 +271,7 @@ namespace FitMeet.ViewModels
 
         ~FriendsPageViewModel()
         {
-            
+
         }
 
         private void OnItemAppearing(object obj)
