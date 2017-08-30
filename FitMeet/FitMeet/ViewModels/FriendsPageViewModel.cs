@@ -198,6 +198,7 @@ namespace FitMeet.ViewModels
         {
             var count = await _fitMeetRestService.CheckMessage();
             Debug.WriteLine("there are {0} message",count);
+            MessageLogo = String.Format("message_logo_{0}", count);
             if(count == 0)
             {
                 MessageCount = String.Empty;

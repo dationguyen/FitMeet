@@ -64,10 +64,6 @@
 		<string>Fonts/MyriadPro-Regular.ttf</string>
 		<string>Fonts/MyriadPro-Bold.otf</string>
 	</array>
-	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcon.appiconset</string>
-	<key>XSLaunchImageAssets</key>
-	<string>Assets.xcassets/LaunchImage.launchimage</string>
 	<key>NSExceptionDomains</key>
 	<dict>
 		<key>facebook.com</key>
@@ -105,5 +101,9 @@
 	<string>306989955995811</string>
 	<key>FacebookDisplayName</key>
 	<string>Roor</string>
+	<key>XSLaunchImageAssets</key>
+	<string>Resources/Media.xcassets/LaunchImages.launchimage</string>
+	<key>XSAppIconAssets</key>
+	<string>Resources/Media.xcassets/AppIcons.appiconset</string>
 </dict>
 </plist>
