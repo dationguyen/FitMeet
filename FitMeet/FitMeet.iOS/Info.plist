@@ -101,9 +101,5 @@
 	<string>306989955995811</string>
 	<key>FacebookDisplayName</key>
 	<string>Roor</string>
-	<key>XSLaunchImageAssets</key>
-	<string>Resources/Media.xcassets/LaunchImages.launchimage</string>
-	<key>XSAppIconAssets</key>
-	<string>Resources/Media.xcassets/AppIcons.appiconset</string>
 </dict>
 </plist>

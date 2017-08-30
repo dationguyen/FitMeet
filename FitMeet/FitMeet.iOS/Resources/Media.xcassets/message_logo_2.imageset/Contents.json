@@ -1,11 +1,34 @@
 {
   "images": [
     {
-      "scale": "1x",
-      "idiom": "iphone",
-      "filename": "message_logo_2.png"
+      "idiom": "universal"
     },
     {
+      "scale": "1x",
+      "idiom": "universal"
+    },
+    {
+      "scale": "2x",
+      "idiom": "universal"
+    },
+    {
+      "scale": "3x",
+      "idiom": "universal"
+    },
+    {
+      "idiom": "iphone"
+    },
+    {
+      "filename": "message_logo_2.png",
+      "scale": "1x",
+      "idiom": "iphone"
+    },
+    {
+      "scale": "2x",
+      "idiom": "iphone"
+    },
+    {
+      "subtype": "retina4",
       "scale": "2x",
       "idiom": "iphone"
     },
@@ -14,14 +37,48 @@
       "idiom": "iphone"
     },
     {
-      "idiom": "iphone"
+      "idiom": "ipad"
+    },
+    {
+      "scale": "1x",
+      "idiom": "ipad"
+    },
+    {
+      "scale": "2x",
+      "idiom": "ipad"
+    },
+    {
+      "idiom": "watch"
+    },
+    {
+      "scale": "2x",
+      "idiom": "watch"
+    },
+    {
+      "screenWidth": "{130,145}",
+      "scale": "2x",
+      "idiom": "watch"
+    },
+    {
+      "screenWidth": "{146,165}",
+      "scale": "2x",
+      "idiom": "watch"
+    },
+    {
+      "idiom": "mac"
+    },
+    {
+      "scale": "1x",
+      "idiom": "mac"
+    },
+    {
+      "scale": "2x",
+      "idiom": "mac"
     }
   ],
-  "properties": {
-    "template-rendering-intent": "original"
-  },
   "info": {
     "version": 1,
-    "author": ""
+    "author": "xcode",
+    "template-rendering-intent": "original"
   }
 }
