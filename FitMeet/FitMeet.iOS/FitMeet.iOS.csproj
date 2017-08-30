@@ -102,18 +102,6 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\ListViewRenderer.cs" />
     <Compile Include="Renderers\ToggeButtonRenderer.cs" />
-    <ImageAsset Include="Resources\Assets.xcassets\female.imageset\Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Assets.xcassets\female.imageset\female.png">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Media.xcassets\AppIcons.appiconset\Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Resources\Media.xcassets\LaunchImages.launchimage\Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
     <ImageAsset Include="Resources\Media.xcassets\message_logo_1.imageset\Contents.json">
       <InProject>false</InProject>
     </ImageAsset>
@@ -141,12 +129,8 @@
     <BundleResource Include="Resources\Fonts\MyriadPro-Bold.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
-    <ImageAsset Include="Assets.xcassets\message_logo_1.imageset\Contents.json">
-      <InProject>false</InProject>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\message_logo_1.imageset\message_logo_1.png">
-      <InProject>false</InProject>
-    </ImageAsset>
+    <ImageAsset Include="Resources\Media.xcassets\AppIcon.appiconset\Contents.json" />
+    <ImageAsset Include="Resources\Media.xcassets\LaunchImage.launchimage\Contents.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FitMeet\FitMeet.csproj">
