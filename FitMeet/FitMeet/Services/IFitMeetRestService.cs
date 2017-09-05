@@ -76,6 +76,12 @@ namespace FitMeet.Services
         /// Add Friend
         /// </summary>
         /// <returns></returns>
+        Task<ResponseMessage<List<BlockedFriend>>> GetBlockedFriendsAsync();
+
+        /// <summary>
+        /// Add Friend
+        /// </summary>
+        /// <returns></returns>
         Task<ResponseMessage<List<Place>>> GetTrainingLocationAsync();
 
         /// <summary>
@@ -97,6 +103,12 @@ namespace FitMeet.Services
         Task<bool> BlockfriendAsync(string id,string message = null);
 
         /// <summary>
+        /// Unblock
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> UnblockfriendAsync(string id);
+
+        /// <summary>
         /// Manual Login
         /// </summary>
         /// <returns></returns>
@@ -114,6 +126,12 @@ namespace FitMeet.Services
         /// </summary>
         /// <returns></returns>
         Task<ResponseMessage<List<MessageModel>>> GetMessagesAsync(string id);
+
+        /// <summary>
+        /// Get a list of message 
+        /// </summary>
+        /// <returns></returns>
+        Task<ResponseMessage<List<MessageModel>>> GetMoreMessagesAsync(string id,int page);
 
         /// <summary>
         /// Get a specific message

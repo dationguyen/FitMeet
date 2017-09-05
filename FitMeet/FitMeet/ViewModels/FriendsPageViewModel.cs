@@ -154,7 +154,7 @@ namespace FitMeet.ViewModels
                              orderby member.MemberFirstName
                              group member by member.NameSort into memberGroup
                              select new GroupsCollection<string,Member>(memberGroup.Key,memberGroup);
-
+              
                 //create a new collection of groups
                 FriendsGrouped = new ObservableCollection<GroupsCollection<string,Member>>(sorted);
 
@@ -179,22 +179,23 @@ namespace FitMeet.ViewModels
             _isChecking = true;
             Device.StartTimer(TimeSpan.FromSeconds(5),Callback);
 
-            if(FriendListItemsSource.Count == 0)
-            {
-                LoadItems();
-            }
+            //if(FriendListItemsSource.Count == 0)
+            //{
+            FriendListItemsSource.Clear();
+            LoadItems();
+            //}
         }
 
         private bool Callback()
         {
             if(_isChecking)
             {
-                checkMessage();
+                CheckMessage();
             }
             return _isChecking;
         }
 
-        private async void checkMessage()
+        private async void CheckMessage()
         {
             var count = await _fitMeetRestService.CheckMessage();
             Debug.WriteLine("there are {0} message",count);
@@ -231,11 +232,10 @@ namespace FitMeet.ViewModels
 
         private async void LoadItems()
         {
-            IsRefreshing = true;
-
             var restResponseMessage = await GetDataFromRest(_curentPage + 1);
             if(restResponseMessage == null)
             {
+                IsRefreshing = false;
                 _curentPage++;
                 return;
             }

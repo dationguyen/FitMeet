@@ -130,9 +130,7 @@ namespace FitMeet.Controls
 
         protected virtual void SetSelectedItem( object selectedItem )
         {
-            var handler = SelectedItemChanged;
-            if ( handler != null )
-                handler(this , new SelectedItemChangedEventArgs(selectedItem));
+            SelectedItemChanged?.Invoke(this,new SelectedItemChangedEventArgs(selectedItem));
         }
 
         IObservableReadOnlyCollection<object> _observableSource;

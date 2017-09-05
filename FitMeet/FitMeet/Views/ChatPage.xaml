@@ -1,13 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
         xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" x:Class="FitMeet.Views.ChatPage"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
         LastItem="{Binding LastItem}" Title="{Binding Title}" mvvm:ViewModelLocator.AutowireViewModel="True">
     <ContentPage.Content>
         <ScrollView x:Name="Container">
             <Grid HeightRequest="{Binding Height,Source={x:Reference Container}}">
-                <ListView ItemsSource="{Binding Messages}" x:Name="MessageListView"
-                        SelectedItem="{Binding SelectedItem,Mode=TwoWay}" HorizontalOptions="Start" Margin="0,0,0,64"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ListView ItemsSource="{Binding Messages}" x:Name="MessageListView" Grid.Row ="1" IsPullToRefreshEnabled="{Binding HasMore}"
+                        SelectedItem="{Binding SelectedItem,Mode=TwoWay}" HorizontalOptions="Start" Margin="0,0,0,4"
+                        RefreshCommand="{Binding LoadMoreCommand}" IsRefreshing="{Binding Loading}"
                         VerticalOptions="Fill" HasUnevenRows="True" SeparatorVisibility="None">
+                    <ListView.Header>
+                        <Label Text="Pull to get more message" IsVisible="{Binding HasMore}" HorizontalTextAlignment="Center"
+                                FontSize="Micro" TextColor="{StaticResource BodyColor}" HeightRequest="20"></Label>
+                    </ListView.Header>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell >
@@ -21,14 +32,14 @@
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                         <ColumnDefinition Width="60"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <Image HeightRequest="60" WidthRequest="60" Aspect="AspectFill"
+                                    <ffimageloading:CachedImage DownsampleToViewSize="true" HeightRequest="60" WidthRequest="60" Aspect="AspectFill"
                                             VerticalOptions="Start" Source="{Binding SenderImage}">
-                                        <Image.Triggers>
-                                            <DataTrigger TargetType="Image" Binding="{Binding IsClient}" Value="True">
+                                        <ffimageloading:CachedImage.Triggers>
+                                            <DataTrigger TargetType="ffimageloading:CachedImage" Binding="{Binding IsClient}" Value="True">
                                                 <Setter Property="Grid.Column" Value="2"></Setter>
                                             </DataTrigger>
-                                        </Image.Triggers>
-                                    </Image>
+                                        </ffimageloading:CachedImage.Triggers>
+                                    </ffimageloading:CachedImage>
                                     <Frame Grid.ColumnSpan="2" Grid.Column="1" Padding="10" Margin="10,0"
                                             HasShadow="False" OutlineColor="{StaticResource BorderColor}"
                                             BackgroundColor="{StaticResource NavBackgroundColor}"
@@ -57,7 +68,7 @@
                     <ListView.Footer></ListView.Footer>
                 </ListView>
 
-                <Grid HeightRequest="60" VerticalOptions="End" BackgroundColor="{StaticResource NavBackgroundColor}">
+                <Grid HeightRequest="60" Grid.Row="2" BackgroundColor="{StaticResource NavBackgroundColor}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="80"></ColumnDefinition>
@@ -65,8 +76,7 @@
 
                     <Entry Margin="10,10,0,10" x:Name="Input" Text="{Binding Message}" Completed="Input_OnCompleted" Keyboard="Chat"></Entry>
                     <Button Grid.Column="1" x:Name="SendButton"
-                            Command="{Binding SendMessageCommand}" Text="Send"
-                            IsEnabled="{Binding IsAbleToSend}"></Button>
+                            Command="{Binding SendMessageCommand}" Text="Send"></Button>
                 </Grid>
 
             </Grid>

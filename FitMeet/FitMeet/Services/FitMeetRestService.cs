@@ -1,4 +1,5 @@
 ﻿using FitMeet.Models;
+using FitMeet.Services.DependencyServices;
 using Prism.Services;
 using System;
 using System.Collections.Generic;
@@ -10,26 +11,27 @@ namespace FitMeet.Services
 {
     public class FitMeetRestService:RestApiClient, IFitMeetRestService
     {
-        private const string baseUri = "http://52.64.164.241/";
-        private const string getNewsUri = "News/index.json";
-        private const string getPageUri = "contentpages/getpage.json";
-        private const string getNewsDetailUri = "News/view.json";
-        private const string getMemberUri = "users/index/page:{0}.json";
-        private const string getFriendUri = "friends/index/page:{0}.json";
-        private const string getProfileUri = "Users/my_profile.json";
-        private const string addFriendUri = "Friends/add.json";
-        private const string getTrainPlacesUri = "Locations/listTrainPlaces.json";
-        private const string getMemberDetailUri = "/users/view.json";
-        private const string searchMemberUri = "Users/advance_search/page:{0}.json";
-        private const string getActivityDataUri = "activities/index.json";
+        private const string BaseUri = "http://52.64.164.241/";
+        private const string GetNewsUri = "News/index.json";
+        private const string GetPageUri = "contentpages/getpage.json";
+        private const string GetNewsDetailUri = "News/view.json";
+        private const string GetMemberUri = "users/index/page:{0}.json";
+        private const string GetFriendUri = "friends/index/page:{0}.json";
+        private const string GetProfileUri = "Users/my_profile.json";
+        private const string AddFriendUri = "Friends/add.json";
+        private const string GetTrainPlacesUri = "Locations/listTrainPlaces.json";
+        private const string GetMemberDetailUri = "/users/view.json";
+        private const string SearchMemberUri = "Users/advance_search/page:{0}.json";
+        private const string GetActivityDataUri = "activities/index.json";
         private const string UpdateProfileUri = "Users/edit_profile.json";
         private const string UnfriendUri = "friends/unfriend.json";
         private const string ManualLoginUri = "Users/login.json";
         private const string CheckTokenUri = "users/check_token.json";
-        private const string BlockFriendUri = "Users/block.json";
+        private const string BlockFriendUri = "friends/block.json";
         private const string FBSignUpUri = "Users/signup_facebook.json";
         private const string LogOutUri = "users/logout.json";
         private const string GetMessagesUri = "Messages/msg_paginate.json";
+        private const string GetMoreMessagesUri = "Messages/msg_paginate/page:{0}.json";
         private const string GetMessageUri = "Messages/get_msg.json";
         private const string SendMessageUri = "Messages/save_msg.json";
         private const string CheckMessageUri = "Users/count_msg.json";
@@ -39,20 +41,23 @@ namespace FitMeet.Services
         private const string SignUpStep2Uri = "Users/signup_step2.json";
         private const string SignUpStep3Uri = "Users/signup_step3.json";
         private const string VerifyUri = "Users/signup_step3.json";
-
+        private const string GetBlockedFriendsUri = "friends/block_list.json";
+        private const string UnblockedFriendUri = "friends/unblock.json";
 
 
         private readonly IPageDialogService _dialogService;
         private readonly IGeoLocationService _geoService;
+        private IDependencyService _dependencyService;
 
         private string _token = "";
 
 
-        public FitMeetRestService(IPageDialogService dialogService,IGeoLocationService geoService)
+        public FitMeetRestService(IPageDialogService dialogService,IGeoLocationService geoService,IDependencyService dependencyService)
         {
-            this.httpClient = new HttpClient() { BaseAddress = new Uri(baseUri) };
+            this.httpClient = new HttpClient() { BaseAddress = new Uri(BaseUri) };
             _dialogService = dialogService;
             _geoService = geoService;
+            _dependencyService = dependencyService;
         }
 
         public bool HasFacebook { get; set; }
@@ -64,7 +69,7 @@ namespace FitMeet.Services
                 { "token",_token },
                 { "friend",friendId }
             };
-            var result = await ApiPost<ResponseMessage<string>>(addFriendUri,param);
+            var result = await ApiPost<ResponseMessage<string>>(AddFriendUri,param);
             return result?.Output?.Status == 1;
         }
 
@@ -79,7 +84,7 @@ namespace FitMeet.Services
             {
                 param.Add("message",message);
             }
-            var result = await ApiPost<ResponseMessage<string>>(addFriendUri,param);
+            var result = await ApiPost<ResponseMessage<string>>(BlockFriendUri,param);
             return result?.Output?.Status == 1;
         }
 
@@ -123,10 +128,13 @@ namespace FitMeet.Services
         {
             var position = await _geoService.GetPosition();
 
+            var deviceToken = _dependencyService.Get<IGetDeviceTokenService>().DeviceToken();
+
             var param = new Dictionary<string,string>
             {
                 { "email",email },
                 { "password",password },
+                { "device_token",deviceToken },
                 { "newsletter",isSubscibleNews?"1":"0" },
                 { "share_info",isShareInfo?"1":"0"},
                 { "device_type","I"},
@@ -139,11 +147,13 @@ namespace FitMeet.Services
         public async Task<ResponseMessage<SignUpResponse>> FacebookLoginAsync(FacebookProfile profile)
         {
             var position = await _geoService.GetPosition();
+            var deviceToken = _dependencyService.Get<IGetDeviceTokenService>().DeviceToken();
 
             var param = new Dictionary<string,string>
             {
                 { "fbid",profile.Id },
                 { "email",profile.Email },
+                { "device_token",deviceToken },
                 { "fname",profile.FirstName },
                 { "lname",profile.LastName },
                 { "picture",profile.Picture?.Data?.Url},
@@ -159,8 +169,17 @@ namespace FitMeet.Services
             {
                 { "token",_token }
             };
-            return await ApiPost<ResponseMessage<ActivityData>>(getActivityDataUri,param);
+            return await ApiPost<ResponseMessage<ActivityData>>(GetActivityDataUri,param);
 
+        }
+
+        public async Task<ResponseMessage<List<BlockedFriend>>> GetBlockedFriendsAsync()
+        {
+            var param = new Dictionary<string,string>
+            {
+                { "token",_token }
+            };
+            return await ApiPost<ResponseMessage<List<BlockedFriend>>>(GetBlockedFriendsUri,param);
         }
 
         public async Task<ResponseMessage<List<Member>>> GetFriendsAsync(int page)
@@ -173,7 +192,7 @@ namespace FitMeet.Services
                 { "lat", position?.Latitude.ToString() },
                 { "lng", position?.Longitude.ToString() }
             };
-            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(getFriendUri,page),param);
+            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(GetFriendUri,page),param);
         }
 
         public async Task<ResponseMessage<MemberDetail>> GetMemberDetailAsync(string id)
@@ -183,7 +202,7 @@ namespace FitMeet.Services
                 { "token",_token },
                 { "id", id }
             };
-            return await ApiPost<ResponseMessage<MemberDetail>>(getMemberDetailUri,param);
+            return await ApiPost<ResponseMessage<MemberDetail>>(GetMemberDetailUri,param);
         }
 
         public async Task<ResponseMessage<List<Member>>> GetMembersAsync(int pageId)
@@ -196,7 +215,7 @@ namespace FitMeet.Services
                 { "lat", position?.Latitude.ToString() },
                 { "lng", position?.Longitude.ToString() }
             };
-            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(getMemberUri,pageId),param);
+            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(GetMemberUri,pageId),param);
         }
 
         public async Task<ResponseMessage<List<MessageModel>>> GetMessageAsync(string friendId,string messageId)
@@ -220,6 +239,16 @@ namespace FitMeet.Services
             return await ApiPost<ResponseMessage<List<MessageModel>>>(GetMessagesUri,param);
         }
 
+        public async Task<ResponseMessage<List<MessageModel>>> GetMoreMessagesAsync(string id,int page)
+        {
+            var param = new Dictionary<string,string>
+            {
+                { "token",_token },
+                { "friend",id }
+            };
+            return await ApiPost<ResponseMessage<List<MessageModel>>>(String.Format(GetMoreMessagesUri,page),param);
+        }
+
         /// <summary>
         /// Get the list of news
         /// </summary>
@@ -230,7 +259,7 @@ namespace FitMeet.Services
             {
                 { "token",_token }
             };
-            return await ApiPost<ResponseMessage<List<News>>>(getNewsUri,param);
+            return await ApiPost<ResponseMessage<List<News>>>(GetNewsUri,param);
         }
 
         public async Task<ResponseMessage<NewsDetail>> GetNewsDetailAsync(string id)
@@ -240,7 +269,7 @@ namespace FitMeet.Services
                 { "token",_token },
                 { "id", id }
             };
-            return await ApiPost<ResponseMessage<NewsDetail>>(getNewsDetailUri,param);
+            return await ApiPost<ResponseMessage<NewsDetail>>(GetNewsDetailUri,param);
         }
 
         public async Task<ResponseMessage<WebPageInfo>> GetPageDetailAsync(string pageName)
@@ -249,14 +278,14 @@ namespace FitMeet.Services
             {
                 { "slug", pageName }
             };
-            return await ApiPost<ResponseMessage<WebPageInfo>>(getPageUri,param);
+            return await ApiPost<ResponseMessage<WebPageInfo>>(GetPageUri,param);
         }
 
         public async Task<ResponseMessage<List<Place>>> GetTrainingLocationAsync()
         {
             var param = new Dictionary<string,string>();
 
-            return await ApiPost<ResponseMessage<List<Place>>>(getTrainPlacesUri,param);
+            return await ApiPost<ResponseMessage<List<Place>>>(GetTrainPlacesUri,param);
         }
 
         public async Task<ResponseMessage<UserProfile>> GetUserProfileAsync()
@@ -265,7 +294,7 @@ namespace FitMeet.Services
             {
                 { "token",_token }
             };
-            var profile = await ApiPost<ResponseMessage<UserProfile>>(getProfileUri,param);
+            var profile = await ApiPost<ResponseMessage<UserProfile>>(GetProfileUri,param);
             HasFacebook = profile?.Output?.Response?.HasFacebook == "No";
             return profile;
         }
@@ -282,9 +311,10 @@ namespace FitMeet.Services
 
         public async Task<ResponseMessage<LoginModel>> ManualLoginAsync(string id,string password)
         {
+            var deviceToken = _dependencyService.Get<IGetDeviceTokenService>().DeviceToken();
             var param = new Dictionary<string,string>
             {
-                { "device_token","APA91bGQORESHDWSf2cG6dPpcwrxm4ViL1a8u0bDMqBjkfKBGEVcy-k67YnWaMsX7rcVTpGQrSnVeOn5VEOlIjIeHXDV0f9a3QykLHHXK_6q2TlsO2o81qscqHMXbpGdH6fLzLXo08TD" },
+                { "device_token",deviceToken },
                 { "device_type","I" },
                 { "password",password },
                 { "email", id }
@@ -320,7 +350,7 @@ namespace FitMeet.Services
             {
                 param.Add(String.Format("activity[{0}]",i),activities[i].ToString());
             }
-            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(searchMemberUri,page),param);
+            return await ApiPost<ResponseMessage<List<Member>>>(String.Format(SearchMemberUri,page),param);
 
         }
 
@@ -381,6 +411,17 @@ namespace FitMeet.Services
                 param.Add("goal_text",goal.Name);
             }
             return await ApiPost<ResponseMessage<string>>(SignUpStep3Uri,param);
+        }
+
+        public async Task<bool> UnblockfriendAsync(string id)
+        {
+            var param = new Dictionary<string,string>
+            {
+                { "token",_token },
+                { "friend",id }
+            };
+            var result = await ApiPost<ResponseMessage<string>>(UnblockedFriendUri,param);
+            return result?.Output?.Status == 1;
         }
 
         public async Task<ResponseMessage<string>> UnfriendAsync(string id)

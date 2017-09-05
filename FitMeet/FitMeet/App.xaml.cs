@@ -53,6 +53,7 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<ChatPage>();
             Container.RegisterTypeForNavigation<SecondSignUpPage>();
             Container.RegisterTypeForNavigation<ThirdSignUpPage>();
+            Container.RegisterTypeForNavigation<BlockedFriendsPage>();
 
             //Services registration
             Container.RegisterType<IFitMeetRestService,FitMeetRestService>(new ContainerControlledLifetimeManager());

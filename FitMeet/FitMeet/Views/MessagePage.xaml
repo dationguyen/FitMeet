@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
         xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" x:Class="FitMeet.Views.MessagePage"
-        mvvm:ViewModelLocator.AutowireViewModel="True" Title="Message">
+        xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
+             mvvm:ViewModelLocator.AutowireViewModel="True" Title="Message">
     <ContentPage.Content>
         <Grid BackgroundColor="White">
             <StackLayout VerticalOptions="Center" IsVisible="{Binding HasNoData}" HorizontalOptions="Center">
@@ -15,8 +16,12 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout>
-                                <StackLayout Padding="10,4,10,10" Orientation="Horizontal">
-                                    <Grid>
+                                <Grid Padding="10,4,10,10" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid >
                                         <Image Margin="10,6,10,0" HorizontalOptions="Start" WidthRequest="60"
                                                 Aspect="AspectFill" Source="{Binding UserPhoto}"></Image>
                                         <Frame CornerRadius="8" WidthRequest="16" Padding="0" HeightRequest="16"
@@ -33,11 +38,11 @@
                                         </Frame>
                                     </Grid>
 
-                                    <StackLayout VerticalOptions="Center" Margin="0,6,0,0">
+                                    <StackLayout VerticalOptions="Center" Margin="0,6,0,0" Grid.Column="1">
                                         <Label Text="{Binding UserName}"></Label>
-                                        <Label Text="{Binding Message}" FontSize="Micro"></Label>
+                                        <controls:CustomLabel Text="{Binding Message}" FontSize="Micro" MaxLine="2" LineBreakMode="TailTruncation" ></controls:CustomLabel>
                                     </StackLayout>
-                                </StackLayout>
+                                </Grid>
                                 <Grid HeightRequest="1" BackgroundColor="{StaticResource BorderColor}"></Grid>
                             </StackLayout>
                         </ViewCell>

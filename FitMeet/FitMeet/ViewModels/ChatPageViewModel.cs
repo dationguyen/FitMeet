@@ -22,23 +22,53 @@ namespace FitMeet.ViewModels
         private string _id;
         private bool _isTimerTick;
         private string _message;
-        private bool _isAbleToSend = false;
+        private bool _hasMore;
+        private bool _loading;
+        private int _curPage = 0;
 
         public ChatPageViewModel(IPageDialogService dialogService,INavigationService navigationService,IFitMeetRestService fitMeetRestService) : base(navigationService,fitMeetRestService)
         {
             _dialogService = dialogService;
+
+            SendMessageCommand = new DelegateCommand(SendMessage,CanSendMessage);
+            LoadMoreCommand = new DelegateCommand(LoadMore);
         }
 
-        public DelegateCommand SendMessageCommand
+        private async void LoadMore()
         {
-            get
+            if(HasMore && _curPage > 1)
             {
-                return new DelegateCommand(async () =>
+                var api = await _fitMeetRestService.GetMoreMessagesAsync(_id,_curPage - 1);
+                var mesages = api.Output.Response;
+                if(mesages != null)
                 {
-                    var result = await _fitMeetRestService.SendMessageAsync(Message,_id);
-                    Message = "";
-                });
+                    _curPage = api.Output.Currentpage;
+                    HasMore = (_curPage > 1);
+                    var index = 0;
+                    foreach(var message in mesages)
+                    {
+                        message.IsClient = !(message.SenderId == _id);
+                        Messages.Insert(index,message);
+                        index++;
+                    }
+
+                }
             }
+            Loading = false;
+        }
+
+        private async void SendMessage()
+        {
+            var result = await _fitMeetRestService.SendMessageAsync(Message,_id);
+            Message = "";
+        }
+
+        public DelegateCommand SendMessageCommand { get; }
+        public DelegateCommand LoadMoreCommand { get; }
+
+        private bool CanSendMessage()
+        {
+            return !String.IsNullOrEmpty(Message);
         }
 
         public ObservableCollection<MessageModel> Messages
@@ -52,15 +82,9 @@ namespace FitMeet.ViewModels
             get => _message;
             set
             {
-                IsAbleToSend = !String.IsNullOrEmpty(value);
                 SetProperty(ref _message,value);
+                SendMessageCommand.RaiseCanExecuteChanged();
             }
-        }
-
-        public bool IsAbleToSend
-        {
-            get { return _isAbleToSend; }
-            set { SetProperty(ref _isAbleToSend,value); }
         }
 
         public MessageModel SelectedItem
@@ -75,6 +99,14 @@ namespace FitMeet.ViewModels
             set { SetProperty(ref _lastItem,value); }
         }
 
+        public bool HasMore
+        {
+            get { return _hasMore; }
+            set { SetProperty(ref _hasMore,value); }
+        }
+
+        public bool Loading { get => _loading; set => SetProperty(ref _loading,value); }
+
         public override async void OnNavigatedTo(NavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
@@ -85,19 +117,21 @@ namespace FitMeet.ViewModels
             {
                 var api = await _fitMeetRestService.GetMessagesAsync(_id);
                 var mesages = api.Output.Response;
-                if (mesages != null)
+                if(mesages != null)
                 {
+                    _curPage = api.Output.Currentpage;
+                    HasMore = (_curPage > 1);
                     foreach(var message in mesages)
                     {
                         message.IsClient = !(message.SenderId == _id);
                     }
-               
+
                     Messages = new ObservableCollection<MessageModel>(mesages);
                     var last = Messages.Last();
                     _currentIndex = last.MessageId;
                     LastItem = last;
                 }
-               
+
                 _isTimerTick = true;
                 Device.StartTimer(TimeSpan.FromSeconds(2),TimerOnTick);
             }

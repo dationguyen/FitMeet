@@ -1,12 +1,11 @@
 ﻿using Facebook.CoreKit;
+using FFImageLoading.Forms.Touch;
 using Foundation;
 using Microsoft.Practices.Unity;
 using Plugin.Badge.iOS;
 using Prism.Unity;
-using System;
 using UIKit;
 using Xamarin.Forms;
-using Newtonsoft.Json.Linq;
 
 [assembly: ExportRenderer(typeof(TabbedPage),typeof(BadgedTabbedPageRenderer))]
 namespace FitMeet.iOS
@@ -31,6 +30,8 @@ namespace FitMeet.iOS
                 new UIColor(red: 0.96f,green: 0.96f,blue: 0.96f,alpha: 1.0f);
             UITabBar.Appearance.SelectedImageTintColor =
                 new UIColor(red: 0.30f,green: 0.75f,blue: 0.63f,alpha: 1.0f);
+
+            CachedImageRenderer.Init();
 
             if(UIDevice.CurrentDevice.CheckSystemVersion(8,0))
             {
@@ -67,6 +68,11 @@ namespace FitMeet.iOS
             UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
         }
 
+        public override void ReceivedRemoteNotification(UIApplication application,NSDictionary userInfo)
+        {
+            base.ReceivedRemoteNotification(application,userInfo);
+        }
+
         public override void RegisteredForRemoteNotifications(UIApplication application,
             NSData deviceToken)
         {
@@ -76,7 +82,7 @@ namespace FitMeet.iOS
             {
                 DeviceToken = DeviceToken.Trim('<').Trim('>');
             }
-            
+
             // Get previous device token
             var oldDeviceToken = NSUserDefaults.StandardUserDefaults.StringForKey("PushDeviceToken");
 

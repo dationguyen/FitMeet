@@ -18,117 +18,18 @@ namespace FitMeet.ViewModels
         private bool _isShowInputDialog = false;
         private bool _isFriend = true;
 
-        public DelegateCommand AddFriendCommand
-        {
-            get
-            {
-                return new DelegateCommand(async () =>
-                {
-                    IsAdding = true;
-                    var success = await _fitMeetRestService.AddFriendsAsync(_dataSource.UserId);
-                    if(success)
-                    {
-                        DataSource.IsFriend = "Sent";
-                        RaisePropertyChanged("DataSource");
-                    }
-                    IsAdding = false;
-                });
-            }
-        }
+        public DelegateCommand AddFriendCommand => new DelegateCommand(AddFriend);
 
-        public DelegateCommand UnfriendCommand
-        {
-            get
-            {
-                return new DelegateCommand(async () =>
-                {
-                    var action = await _pageDialogService?.DisplayAlertAsync("","I am sure about unfriending " + DataSource.FullName,
-                        "Unfriend","Cancel");
-                    if(action)
-                    {
-                        var result = await _fitMeetRestService.UnfriendAsync(DataSource.UserId);
-                        if(result?.Output?.Status == 1)
-                        {
-                            NavigateBackCommand.Execute();
-                        }
-                    }
+        public DelegateCommand<string> ReportAndBlockCommand => new DelegateCommand<string>(ReportAndBlock);
 
-                });
-            }
-        }
+        public DelegateCommand UnfriendCommand => new DelegateCommand(Unfriend);
 
-        public DelegateCommand MessageCommand
-        {
-            get
-            {
-                return new DelegateCommand(async () =>
-                {
-                    var param = new NavigationParameters()
-                    {
-                        {"id",_dataSource.UserId},
-                        { "name",_dataSource.FullName}
-                    };
-                    await _navigationService.NavigateAsync("ChatPage",param,false,true);
-                });
-            }
-        }
+        public DelegateCommand MessageCommand => new DelegateCommand(Message);
 
-        public DelegateCommand<string> ResponseCommand
-        {
-            get
-            {
-                return new DelegateCommand<string>(async (status) =>
-                {
-                    var success = await _fitMeetRestService.ResponseToFriendAsync(DataSource.UserId,status);
-                    if(success)
-                    {
-                        NavigateBackCommand.Execute();
-                    }
-                    else
-                    {
-                        await _pageDialogService.DisplayAlertAsync("Error","Can't response to this person\nPlease try later",
-                             "Ok");
-                    }
-                });
-            }
-        }
+        public DelegateCommand<string> ResponseCommand => new DelegateCommand<string>(Response);
 
-        public DelegateCommand ReportCommand
-        {
-            get
-            {
-                return new DelegateCommand(async () =>
-               {
-                   var action = await _pageDialogService?.DisplayActionSheetAsync("","Cancel",null,
-                       "Report",
-                       "Report and Block");
-                   switch(action)
-                   {
-                       case "Report":
-                           await _fitMeetRestService.BlockfriendAsync(DataSource.UserId);
-                           await _navigationService.GoBackAsync();
-                           break;
-                       case "Report and Block":
-                           IsShowInputDialog = true;
-                           break;
-                       default:
-                           break;
-                   }
-               });
-            }
-        }
-        public DelegateCommand<string> ReportAndBlockCommand
-        {
-            get
-            {
-                return new DelegateCommand<string>(async (s) =>
-                {
-                    await _fitMeetRestService.BlockfriendAsync(DataSource.UserId,s);
-                    IsShowInputDialog = false;
-                    await _navigationService.GoBackAsync();
-                });
-            }
-        }
+        public DelegateCommand ReportCommand => new DelegateCommand(Report);
+        public DelegateCommand UnblockCommand => new DelegateCommand(Unblock);
 
         public object NullItem
         {
@@ -192,6 +93,89 @@ namespace FitMeet.ViewModels
             IsFriend = DataSource.IsFriend == "Friends";
             IsLoading = false;
             base.OnNavigatingTo(parameters);
+        }
+
+
+        private async void Message()
+        {
+            var param = new NavigationParameters()
+            {
+                {"id", _dataSource.UserId},
+                {"name", _dataSource.FullName}
+            };
+            await _navigationService.NavigateAsync("ChatPage",param,false,true);
+        }
+        private async void Response(string status)
+        {
+            var success = await _fitMeetRestService.ResponseToFriendAsync(DataSource.UserId,status);
+            if(success)
+            {
+                NavigateBackCommand.Execute();
+            }
+            else
+            {
+                await _pageDialogService.DisplayAlertAsync("Error","Can't response to this person\nPlease try later","Ok");
+            }
+        }
+        private async void Unfriend()
+        {
+            var action = await _pageDialogService?.DisplayAlertAsync("","I am sure about unfriending " + DataSource.FullName,"Unfriend","Cancel");
+            if(action)
+            {
+                var result = await _fitMeetRestService.UnfriendAsync(DataSource.UserId);
+                if(result?.Output?.Status == 1)
+                {
+                    NavigateBackCommand.Execute();
+                }
+            }
+        }
+        private async void Report()
+        {
+            var action = await _pageDialogService?.DisplayActionSheetAsync("","Cancel",null,"Block","Report and Block");
+            switch(action)
+            {
+                case "Block":
+                    await _fitMeetRestService.BlockfriendAsync(DataSource.UserId);
+                    await _navigationService.GoBackAsync();
+                    break;
+                case "Report and Block":
+                    IsShowInputDialog = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+        private async void AddFriend()
+        {
+            IsAdding = true;
+            var success = await _fitMeetRestService.AddFriendsAsync(_dataSource.UserId);
+            if(success)
+            {
+                DataSource.IsFriend = "Sent";
+                RaisePropertyChanged("DataSource");
+            }
+            IsAdding = false;
+        }
+        private async void ReportAndBlock(string s)
+        {
+            await _fitMeetRestService.BlockfriendAsync(DataSource.UserId,s);
+            IsShowInputDialog = false;
+            await _navigationService.GoBackAsync();
+        }
+
+
+
+        private async void Unblock()
+        {
+            IsAdding = true;
+            var result = await _fitMeetRestService.UnblockfriendAsync(DataSource.UserId);
+            if(result)
+            {
+                DataSource.IsFriend = "Friends";
+                RaisePropertyChanged("DataSource");
+            }
+            IsAdding = false;
+
         }
     }
 }

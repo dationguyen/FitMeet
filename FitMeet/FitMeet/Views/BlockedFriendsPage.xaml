@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" Title="Blocked Users" NavigationPage.BackButtonTitle=" "
+        xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet" mvvm:ViewModelLocator.AutowireViewModel="True" x:Name="BlockedFriendsContentPage"
+        x:Class="FitMeet.Views.BlockedFriendsPage">
+    <ContentPage.Content>
+        <Grid>
+            <ListView ItemsSource="{Binding BlockedFriends}" SeparatorVisibility="None" RowHeight="80">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="0,10,0,0">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                            Command="{Binding BindingContext.ItemTappedCommand,Source={x:Reference BlockedFriendsContentPage}}"
+                                            CommandParameter="{Binding MemberId}"></TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                                <Grid Margin="30,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding MemberPhoto}" WidthRequest="60" HeightRequest="60"
+                                            HorizontalOptions="Start" Aspect="AspectFill"></Image>
+                                    <StackLayout Grid.Column="1">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding FullName}" FontSize="15" />
+                                            <Image Source="{Binding GenderLogoUrl}" Margin="10,-1,0,0"
+                                                    HeightRequest="14"></Image>
+                                        </StackLayout>
+                                       
+                                    </StackLayout>
+                                </Grid>
+                                <Grid HeightRequest="1" BackgroundColor="{StaticResource BorderColor}" Margin="0,10,0,0"></Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label Text="You have no blocked friends" IsVisible="{Binding HasNoBlockedFriends}"
+                    HorizontalOptions="Center" VerticalOptions="Center" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

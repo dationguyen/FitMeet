@@ -220,6 +220,10 @@
                                     CommandParameter="2"
                                     Command="{Binding ResponseCommand}"
                                     BackgroundColor="{StaticResource RedColor}"></Button>
+                            <Button Text="UnBlock" IsVisible="{Binding DataSource.IsFriend, 
+    												Converter={StaticResource StringToBoolConverter}, 
+    												ConverterParameter=UnBlock}" Command="{Binding UnblockCommand}"
+                                    BackgroundColor="{StaticResource RedColor}"></Button>
                         </StackLayout>
                         <Grid BackgroundColor="#8CFFFFFF"
                               IsVisible="{Binding IsAdding}">
