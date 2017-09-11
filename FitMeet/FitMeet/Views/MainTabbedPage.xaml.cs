@@ -79,6 +79,14 @@ namespace FitMeet.Views
             }
         }
 
-
+        protected override bool OnBackButtonPressed()
+        {
+            if (SelectedIndex > 0)
+            {
+                SelectedIndex = 0;
+                return true;
+            }
+            return false;
+        }
     }
 }

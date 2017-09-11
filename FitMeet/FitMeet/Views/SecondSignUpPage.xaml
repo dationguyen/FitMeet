@@ -12,7 +12,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView x:Name="ScrollView">
-            <StackLayout Padding="30,10">
+            <StackLayout Padding="30,10" BackgroundColor="{StaticResource NavBackgroundColor}">
                 <StackLayout Orientation="Horizontal" Padding="10,10,0,10" HorizontalOptions="End">
                     <Label Text="Step" TextColor="{StaticResource MainColor}"></Label>
                     <Image Source="step2.png" HeightRequest="12"></Image>

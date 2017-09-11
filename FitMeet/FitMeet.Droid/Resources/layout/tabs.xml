@@ -10,4 +10,5 @@
     app:tabTextColor="@color/nav_unselected"
     app:tabSelectedTextColor="@color/primary"
     app:tabGravity="fill"
+   app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
     app:tabMode="fixed" />

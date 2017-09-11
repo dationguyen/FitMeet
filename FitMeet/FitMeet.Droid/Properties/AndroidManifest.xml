@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto">
-  <uses-sdk android:minSdkVersion="23" />
-	<application android:label="FitMeet.Droid" android:theme="@style/MyTheme"></application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" package="au.com.fitmeet">
+	<uses-sdk android:minSdkVersion="23" />
+	<application android:label="FitMeet" android:theme="@style/MyTheme">
+	</application>
 </manifest>

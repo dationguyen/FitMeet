@@ -8,7 +8,7 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Name="Master"
              BackgroundColor="{StaticResource NavBackgroundColor}">
-  
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
@@ -20,7 +20,7 @@
     <ContentPage.Content>
         <Grid>
             <ScrollView x:Name="ScrollView">
-                <StackLayout  Padding="30,0">
+                <StackLayout Padding="30,0">
                     <Grid BackgroundColor="White"
                           Padding="30,4"
                           Margin="-30,20,-30,10">
@@ -41,29 +41,39 @@
                                                   NumberOfTapsRequired="1" />
                         </Grid.GestureRecognizers>
                     </Grid>
-                    <Label  Text="Full Name"></Label>
+                    <Label Text="Full Name"></Label>
                     <Entry Text="{Binding FullName}"
                            Margin="0,4,0,10"></Entry>
-                    <Label  Text="Date of Birth"></Label>
-                    <controls:CustomDatePicker VerticalOptions="CenterAndExpand" 
-                                               HeightRequest="60" TextColor="{StaticResource BodyColor}"
+                    <Label Text="Date of Birth"></Label>
+                    <controls:CustomDatePicker VerticalOptions="CenterAndExpand"
+                                               HeightRequest="60"
+                                               TextColor="{StaticResource BodyColor}"
                                                Margin="0,4,0,10"
-                                Date="{Binding Dob, Mode=TwoWay}">
+                                               Date="{Binding Dob, Mode=TwoWay}">
                         <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
                     </controls:CustomDatePicker>
-                    <Label  Text="Address"></Label>
-                    <Entry Text="{Binding Address}" x:Name="AddressEntry" Unfocused="AddressEntry_OnUnfocused" Focused="AddressEntry_OnFocused"
+                    <Label Text="Address"></Label>
+                    <Entry Text="{Binding Address}"
+                           x:Name="AddressEntry"
+                           Unfocused="AddressEntry_OnUnfocused"
+                           Focused="AddressEntry_OnFocused"
                            Margin="0,4,0,10"></Entry>
 
-                    <Grid IsVisible="{Binding IsSearching,Mode=TwoWay}" HeightRequest="{Binding AutoCompleteHeight}" x:Name="AutoCompleteGrid">
-                        <ListView BackgroundColor="White" RowHeight="36" 
-                                  SeparatorVisibility="None" SelectedItem="{Binding AutoCompleteResult,Mode=TwoWay}"
-                                  ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding AutoCompleteCollection}">
+                    <Grid IsVisible="{Binding IsSearching,Mode=TwoWay}"
+                          HeightRequest="{Binding AutoCompleteHeight}"
+                          x:Name="AutoCompleteGrid">
+                        <ListView BackgroundColor="White"
+                                  RowHeight="36"
+                                  SeparatorVisibility="None"
+                                  SelectedItem="{Binding AutoCompleteResult,Mode=TwoWay}"
+                                  ItemSelected="ListView_OnItemSelected"
+                                  ItemsSource="{Binding AutoCompleteCollection}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
                                         <Grid Padding="20,0">
-                                            <Label Text="{Binding}" VerticalTextAlignment="Center"
+                                            <Label Text="{Binding}"
+                                                   VerticalTextAlignment="Center"
                                                    LineBreakMode="NoWrap"></Label>
                                         </Grid>
                                     </ViewCell>
@@ -90,21 +100,28 @@
                                                    Margin="8,0,2,0" />
                         </StackLayout>
                     </Grid>
-                    <Label  Text="Describle Yourself"></Label>
+                    <Label Text="Describle Yourself"></Label>
                     <controls:BorderedEditor HeightRequest="120"
                                              Placeholder="Tell us something about you"
                                              Margin="0,10,0,20"
-                                             Padding="10" TextColor="{StaticResource BodyColor}"
-                                             Text="{Binding DataSource.About}"></controls:BorderedEditor>
+                                             TextColor="{StaticResource BodyColor}"
+                                             Text="{Binding DataSource.About}">
+                        <controls:BorderedEditor.Padding>
+                            <OnPlatform x:TypeArguments="Thickness"
+                                        Android="4"
+                                        iOS="4,10"></OnPlatform>
+                        </controls:BorderedEditor.Padding>
+
+                    </controls:BorderedEditor>
                     <Grid>
                         <Label Text="Activities"></Label>
-                        <Label Text="Level" HorizontalOptions="End"></Label>
+                        <Label Text="Level"
+                               HorizontalOptions="End"></Label>
                     </Grid>
                     <controls:ItemsStack ItemsSource="{Binding ActivitiesLevel,Mode=TwoWay}">
                         <controls:ItemsStack.ItemTemplate>
                             <DataTemplate>
-                                <Grid HeightRequest="40"
-                                      BackgroundColor="Beige">
+                                <Grid HeightRequest="40">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                         <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -114,7 +131,27 @@
                                                            Padding="30,0,0,0"
                                                            SelectedItem="{Binding Activity}"
                                                            ItemDisplayBinding="{Binding Name}" />
-                                    <controls:ExtendedButton WidthRequest="30"
+
+                                    <Grid Padding="10,0,0,0"
+                                          HorizontalOptions="Start"
+                                          VerticalOptions="Fill"
+                                          WidthRequest="30">
+                                        <Image Source="remove.png"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start"
+                                               HeightRequest="16"></Image>
+                                        <Grid>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                                      Command="{Binding BindingContext.DeleteActivityCommand,
+                                                                               Source={x:Reference Master}}"
+                                                                      CommandParameter="{Binding }"></TapGestureRecognizer>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                      
+                                    </Grid>
+
+                                    <!--<controls:ImageButton WidthRequest="30"
                                                              HorizontalOptions="Start"
                                                              VerticalContentAlignment="Center"
                                                              VerticalOptions="Fill"
@@ -122,7 +159,7 @@
                                                              Command="{Binding BindingContext.DeleteActivityCommand,
                                                                                Source={x:Reference Master}}"
                                                              CommandParameter="{Binding }"
-                                                             Image="remove.png"></controls:ExtendedButton>
+                                                             Image="remove.png"></controls:ImageButton>-->
                                     <controls:CustomPicker Grid.Column="1"
                                                            ItemsSource="{Binding BindingContext.LevelsData,
                                                                   Source={x:Reference Master}}"
@@ -140,27 +177,34 @@
                             BorderRadius="4"
                             Margin="0,0,0,20"
                             Text="+"></Button>
-                    <Label  Text="Training Places"></Label>
+                    <Label Text="Training Places"></Label>
                     <controls:ItemsStack ItemsSource="{Binding Trainplaces,Mode=TwoWay}">
                         <controls:ItemsStack.ItemTemplate>
                             <DataTemplate>
-                                <Grid HeightRequest="40"
-                                      BackgroundColor="Beige">
+                                <Grid HeightRequest="40">
                                     <controls:CustomPicker ItemsSource="{Binding BindingContext.TrainingLocations,
                                                                   Source={x:Reference Master}}"
                                                            Padding="30,0,0,0"
                                                            SelectedItem="{Binding Place}"
                                                            ItemDisplayBinding="{Binding LocationTitle}" />
-                                    <controls:ExtendedButton WidthRequest="30"
-                                                             HorizontalOptions="Start"
-                                                             VerticalContentAlignment="Center"
-                                                             VerticalOptions="Fill"
-                                                             Padding="10,0,4,0"
-                                                             Command="{Binding BindingContext.DeletePlaceCommand,
-                                                                  Source={x:Reference Master}}"
-                                                             CommandParameter="{Binding }"
-                                                             HeightRequest="20"
-                                                             Image="remove.png"></controls:ExtendedButton>
+
+                                    <Grid Padding="10,0,0,0"
+                                          HorizontalOptions="Start"
+                                          VerticalOptions="Fill"
+                                          WidthRequest="30">
+                                        <Image Source="remove.png"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start"
+                                               HeightRequest="16"></Image>
+                                        <Grid>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                                      Command="{Binding BindingContext.DeletePlaceCommand,
+                                                                               Source={x:Reference Master}}"
+                                                                      CommandParameter="{Binding }"></TapGestureRecognizer>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
                             </DataTemplate>
                         </controls:ItemsStack.ItemTemplate>
@@ -173,7 +217,7 @@
                             BorderRadius="4"
                             Margin="0,0,0,20"
                             Text="+"></Button>
-                    <Label  Text="Goals"></Label>
+                    <Label Text="Goals"></Label>
                     <controls:CustomPicker HeightRequest="40"
                                            Margin="0,0,0,20"
                                            ItemsSource="{Binding Goals}"
@@ -193,7 +237,9 @@
             </ScrollView>
             <Grid BackgroundColor="#8C000000"
                   IsVisible="{Binding IsLoading}">
-                <ActivityIndicator IsRunning="true" HeightRequest="100" WidthRequest="100"
+                <ActivityIndicator IsRunning="true"
+                                   HeightRequest="100"
+                                   WidthRequest="100"
                                    Color="Black"></ActivityIndicator>
             </Grid>
             <Grid BackgroundColor="#8C000000"
@@ -202,10 +248,10 @@
                     <TapGestureRecognizer Command="{Binding HidePopupCommand}"
                                           NumberOfTapsRequired="1"></TapGestureRecognizer>
                 </Grid.GestureRecognizers>
-                <StackLayout  VerticalOptions="Center"
-                              Padding="20,20,20,0"
-                              Margin="30,0,30,60"
-                              BackgroundColor="White">
+                <StackLayout VerticalOptions="Center"
+                             Padding="20,20,20,0"
+                             Margin="30,0,30,60"
+                             BackgroundColor="White">
                     <Label Text="Set your Goal"></Label>
                     <Entry x:Name="goalEntry"></Entry>
                     <Grid Margin="0,10">

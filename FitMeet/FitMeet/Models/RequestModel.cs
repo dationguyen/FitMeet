@@ -26,6 +26,8 @@ namespace FitMeet.Models
         string UserName { get; }
         string Message { get; }
         int Count { get; }
+
+        bool Equals(object obj);
     }
 
     public class Friend:IRequestItem
@@ -56,6 +58,21 @@ namespace FitMeet.Models
         {
             get => 1;
         }
+
+        public override bool Equals(object obj)
+        {
+            var requestItem = (IRequestItem)obj;
+            return (requestItem.Count == Count && requestItem.UserId == UserId);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 1835195239;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(UserId);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Message);
+            hashCode = hashCode * -1521134295 + Count.GetHashCode();
+            return hashCode;
+        }
     }
 
     public class Msg:IRequestItem
@@ -85,6 +102,26 @@ namespace FitMeet.Models
 
         [JsonProperty("count")]
         public int Count { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var requestItem = (IRequestItem)obj;
+            return (requestItem.Count == Count && requestItem.UserId == UserId && requestItem.Message == Message);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 219605979;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(MessageId);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(MessageDate);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(UserId);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(UserName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(UserPhoto);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Message);
+            hashCode = hashCode * -1521134295 + IsLastSender.GetHashCode();
+            hashCode = hashCode * -1521134295 + Count.GetHashCode();
+            return hashCode;
+        }
     }
 
 }

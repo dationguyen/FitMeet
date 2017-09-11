@@ -1,4 +1,5 @@
 ﻿using FitMeet.Services;
+using FitMeet.Services.DependencyServices;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
@@ -11,7 +12,7 @@ namespace FitMeet.ViewModels
         private IFacebookService _facebookService;
         private ITokenService _tokenService;
         private IPageDialogService _dialogService;
-
+        private IDependencyService _dependencyService;
 
         private bool _isLoading;
 
@@ -22,53 +23,53 @@ namespace FitMeet.ViewModels
         }
 
         public LoginPageViewModel(INavigationService navigationService,
-            IPageDialogService dialogService,
+            IPageDialogService dialogService,IDependencyService dependencyService,
             ITokenService tokenService,IFitMeetRestService fitMeetRestServices,
             IFacebookService facebookService) : base(navigationService,fitMeetRestServices)
         {
             _facebookService = facebookService;
             _tokenService = tokenService;
             _dialogService = dialogService;
+            _dependencyService = dependencyService;
+
+            LoginFacebookCommand = new DelegateCommand(LoginFacebook);
         }
 
-        public DelegateCommand<string> FacebookLoginCommand
+        private async void LoginFacebook()
         {
-            get
+            string[] readPermissions = { "public_profile","email" };
+            var fbtoken = await _dependencyService.Get<IFacebookLoginService>().LoginAsync(readPermissions);
+
+            IsLoading = true;
+            var userProfile = await _facebookService.GetFacebookProfileAsync(fbtoken);
+            if(userProfile != null)
             {
-                return new DelegateCommand<string>(async (o) =>
+                var response = await _fitMeetRestService.FacebookLoginAsync(userProfile);
+                if(response != null && response.Output?.Status == 1 && response.Output?.Response?.token != null)
                 {
-                    IsLoading = true;
-                    var userProfile = await _facebookService.GetFacebookProfileAsync(o);
-                    if(userProfile != null)
+                    var token = response.Output.Response.token;
+                    _tokenService.SetToken(token);
+                    _fitMeetRestService.SetToken(token);
+                    if((response?.Output?.Validation).Equals("User already exists",StringComparison.CurrentCultureIgnoreCase))
                     {
-                        var response = await _fitMeetRestService.FacebookLoginAsync(userProfile);
-                        if(response != null && response.Output?.Status == 1 && response.Output?.Response?.token != null)
-                        {
-                            var token = response.Output.Response.token;
-                            _tokenService.SetToken(token);
-                            _fitMeetRestService.SetToken(token);
-                            if((response?.Output?.Validation).Equals("User already exists",StringComparison.CurrentCultureIgnoreCase))
-                            {
-                                NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
-                            }
-                            else
-                            {
-                                NavigateCommand.Execute("SecondSignUpPage");
-                            }
-                        }
-                        else
-                        {
-                            await _dialogService.DisplayAlertAsync("Error","Could not register. Please try again","Ok");
-                        }
+                        NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
                     }
-
-
-                    IsLoading = false;
-
-                });
+                    else
+                    {
+                        NavigateCommand.Execute("SecondSignUpPage");
+                    }
+                }
+                else
+                {
+                    await _dialogService.DisplayAlertAsync("Error","Could not register. Please try again","Ok");
+                }
             }
+
+
+            IsLoading = false;
         }
 
+        public DelegateCommand LoginFacebookCommand { get; set; }
 
     }
 }

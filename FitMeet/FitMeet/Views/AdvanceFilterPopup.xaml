@@ -11,20 +11,24 @@
     <popup:PopupPage.Content>
         <Grid  BackgroundColor="{StaticResource NavBackgroundColor}"
 			       Padding="20" >
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer></TapGestureRecognizer>
+            </Grid.GestureRecognizers>
             <StackLayout>
-                <Picker HorizontalOptions="Fill" HeightRequest="56"
+                <controls:CustomPicker HorizontalOptions="Fill" HeightRequest="56"
 				        BackgroundColor="{StaticResource NavBackgroundColor}" 
 				        VerticalOptions="Start" 
 				        Focused="VisualElement_OnFocused"
 				        Unfocused="VisualElement_OnUnfocused"
 				        SelectedIndex="{Binding DistanceIndex, Mode=TwoWay}" 
 				        Title="Distance" >
-                    <Picker.Items>
+
+                    <controls:CustomPicker.Items>
                         <x:String>Within 10 km</x:String>
                         <x:String>Within 20 km</x:String>
                         <x:String>Within 30 km</x:String>
-                    </Picker.Items>
-                </Picker>
+                    </controls:CustomPicker.Items>
+                </controls:CustomPicker>
                 <Grid Margin="0,20" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -40,7 +44,7 @@
                     </StackLayout>
                     <Label Text="Activity" Grid.Row="1" Margin="0,30" 
 					       HorizontalOptions="Start" VerticalOptions="Start"></Label>
-                    <ActivityIndicator Grid.Row="1" Margin="30,30,0,30"  IsRunning="True"></ActivityIndicator>
+                    <ActivityIndicator Grid.Row="1" Margin="30,30,0,30" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="Center"  IsRunning="True"></ActivityIndicator>
 
                     <controls:ActivitiesGridView Grid.Row="1" Margin="0,30" 
 					                             ItemSource="{Binding ActivitiesSource}"

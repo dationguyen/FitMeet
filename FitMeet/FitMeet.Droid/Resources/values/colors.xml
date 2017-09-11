@@ -1,8 +1,12 @@
 ﻿<resources>
   <color name="primary">#4cbea0</color>
   <color name="primaryDark">#000000</color>
-  <color name="accent">#5a5a5a</color>
+  <color name="accent">#4cbea0</color>
   <color name="window_background">#ffffff</color>
   <color name="nav_background">#f5f5f5</color>
-  <color name="nav_unselected">#c2c2c2</color>
+  <color name="nav_unselected">#5a5a5a</color>
+  <color name="ListViewSelected">#e8e8e8</color>
+  <color name="ListViewHighlighted">#e8e8e8</color>
+  <color name="entry_background">#ffffff</color>
+  <color name="entry_border">#e8e8e8</color>
 </resources>

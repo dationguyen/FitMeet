@@ -28,7 +28,7 @@ namespace FitMeet.iOS.Renderers
                 }
                 Control.ImageEdgeInsets = new UIEdgeInsets(12,12,12,12);
                 Control.TintColor = Control.CurrentTitleColor;
-
+                
             }
 
         }

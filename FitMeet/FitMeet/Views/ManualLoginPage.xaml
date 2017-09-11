@@ -44,14 +44,14 @@
                         Text="Login"></Button>
                 <Grid>
                     <Button HorizontalOptions="Start"
-                            Text="Back to Sign Up"
-                            FontSize="12"
+                            Text="Back to Sign Up" BorderColor="Transparent"
+                            BackgroundColor="Transparent" FontSize="12"
                             Command="{Binding NavigateBackCommand}"
                             TextColor="{StaticResource BodyColor}"></Button>
                     <Button HorizontalOptions="End"
                             Text="Forgot Password?"
-                            FontSize="12"
-                            TextColor="{StaticResource BodyColor}"></Button>
+                            FontSize="12" BorderColor="Transparent"
+                            BackgroundColor="Transparent" TextColor="{StaticResource BodyColor}"></Button>
                 </Grid>
             </StackLayout>
         </Grid>

@@ -56,6 +56,10 @@ namespace FitMeet.iOS
             return ApplicationDelegate.SharedInstance.OpenUrl(application,url,sourceApplication,annotation);
         }
 
+        public override void FailedToRegisterForRemoteNotifications(UIApplication application,NSError error)
+        {
+            UIAlertController.Create("Error registering push notifications",error.LocalizedDescription,UIAlertControllerStyle.Alert);
+        }
         public override void ReceivedLocalNotification(UIApplication application,UILocalNotification notification)
         {
             // show an alert

@@ -28,11 +28,10 @@
 					<Label Text="By signing up yo agree to our terms of condition"
 					       TextColor="White" HorizontalOptions="Center" 
 					       FontSize="10" HeightRequest="25"></Label>
-                    <controls:FacebookLoginButton HeightRequest="52" CompletedCommand="{Binding FacebookLoginCommand}" />
-				    <!--<Button BackgroundColor="{StaticResource MainColor}" TextColor="White" HeightRequest="60" 
+                    <!--<controls:FacebookLoginButton HeightRequest="52" CompletedCommand="{Binding FacebookLoginCommand}" />-->
+				    <Button BackgroundColor="{StaticResource MainColor}" TextColor="White" HeightRequest="60" 
 					        Text="Signup with Facebook"
-					        Command="{Binding NavigateCommand}"
-                            CommandParameter="app:///MainPage/NavigationPage/MainTabbedPage" />-->
+					        Command="{Binding LoginFacebookCommand}"/>
 					<Grid Margin="0,10,0,0">
 						<StackLayout HorizontalOptions="Start">
 							<StackLayout.GestureRecognizers>
@@ -55,7 +54,7 @@
 				</StackLayout>
 			</Grid>
             <Grid Grid.RowSpan="2" IsVisible="{Binding IsLoading}" BackgroundColor="#8CFFFFFF">
-                <ActivityIndicator IsRunning="True"></ActivityIndicator>
+                <ActivityIndicator IsRunning="True" HeightRequest="30" WidthRequest="30" VerticalOptions="Center" HorizontalOptions="Center"></ActivityIndicator>
             </Grid>
 		</Grid>
     </ContentPage.Content>

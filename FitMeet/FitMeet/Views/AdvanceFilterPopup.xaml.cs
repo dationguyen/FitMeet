@@ -5,7 +5,7 @@ using Xamarin.Forms.Xaml;
 namespace FitMeet.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AdvanceFilterPopup : PopupPage
+    public partial class AdvanceFilterPopup:PopupPage
     {
         public AdvanceFilterPopup()
         {
@@ -13,14 +13,26 @@ namespace FitMeet.Views
 
         }
 
-        private void VisualElement_OnFocused( object sender , FocusEventArgs e )
+        private void VisualElement_OnFocused(object sender,FocusEventArgs e)
         {
-            Padding = new Thickness(20 , 50 , 20 , 0);
+            switch(Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    Padding = new Thickness(20,50,20,0);
+                    return;
+            }
+
         }
 
-        private void VisualElement_OnUnfocused( object sender , FocusEventArgs e )
+        private void VisualElement_OnUnfocused(object sender,FocusEventArgs e)
         {
-            Padding = new Thickness(20 , 50);
+            switch(Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    Padding = new Thickness(20,50);
+                    return;
+            }
+
         }
     }
 }

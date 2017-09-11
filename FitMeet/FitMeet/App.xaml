@@ -58,17 +58,31 @@
         <Setter Property="FontSize" Value="Small"/>
         <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
         <Setter Property="PlaceholderColor" Value="{StaticResource PlaceHolderColor}"/>
+        <!--<Setter Property="BackgroundColor" Value="White"/>-->
+
       </Style>
 
       <Style TargetType="controls:BorderedEditor">
-          <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
-          <Setter Property="FontSize" Value="Small"/>
-          <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
+        <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
+        <Setter Property="FontSize" Value="Small"/>
+        <Setter Property="BackgroundColor">
+          <Setter.Value>
+            <OnPlatform x:TypeArguments="Color" Android="Transparent" iOS="White"></OnPlatform>
+          </Setter.Value>
+        </Setter>
+        <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
       </Style>
-      
+
       <Style TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
         <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
+      </Style>
+      <Style TargetType="ActivityIndicator">
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="WidthRequest" Value="30"/>
+        <Setter Property="HeightRequest" Value="30"/>
+        
       </Style>
 
       <Style TargetType="controls:HtmlLabel">
@@ -80,7 +94,9 @@
       <Style TargetType="Button">
         <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
       </Style>
-
+      <Style TargetType="controls:CustomPicker">
+        <Setter Property="TextColor" Value="{StaticResource BodyColor}"/>
+      </Style>
       <Style TargetType="controls:ToggleButton">
         <Setter Property="FontFamily" Value="MyriadPro-Regular"/>
         <Setter Property="BorderColor" Value="{StaticResource BodyColor}"/>
@@ -92,13 +108,14 @@
         <Setter Property="WidthRequest" Value="88"/>
         <Setter Property="HeightRequest" Value="40"/>
       </Style>
+
       <!-- Styles -->
 
       <converter:StringToBoolConverter x:Key="StringToBoolConverter"/>
       <converter:BoolRevertConverter x:Key="RevertConverter"/>
       <converter:BoolToColorConverter x:Key="BoolToColorConverter"/>
       <converter:ViewsToColorConverter x:Key="ViewsToColorConverter"/>
-            
+
     </ResourceDictionary>
   </prism:PrismApplication.Resources>
 

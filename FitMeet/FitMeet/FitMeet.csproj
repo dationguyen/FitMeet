@@ -48,9 +48,9 @@
     <Compile Include="Controls\CustomLabel.cs" />
     <Compile Include="Controls\CustomSearchEntry.cs" />
     <Compile Include="Controls\ExtendedButton.cs" />
-    <Compile Include="Controls\FacebookLoginButton.cs" />
     <Compile Include="Controls\HtmlLabel.cs" />
     <Compile Include="Controls\ActivitiesPanel.cs" />
+    <Compile Include="Controls\ImageToggleButton.cs" />
     <Compile Include="Controls\IObservableReadOnlyCollection.cs" />
     <Compile Include="Controls\ItemsStack.cs" />
     <Compile Include="Controls\ObservableReadOnlyCollection.cs" />
@@ -86,6 +86,7 @@
     <Compile Include="Models\Place.cs" />
     <Compile Include="Models\Trainplace.cs" />
     <Compile Include="Models\UserProfile.cs" />
+    <Compile Include="Services\DependencyServices\IFacebookLoginService.cs" />
     <Compile Include="Services\DependencyServices\IGetDeviceTokenService.cs" />
     <Compile Include="Services\FacebookService.cs" />
     <Compile Include="Services\GoogleLocationService.cs" />

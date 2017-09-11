@@ -90,7 +90,7 @@ namespace FitMeet.Controls
                         listStackLayouts.Add(layout);
                         row++;
                     }
-                    var button = new ToggleButton()
+                    var button = new ImageToggleButton()
                     {
                         Image = ItemSource[i].Icon,
                         BorderColor = Color.FromHex("#5a5a5a"),
@@ -102,7 +102,7 @@ namespace FitMeet.Controls
                     };
                     button.Clicked += (sender,args) =>
                     {
-                        var b = (ToggleButton)sender;
+                        var b = (ImageToggleButton)sender;
                         var activity = (Activity)b.CommandParameter;
                         b.Checked = !b.Checked;
                         if(b.Checked == true)

@@ -44,7 +44,15 @@ namespace FitMeet.Views
         public MemberDetailPage()
         {
             InitializeComponent();
-            TriggerSecondToolbarMenu();
+            switch(Device.RuntimePlatform)
+            {
+                case Device.Android:
+                    this.ToolbarItems.Remove(MainToolbarItem);
+                    break;
+                case Device.iOS:
+                    TriggerSecondToolbarMenu();
+                    break;
+            }
         }
 
 
@@ -76,7 +84,13 @@ namespace FitMeet.Views
         private void TapGestureRecognizer_OnTapped(object sender,EventArgs e)
         {
             isOverlayVisible = true;
-            TriggerSecondToolbarMenu();
+            switch(Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    TriggerSecondToolbarMenu();
+                    break;
+            }
+
         }
 
 

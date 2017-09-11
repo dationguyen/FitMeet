@@ -22,9 +22,15 @@ namespace FitMeet.Controls
     {
         #region BindAble
         //public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create<ItemsStack , IEnumerable>(p => p.ItemsSource , default(IEnumerable<object>) , BindingMode.TwoWay , null , ItemsSourceChanged);
-        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create<ItemsStack , object>(p => p.SelectedItem , default(object) , BindingMode.TwoWay , null , OnSelectedItemChanged);
-        public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create<ItemsStack , DataTemplate>(p => p.ItemTemplate , default(DataTemplate));
+        //public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create<ItemsStack , object>(p => p.SelectedItem , default(object) , BindingMode.TwoWay , null , OnSelectedItemChanged);
+        //public static readonly BindableProperty ItemTemplateProperty = BindableProperty.Create<ItemsStack , DataTemplate>(p => p.ItemTemplate , default(DataTemplate));
 
+        public static readonly BindableProperty SelectedItemProperty =
+            BindableProperty.Create("SelectedItem", typeof(object), typeof(ItemsStack), default(object),BindingMode.TwoWay,null,OnSelectedItemChanged);
+
+        public static readonly BindableProperty ItemTemplateProperty =
+            BindableProperty.Create(nameof(ItemTemplate), typeof(DataTemplate), typeof(ItemsStack), default(DataTemplate));
+     
         public static BindableProperty ItemsSourceProperty = BindableProperty.Create(
                propertyName: "ItemsSource" ,
                returnType: typeof(IEnumerable) ,
@@ -130,6 +136,7 @@ namespace FitMeet.Controls
 
         protected virtual void SetSelectedItem( object selectedItem )
         {
+            this.SelectedItem = SelectedItem;
             SelectedItemChanged?.Invoke(this,new SelectedItemChangedEventArgs(selectedItem));
         }
 

@@ -23,7 +23,7 @@ namespace FitMeet.iOS.Renderers
             {
                 return;
             }
-
+            
             var control = new LoginButton(new CGRect(0,0,element.WidthRequest,element.HeightRequest))
             {
                 LoginBehavior = LoginBehavior.Native,

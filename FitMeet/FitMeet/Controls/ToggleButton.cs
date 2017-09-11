@@ -30,7 +30,6 @@ namespace FitMeet.Controls
             set
             {
                 SetValue(CheckedProperty, value);
-                OnPropertyChanged();
                 RaiseCheckedChanged();
             }
         }
@@ -38,11 +37,13 @@ namespace FitMeet.Controls
         {
             if (newValue != null && (Boolean)newValue == true)
             {
+                ((ToggleButton) bindable).Checked = true;
                 ((ToggleButton)bindable).BackgroundColor = ((ToggleButton)bindable).CheckedBackgroundColor;
                 ((ToggleButton)bindable).TextColor = ((ToggleButton)bindable).CheckedTextColor;
             }
             else
             {
+                ((ToggleButton)bindable).Checked = false;
                 ((ToggleButton)bindable).BackgroundColor = ((ToggleButton)bindable).UncheckedBackgroundColor;
                 ((ToggleButton)bindable).TextColor = ((ToggleButton)bindable).UncheckedTextColor;
             }

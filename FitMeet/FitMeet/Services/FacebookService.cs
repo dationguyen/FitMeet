@@ -15,13 +15,15 @@ namespace FitMeet.Services
                 "me?fields=email,picture,first_name,last_name,name&access_token="
                 + accessToken;
 
-            var httpClient = new HttpClient();
+            using (var httpClient = new HttpClient())
+            {
+                var userJson = await httpClient.GetStringAsync(baseUrl + requestParam);
 
-            var userJson = await httpClient.GetStringAsync(baseUrl + requestParam);
+                var facebookProfile = JsonConvert.DeserializeObject<FacebookProfile>(userJson);
 
-            var facebookProfile = JsonConvert.DeserializeObject<FacebookProfile>(userJson);
-
-            return facebookProfile;
+                return facebookProfile;
+            }
+               
         }
     }
 }

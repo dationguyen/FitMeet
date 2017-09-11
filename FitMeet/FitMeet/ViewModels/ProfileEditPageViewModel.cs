@@ -362,8 +362,9 @@ namespace FitMeet.ViewModels
             RaisePropertyChanged("Address");
 
             FullName = DataSource.FullName;
-            DateTime.TryParseExact(DataSource.Dob ?? "1990-01-01","yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture,DateTimeStyles.None,out _dob);
-            Dob = _dob;
+
+            DateTime.TryParseExact(DataSource.Dob ?? "1990-01-01","yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture,DateTimeStyles.None,out var dob);
+            Dob = dob;
         }
 
         private void UpdateStaticResource()

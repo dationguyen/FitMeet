@@ -4,6 +4,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace FitMeet.ViewModels
@@ -23,7 +24,11 @@ namespace FitMeet.ViewModels
         public List<IRequestItem> ItemsDataSource
         {
             get { return _itemsDataSource; }
-            set { SetProperty(ref _itemsDataSource,value); }
+            set
+            {
+                if(_itemsDataSource == null || !_itemsDataSource.SequenceEqual(value))
+                    SetProperty(ref _itemsDataSource,value);
+            }
         }
 
         public bool HasNoData
