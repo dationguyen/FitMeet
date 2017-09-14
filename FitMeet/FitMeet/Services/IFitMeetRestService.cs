@@ -185,6 +185,21 @@ namespace FitMeet.Services
         Task<bool> VerifyAsync();
 
         /// <summary>
+        /// Change Password
+        /// </summary>
+        Task<bool> ChangePasswordAsync(string newPassword);
+
+        /// <summary>
+        /// Find password
+        /// </summary>
+        Task<bool> ResetPasswordAsync(string email);
+
+        /// <summary>
+        /// Sync Facebook
+        /// </summary>
+        Task<bool> ConnectFacebookAsync(string fbId);
+
+        /// <summary>
         /// Set current token
         /// </summary>
         /// <param name="token"></param>

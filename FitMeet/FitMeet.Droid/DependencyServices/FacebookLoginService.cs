@@ -23,10 +23,32 @@ namespace FitMeet.Droid.DependencyServices
             {
                 HandleSuccess = token =>
                 {
-                    tcs.SetResult(token);
+                    tcs.SetResult(token.Token);
                 },
                 HandleCancel = () => tcs.SetResult(""),
                 HandleError = (error) => tcs.SetException(error.InnerException)
+
+            });
+            var activity = (MainActivity)Forms.Context;
+
+
+            LoginManager.Instance.LogInWithReadPermissions(activity,readPermissions);
+
+            return tcs.Task;
+        }
+        public Task<string> LoginAsync()
+        {
+            string[] readPermissions = { "public_profile" };
+            var tcs = new TaskCompletionSource<string>();
+
+            LoginManager.Instance.RegisterCallback(MainActivity.callbackManager,new FacebookCallback<LoginResult>()
+            {
+                HandleSuccess = token =>
+                {
+                    tcs.SetResult(token?.UserId);
+                },
+                HandleCancel = () => tcs.SetResult(""),
+                HandleError = (error) => tcs.SetResult("")
 
             });
             var activity = (MainActivity)Forms.Context;

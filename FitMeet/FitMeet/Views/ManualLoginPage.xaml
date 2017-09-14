@@ -50,6 +50,8 @@
                             TextColor="{StaticResource BodyColor}"></Button>
                     <Button HorizontalOptions="End"
                             Text="Forgot Password?"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="FindPasswordPage"
                             FontSize="12" BorderColor="Transparent"
                             BackgroundColor="Transparent" TextColor="{StaticResource BodyColor}"></Button>
                 </Grid>

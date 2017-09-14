@@ -2,29 +2,45 @@
 
 namespace FitMeet.Behaviors
 {
-    public class ConfirmPasswordBehavior : Behavior<Entry>
+    public class ConfirmPasswordBehavior:Behavior<Entry>
     {
         const string passwordRegex = @"^(?=.*?[a-z]).{6,}$";
 
-        static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(EmailValidatorBehavior), false);
+        //static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(EmailValidatorBehavior), false);
 
-        public static readonly BindableProperty IsValidProperty = IsValidPropertyKey.BindableProperty;
+        //public static readonly BindableProperty IsValidProperty = IsValidPropertyKey.BindableProperty;
 
         public static readonly BindableProperty CompareToEntryProperty = BindableProperty.Create("CompareToEntry",
-            typeof(Entry), typeof(ConfirmPasswordBehavior), null);
+            typeof(Entry),typeof(ConfirmPasswordBehavior),null);
 
+        public static readonly BindableProperty IsValidProperty = BindableProperty.Create(
+            propertyName: "IsValid",
+            returnType: typeof(bool),
+            declaringType: typeof(ConfirmPasswordBehavior),
+            defaultValue: false,
+            defaultBindingMode: BindingMode.OneWay,
+            propertyChanged: IsValidPropertyChanged);
+
+        private static void IsValidPropertyChanged(BindableObject bindable,object oldValue,object newValue)
+        {
+            ((ConfirmPasswordBehavior)bindable).IsValid = (bool)newValue;
+        }
 
 
         public Entry CompareToEntry
         {
             get { return (Entry)base.GetValue(CompareToEntryProperty); }
-            set { base.SetValue(CompareToEntryProperty, value); }
+            set { base.SetValue(CompareToEntryProperty,value); }
         }
 
         public bool IsValid
         {
             get { return (bool)base.GetValue(IsValidProperty); }
-            set { base.SetValue(IsValidPropertyKey, value); }
+            set
+            {
+                SetValue(IsValidProperty,value);
+                OnPropertyChanged("IsValid");
+            }
         }
 
         protected override void OnAttachedTo(Entry bindable)
@@ -35,11 +51,11 @@ namespace FitMeet.Behaviors
 
 
 
-        void HandleTextChanged(object sender, TextChangedEventArgs e)
+        void HandleTextChanged(object sender,TextChangedEventArgs e)
         {
             var password = CompareToEntry.Text;
             var confirmPassword = e.NewTextValue;
-            if (password != null)
+            if(password != null)
                 IsValid = password.Equals(confirmPassword);
             ((Entry)sender).TextColor = IsValid ? Color.FromHex("#5a5a5a") : Color.FromHex("#f27062");
         }

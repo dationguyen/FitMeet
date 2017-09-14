@@ -1,6 +1,7 @@
 ﻿using FitMeet.Services;
 using FitMeet.Views;
 using Microsoft.Practices.Unity;
+using Prism.Navigation;
 using Prism.Unity;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -11,20 +12,47 @@ namespace FitMeet
 {
     public partial class App:PrismApplication
     {
+        private string _userId;
+        private string _token;
+        private string _userName;
+
+
         public static Action<string> PostSuccessFacebookAction { get; set; }
 
-        public App(IPlatformInitializer initializer = null) : base(initializer)
+        public App(IPlatformInitializer initializer = null,string userId = null,string token = null,string userName = null) : base(initializer)
         {
+            _userId = userId;
+            _token = token;
+            _userName = userName;
+            OnUpdateInitialized();
         }
 
         public App()
         {
 
         }
+
+        private void OnUpdateInitialized()
+        {
+            if(!String.IsNullOrEmpty(_userId) && !String.IsNullOrEmpty(_token) && !String.IsNullOrEmpty(_userName))
+            {
+                var param = new NavigationParameters()
+                {
+                    {"id",_userId},
+                    { "name",_userName},
+                    { "token",_token}
+                };
+                NavigationService.NavigateAsync("app:///MainPage/NavigationPage/MainTabbedPage/ChatPage",param,false,true);
+            }
+            else
+            {
+                NavigationService.NavigateAsync("StartupPage");
+            }
+        }
+
         protected override void OnInitialized()
         {
             InitializeComponent();
-            NavigationService.NavigateAsync("StartupPage");
         }
 
         protected override void RegisterTypes()
@@ -54,6 +82,8 @@ namespace FitMeet
             Container.RegisterTypeForNavigation<SecondSignUpPage>();
             Container.RegisterTypeForNavigation<ThirdSignUpPage>();
             Container.RegisterTypeForNavigation<BlockedFriendsPage>();
+            Container.RegisterTypeForNavigation<FindPasswordPage>();
+            Container.RegisterTypeForNavigation<ChangePasswordPage>();
 
             //Services registration
             Container.RegisterType<IFitMeetRestService,FitMeetRestService>(new ContainerControlledLifetimeManager());

@@ -11,6 +11,10 @@ namespace FitMeet.Services.DependencyServices
         /// <returns>Facebook Login Token</returns>
         Task<string> LoginAsync(string[] readPermissions);
 
-
+        /// <summary>
+        /// Simple Login to get UserID
+        /// </summary>
+        /// <returns></returns>
+        Task<string> LoginAsync();
     }
 }

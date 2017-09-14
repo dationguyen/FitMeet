@@ -1,6 +1,6 @@
 ﻿namespace FitMeet.Services.DependencyServices
 {
-    public interface IGetDeviceTokenService
+    public interface IPushNotificationSupportService
     {
         string DeviceToken();
     }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace FitMeet.Services
 
@@ -43,7 +44,9 @@ namespace FitMeet.Services
         private const string VerifyUri = "Users/signup_step3.json";
         private const string GetBlockedFriendsUri = "friends/block_list.json";
         private const string UnblockedFriendUri = "friends/unblock.json";
-
+        private const string FindPasswordUri = "Users/forget_password.json";
+        private const string ChangePasswordUri = "Users/change_password.json";
+        private const string ConnectFacebookUri = "Users/connect_fb.json";
 
         private readonly IPageDialogService _dialogService;
         private readonly IGeoLocationService _geoService;
@@ -124,11 +127,28 @@ namespace FitMeet.Services
             return result?.Output?.Status == 1;
         }
 
+        private string DeviceType()
+        {
+            var deviceType = "";
+            switch(Device.RuntimePlatform)
+            {
+                case Device.Android:
+                    deviceType = "A";
+                    break;
+                case Device.iOS:
+                    deviceType = "I";
+                    break;
+            }
+            return deviceType;
+        }
+
         public async Task<ResponseMessage<SignUpResponse>> EmailSignUpAsync(string email,string password,bool isSubscibleNews,bool isShareInfo)
         {
             var position = await _geoService.GetPosition();
 
-            var deviceToken = _dependencyService.Get<IGetDeviceTokenService>().DeviceToken();
+            var deviceToken = _dependencyService.Get<IPushNotificationSupportService>().DeviceToken();
+
+
 
             var param = new Dictionary<string,string>
             {
@@ -137,7 +157,7 @@ namespace FitMeet.Services
                 { "device_token",deviceToken },
                 { "newsletter",isSubscibleNews?"1":"0" },
                 { "share_info",isShareInfo?"1":"0"},
-                { "device_type","I"},
+                { "device_type",DeviceType()},
                 { "lat", position?.Latitude.ToString() },
                 { "lng", position?.Longitude.ToString() }
             };
@@ -147,13 +167,14 @@ namespace FitMeet.Services
         public async Task<ResponseMessage<SignUpResponse>> FacebookLoginAsync(FacebookProfile profile)
         {
             var position = await _geoService.GetPosition();
-            var deviceToken = _dependencyService.Get<IGetDeviceTokenService>().DeviceToken();
+            var deviceToken = _dependencyService.Get<IPushNotificationSupportService>().DeviceToken();
 
             var param = new Dictionary<string,string>
             {
                 { "fbid",profile.Id },
                 { "email",profile.Email },
                 { "device_token",deviceToken },
+                { "device_type",DeviceType()},
                 { "fname",profile.FirstName },
                 { "lname",profile.LastName },
                 { "picture",profile.Picture?.Data?.Url},
@@ -311,11 +332,11 @@ namespace FitMeet.Services
 
         public async Task<ResponseMessage<LoginModel>> ManualLoginAsync(string id,string password)
         {
-            var deviceToken = _dependencyService.Get<IGetDeviceTokenService>().DeviceToken();
+            var deviceToken = _dependencyService.Get<IPushNotificationSupportService>().DeviceToken();
             var param = new Dictionary<string,string>
             {
                 { "device_token",deviceToken },
-                { "device_type","I" },
+                { "device_type",DeviceType() },
                 { "password",password },
                 { "email", id }
             };
@@ -491,6 +512,38 @@ namespace FitMeet.Services
             var result = await ApiPost<ResponseMessage<string>>(VerifyUri,param);
             return (result != null && result.Output?.Status == 1);
 
+        }
+
+        public async Task<bool> ResetPasswordAsync(string email)
+        {
+            var param = new Dictionary<string,string>
+            {
+                {"email", email}
+            };
+            var result = await ApiPost<ResponseMessage<string>>(FindPasswordUri,param);
+            return (result != null && result.Output?.Status == 1);
+        }
+
+        public async Task<bool> ChangePasswordAsync(string p)
+        {
+            var param = new Dictionary<string,string>
+            {
+                {"token", _token},
+                {"password", p}
+            };
+            var result = await ApiPost<ResponseMessage<string>>(ChangePasswordUri,param);
+            return (result != null && result.Output?.Status == 1);
+        }
+
+        public async Task<bool> ConnectFacebookAsync(string fbId)
+        {
+            var param = new Dictionary<string,string>
+            {
+                {"token", _token},
+                {"fbid", fbId}
+            };
+            var result = await ApiPost<ResponseMessage<string>>(ConnectFacebookUri,param);
+            return (result != null && result.Output?.Status == 1);
         }
     }
 }

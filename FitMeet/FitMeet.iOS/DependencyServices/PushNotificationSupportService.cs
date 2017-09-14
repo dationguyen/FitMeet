@@ -3,12 +3,12 @@ using FitMeet.Services.DependencyServices;
 using Foundation;
 
 
-[assembly: Xamarin.Forms.Dependency(typeof(GetDeviceTokenService))]
+[assembly: Xamarin.Forms.Dependency(typeof(PushNotificationSupportService))]
 namespace FitMeet.iOS.DependencyServices
 {
-    public class GetDeviceTokenService:IGetDeviceTokenService
+    public class PushNotificationSupportService:IPushNotificationSupportService
     {
-        public GetDeviceTokenService()
+        public PushNotificationSupportService()
         {
 
         }

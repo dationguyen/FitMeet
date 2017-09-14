@@ -112,7 +112,12 @@ namespace FitMeet.ViewModels
             base.OnNavigatedTo(parameters);
             Messages = new ObservableCollection<MessageModel>();
             Title = parameters["name"]?.ToString();
-            _id = parameters["id"].ToString();
+            _id = parameters["id"]?.ToString();
+            var token = parameters["token"]?.ToString();
+            if(!String.IsNullOrEmpty(token))
+            {
+                _fitMeetRestService.SetToken(token);
+            }
             if(_id != null)
             {
                 var api = await _fitMeetRestService.GetMessagesAsync(_id);
@@ -146,11 +151,11 @@ namespace FitMeet.ViewModels
         private bool TimerOnTick()
         {
             if(_isTimerTick)
-                updateMessage();
+                UpdateMessage();
             return _isTimerTick;
         }
 
-        private async void updateMessage()
+        private async void UpdateMessage()
         {
             var api = await _fitMeetRestService.GetMessageAsync(_id,_currentIndex.ToString());
             if(api?.Output?.Status == 1)

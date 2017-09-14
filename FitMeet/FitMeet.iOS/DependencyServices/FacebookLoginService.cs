@@ -23,7 +23,14 @@ namespace FitMeet.iOS.DependencyServices
             var vc = ViewController();
             var result = await _loginManager.LogInWithReadPermissionsAsync(readPermissions,vc);
             return result?.Token.TokenString;
+        }
 
+        public async Task<string> LoginAsync()
+        {
+            string[] readPermissions = { "public_profile" };
+            var vc = ViewController();
+            var result = await _loginManager.LogInWithReadPermissionsAsync(readPermissions,vc);
+            return result?.Token.UserID;
         }
 
         private UIViewController ViewController()

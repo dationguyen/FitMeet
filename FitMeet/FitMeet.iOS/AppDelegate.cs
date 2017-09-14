@@ -1,9 +1,7 @@
 ﻿using Facebook.CoreKit;
 using FFImageLoading.Forms.Touch;
 using Foundation;
-using Microsoft.Practices.Unity;
 using Plugin.Badge.iOS;
-using Prism.Unity;
 using UIKit;
 using Xamarin.Forms;
 
@@ -60,23 +58,6 @@ namespace FitMeet.iOS
         {
             UIAlertController.Create("Error registering push notifications",error.LocalizedDescription,UIAlertControllerStyle.Alert);
         }
-        public override void ReceivedLocalNotification(UIApplication application,UILocalNotification notification)
-        {
-            // show an alert
-            UIAlertController okayAlertController = UIAlertController.Create(notification.AlertAction,notification.AlertBody,UIAlertControllerStyle.Alert);
-            okayAlertController.AddAction(UIAlertAction.Create("OK",UIAlertActionStyle.Default,null));
-
-            Window.RootViewController.PresentViewController(okayAlertController,true,null);
-
-            // reset our badge
-            UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
-        }
-
-        public override void ReceivedRemoteNotification(UIApplication application,NSDictionary userInfo)
-        {
-            base.ReceivedRemoteNotification(application,userInfo);
-        }
-
         public override void RegisteredForRemoteNotifications(UIApplication application,
             NSData deviceToken)
         {
@@ -99,13 +80,10 @@ namespace FitMeet.iOS
             // Save new device token
             NSUserDefaults.StandardUserDefaults.SetString(DeviceToken,"PushDeviceToken");
         }
-    }
 
-    public class IOSInitializer:IPlatformInitializer
-    {
-        public void RegisterTypes(IUnityContainer container)
+        public override void ReceivedRemoteNotification(UIApplication application,NSDictionary userInfo)
         {
-
+            UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
         }
     }
 

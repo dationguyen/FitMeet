@@ -1,66 +1,106 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMeet.Views.SettingPage"
              xmlns:mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             mvvm:ViewModelLocator.AutowireViewModel="True" 
+             mvvm:ViewModelLocator.AutowireViewModel="True"
              Title="Setting"
              NavigationPage.HasBackButton="True">
     <ContentPage.Content>
         <Grid BackgroundColor="{StaticResource NavBackgroundColor}">
-            <StackLayout Margin="0,20" VerticalOptions="Start" BackgroundColor="{StaticResource NavBackgroundColor}" Spacing="1">
+            <StackLayout Margin="0,20"
+                         VerticalOptions="Start"
+                         BackgroundColor="{StaticResource NavBackgroundColor}"
+                         Spacing="1">
                 <StackLayout.Resources>
                     <ResourceDictionary>
                         <Style TargetType="Grid">
-                            <Setter Property="Padding" Value="16,8"></Setter>
-                            <Setter Property="BackgroundColor" Value="White"></Setter>
+                            <Setter Property="Padding"
+                                    Value="16,8"></Setter>
+                            <Setter Property="BackgroundColor"
+                                    Value="White"></Setter>
                         </Style>
                         <Style TargetType="Label">
-                            <Setter Property="VerticalTextAlignment" Value="Center"></Setter>
-                            <Setter Property="FontSize" Value="Small"></Setter>
+                            <Setter Property="VerticalTextAlignment"
+                                    Value="Center"></Setter>
+                            <Setter Property="FontSize"
+                                    Value="Small"></Setter>
                         </Style>
                     </ResourceDictionary>
                 </StackLayout.Resources>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="60"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Text="Message Notification"></Label>
-                    <Switch Grid.Column="1" ></Switch>
-                </Grid>
-                <Grid >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="60"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Text="Voice"></Label>
-                    <Switch Grid.Column="1"></Switch>
-                </Grid>
-                <Grid Margin="0,0,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="60"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Text="Vibrate"></Label>
-                    <Switch Grid.Column="1"  ></Switch>
-                </Grid>
-                <Grid Margin="0,10,0,20" HeightRequest="40">
+                <StackLayout Spacing="1"
+                             Margin="0,0,0,20">
+                    <StackLayout.IsVisible>
+                        <OnPlatform x:TypeArguments="x:Boolean"
+                                    iOS="False"
+                                    Android="True"></OnPlatform>
+                    </StackLayout.IsVisible>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Message Notification"></Label>
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding IsNotificationEnable}"></Switch>
+                    </Grid>
+                    <Grid IsVisible="{Binding IsNotificationEnable}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Sound"></Label>
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding IsSoundEnable}"></Switch>
+                    </Grid>
+                    <Grid IsVisible="{Binding IsNotificationEnable}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Vibrate"></Label>
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding IsVibrateEnable}"></Switch>
+                    </Grid>
+                </StackLayout>
+
+                <Grid Margin="0,0,0,20"
+                      HeightRequest="40"
+                      IsVisible="{Binding HasFacebook}">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ConnectWithFacebookCommand}"></TapGestureRecognizer>
+                    </Grid.GestureRecognizers>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="60"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Text="Connect With Facebook"></Label>
-                    <Image Source="facebook_logo" Grid.Column="1" HeightRequest="36" VerticalOptions="Center"></Image>
+                    <Image Source="facebook_logo"
+                           Grid.Column="1"
+                           HeightRequest="36"
+                           VerticalOptions="Center"></Image>
                 </Grid>
-                
-                <Button Text="Change Password" BackgroundColor="White" TextColor="{StaticResource BodyColor}"
-                        HeightRequest="48" ></Button>
-                <Button Text="Delete Account" BackgroundColor="White" TextColor="{StaticResource RedColor}"
-                        HeightRequest="48" Margin="0,10,0,10"></Button>
-                <Button Text="Blocked Users" BackgroundColor="White" TextColor="{StaticResource RedColor}"
-                        Command="{Binding NavigateCommand}" CommandParameter="BlockedFriendsPage"
-                        HeightRequest="48" Margin="0,0"></Button>
+
+                <Button Text="Change Password"
+                        BackgroundColor="White"
+                        TextColor="{StaticResource BodyColor}"
+                        HeightRequest="48"
+                        Command="{Binding NavigateCommand}"
+                        CommandParameter="ChangePasswordPage"
+                        IsVisible="{Binding HasFacebook}"></Button>
+                <Button Text="Delete Account"
+                        BackgroundColor="White"
+                        TextColor="{StaticResource RedColor}"
+                        HeightRequest="48"
+                        Command="{Binding DeleteAccountCommand}"
+                        Margin="0,10,0,10"></Button>
+                <Button Text="Blocked Users"
+                        BackgroundColor="White"
+                        TextColor="{StaticResource RedColor}"
+                        Command="{Binding NavigateCommand}"
+                        CommandParameter="BlockedFriendsPage"
+                        HeightRequest="48"
+                        Margin="0,0"></Button>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

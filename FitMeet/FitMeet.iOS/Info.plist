@@ -93,14 +93,14 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb306989955995811</string>
+				<string>fb1635872766677370</string>
 			</array>
 		</dict>
 	</array>
 	<key>FacebookAppID</key>
-	<string>306989955995811</string>
+	<string>1635872766677370</string>
 	<key>FacebookDisplayName</key>
-	<string>Roor</string>
+	<string>Fitmeet</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
