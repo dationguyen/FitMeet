@@ -47,13 +47,13 @@ namespace FitMeet.Services
         private const string FindPasswordUri = "Users/forget_password.json";
         private const string ChangePasswordUri = "Users/change_password.json";
         private const string ConnectFacebookUri = "Users/connect_fb.json";
+        private const string DeleteAccountUri = "Users/delete.json";
 
         private readonly IPageDialogService _dialogService;
         private readonly IGeoLocationService _geoService;
         private IDependencyService _dependencyService;
 
         private string _token = "";
-
 
         public FitMeetRestService(IPageDialogService dialogService,IGeoLocationService geoService,IDependencyService dependencyService)
         {
@@ -543,6 +543,16 @@ namespace FitMeet.Services
                 {"fbid", fbId}
             };
             var result = await ApiPost<ResponseMessage<string>>(ConnectFacebookUri,param);
+            return (result != null && result.Output?.Status == 1);
+        }
+
+        public async Task<bool> DeleteAccountAsync()
+        {
+            var param = new Dictionary<string,string>
+            {
+                {"token", _token}
+            };
+            var result = await ApiPost<ResponseMessage<string>>(DeleteAccountUri,param);
             return (result != null && result.Output?.Status == 1);
         }
     }

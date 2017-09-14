@@ -200,6 +200,11 @@ namespace FitMeet.Services
         Task<bool> ConnectFacebookAsync(string fbId);
 
         /// <summary>
+        /// Delete account
+        /// </summary>
+        Task<bool> DeleteAccountAsync();
+
+        /// <summary>
         /// Set current token
         /// </summary>
         /// <param name="token"></param>

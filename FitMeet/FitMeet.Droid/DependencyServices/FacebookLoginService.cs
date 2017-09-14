@@ -52,8 +52,7 @@ namespace FitMeet.Droid.DependencyServices
 
             });
             var activity = (MainActivity)Forms.Context;
-
-
+            
             LoginManager.Instance.LogInWithReadPermissions(activity,readPermissions);
 
             return tcs.Task;

@@ -1,5 +1,4 @@
-﻿using System;
-using FitMeet.Services;
+﻿using FitMeet.Services;
 using FitMeet.Services.DependencyServices;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
@@ -25,6 +24,7 @@ namespace FitMeet.ViewModels
         private bool _isVibrateEnable;
         private bool _hasFacebook;
         private readonly IPageDialogService _dialogService;
+        private readonly ITokenService _tokenService;
 
         public bool IsNotificationEnable
         {
@@ -75,8 +75,9 @@ namespace FitMeet.ViewModels
         public DelegateCommand ConnectWithFacebookCommand { get; set; }
         public DelegateCommand DeleteAccountCommand { get; set; }
 
-        public SettingPageViewModel(IPageDialogService dialogService,IDependencyService dependencyService,INavigationService navigationService,IFitMeetRestService fitMeetRestServices) : base(navigationService,fitMeetRestServices)
+        public SettingPageViewModel(ITokenService tokenService,IPageDialogService dialogService,IDependencyService dependencyService,INavigationService navigationService,IFitMeetRestService fitMeetRestServices) : base(navigationService,fitMeetRestServices)
         {
+            _tokenService = tokenService;
             _dialogService = dialogService;
             _dependencyService = dependencyService;
             ConnectWithFacebookCommand = new DelegateCommand(ConnectFacebook);
@@ -85,10 +86,17 @@ namespace FitMeet.ViewModels
 
         private async void DeleteAccount()
         {
-            var accept = await _dialogService.DisplayAlertAsync("Delete", "Are you sure to delete your account?", "Delete", "Cancel");
-            if (accept)
+            var accept = await _dialogService.DisplayAlertAsync("Delete","Are you sure to delete your account?","Delete","Cancel");
+            if(accept)
             {
+                var deleted = await _fitMeetRestService.DeleteAccountAsync();
+                if(deleted)
+                {
+                    _fitMeetRestService.LogOut();
+                    _tokenService.SetToken(null);
 
+                    Navigate("app:///NavigationPage/LoginPage");
+                }
             }
 
         }
