@@ -5,6 +5,7 @@ using Plugin.Settings.Abstractions;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
+using System.IO;
 
 namespace FitMeet.ViewModels
 {

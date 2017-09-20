@@ -1,5 +1,6 @@
 ﻿using FitMeet.Models;
 using FitMeet.Services;
+using FitMeet.Services.DependencyServices;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 
 namespace FitMeet.ViewModels
@@ -16,6 +18,7 @@ namespace FitMeet.ViewModels
         private readonly IStaticDataService _staticDataServices;
         private readonly IPageDialogService _dialogService;
         private readonly IGoogleLocationService _googleLocation;
+        private readonly IDependencyService _dependencyService;
 
         private ObservableCollection<ActivityKey> _activitiesLevel;
         private ObservableCollection<PlaceKey> _trainplaces;
@@ -39,15 +42,19 @@ namespace FitMeet.ViewModels
         private string _autoCompleteResult;
         private string _address;
         private bool _isSearching;
+        private string _profileImage;
 
-        public ProfileEditPageViewModel(INavigationService navigationService,IPageDialogService dialogService,
+        public ProfileEditPageViewModel(IDependencyService dependencyService,INavigationService navigationService,IPageDialogService dialogService,
             IFitMeetRestService fitMeetRestServices,IStaticDataService staticDataServices,IGoogleLocationService googleLocationService) : base(navigationService,fitMeetRestServices)
         {
+            _dependencyService = dependencyService;
             _staticDataServices = staticDataServices;
             _dialogService = dialogService;
             _googleLocation = googleLocationService;
+            EditImageCommand = new DelegateCommand(EditImageAsync);
         }
 
+        public DelegateCommand EditImageCommand { get; set; }
         public DelegateCommand AddActivityCommand
         {
             get
@@ -180,7 +187,7 @@ namespace FitMeet.ViewModels
 
                     var a = await _fitMeetRestService.UpdateProfileAsync(fName.Trim(),
                         lName.Trim(),IsMale ? "Male" : "Female",
-                        SelectedGoal.Id,SelectedGoal.Name,DataSource.UserPhoto,
+                        SelectedGoal.Id,SelectedGoal.Name,ProfileImage,
                         Address,DataSource.About,Dob.ToString("yyyy-MM-dd"),actIds,ids,skillIds,placeIds,locationIds);
 
                     if(a?.Output.Status == 1)
@@ -347,6 +354,12 @@ namespace FitMeet.ViewModels
             set { SetProperty(ref _autoCompleteHeight,value); }
         }
 
+        public string ProfileImage
+        {
+            get { return _profileImage; }
+            set { SetProperty(ref _profileImage,value); }
+        }
+
         public override async void OnNavigatingTo(NavigationParameters parameters)
         {
             base.OnNavigatingTo(parameters);
@@ -362,6 +375,7 @@ namespace FitMeet.ViewModels
             RaisePropertyChanged("Address");
 
             FullName = DataSource.FullName;
+            ProfileImage = DataSource.UserPhoto;
 
             DateTime.TryParseExact(DataSource.Dob ?? "1990-01-01","yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture,DateTimeStyles.None,out var dob);
             Dob = dob;
@@ -414,6 +428,36 @@ namespace FitMeet.ViewModels
             }
         }
 
+        private async void EditImageAsync()
+        {
+            IsLoading = true;
+            Stream stream = await _dependencyService.Get<IPicturePicker>().GetImageStreamAsync();
+            var mem = ReadFully(stream);
+
+            if(mem != null)
+            {
+                var imageSource = await ImageUploadHelper.UploadImage(mem);
+                if(imageSource != null)
+                {
+                    ProfileImage = imageSource;
+                }
+                else
+                {
+                    await _dialogService.DisplayAlertAsync("error",
+                         "There are some problems with our server, please try again later","ok");
+                }
+            }
+            IsLoading = false;
+        }
+        private byte[] ReadFully(Stream input)
+        {
+            using(MemoryStream ms = new MemoryStream())
+            {
+                input.CopyTo(ms);
+
+                return ms.ToArray();
+            }
+        }
         ~ProfileEditPageViewModel()
         {
         }

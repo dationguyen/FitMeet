@@ -3,35 +3,38 @@
     {
       "scale": "2x",
       "size": "29x29",
-      "idiom": "iphone"
+      "idiom": "iphone",
+      "filename": "FitMeet_58.png"
     },
     {
       "scale": "3x",
       "size": "29x29",
       "idiom": "iphone",
-      "filename": "Icon-Small@3x.png"
+      "filename": "FitMeet_logo@3x.png"
     },
     {
       "scale": "2x",
       "size": "40x40",
-      "idiom": "iphone"
+      "idiom": "iphone",
+      "filename": "FitMeet_40@2x.png"
     },
     {
       "scale": "3x",
       "size": "40x40",
-      "idiom": "iphone"
+      "idiom": "iphone",
+      "filename": "FitMeet_40@3x.png"
     },
     {
       "scale": "2x",
       "size": "60x60",
       "idiom": "iphone",
-      "filename": "Icon-Small-40@3x.png"
+      "filename": "Fitmeet_60@2x.png"
     },
     {
       "scale": "3x",
       "size": "60x60",
       "idiom": "iphone",
-      "filename": "Icon-60@3x.png"
+      "filename": "Fitmeet_60@3x.png"
     },
     {
       "scale": "1x",
@@ -41,35 +44,38 @@
     {
       "scale": "2x",
       "size": "29x29",
-      "idiom": "ipad"
+      "idiom": "ipad",
+      "filename": "FitMeet_58.png"
     },
     {
       "scale": "1x",
       "size": "40x40",
       "idiom": "ipad",
-      "filename": "Icon-Small-40.png"
+      "filename": "FitMeet_40.png"
     },
     {
       "scale": "2x",
       "size": "40x40",
-      "idiom": "ipad"
+      "idiom": "ipad",
+      "filename": "FitMeet_40@2x.png"
     },
     {
       "scale": "1x",
       "size": "76x76",
       "idiom": "ipad",
-      "filename": "Icon-76.png"
+      "filename": "FitMeet_76.png"
     },
     {
       "scale": "2x",
       "size": "76x76",
       "idiom": "ipad",
-      "filename": "Icon-76@2x.png"
+      "filename": "Fitmeet_76@2x.png"
     },
     {
       "scale": "2x",
       "size": "83.5x83.5",
-      "idiom": "ipad"
+      "idiom": "ipad",
+      "filename": "Fitmeet_76@3x.png"
     }
   ],
   "properties": {

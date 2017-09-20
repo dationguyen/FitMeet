@@ -23,7 +23,31 @@ namespace FitMeet.iOS
         public override bool FinishedLaunching(UIApplication app,NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App(new IOSInitializer()));
+            if(options != null && options.ContainsKey(UIApplication.LaunchOptionsRemoteNotificationKey))
+            {
+                var token = string.Empty;
+
+                if(options[UIApplication.LaunchOptionsRemoteNotificationKey] is NSDictionary remoteNotification)
+                {
+                   
+                    NSDictionary aps = remoteNotification.ObjectForKey(new NSString("aps")) as NSDictionary;
+
+                    token =  (aps?[new NSString("reciever_token")]).ToString();
+
+
+                 
+                    //if (message != null && message.ContainsKey(new NSString("reciever_token")))
+                    //{
+                    //    token = (message[new NSString("reciever_token")] as NSString).ToString();
+                    //}
+                }
+                LoadApplication(new App(new IOSInitializer(),token));
+            }
+            else
+            {
+                LoadApplication(new App(new IOSInitializer()));
+            }
+
             UITabBar.Appearance.BarTintColor =
                 new UIColor(red: 0.96f,green: 0.96f,blue: 0.96f,alpha: 1.0f);
             UITabBar.Appearance.SelectedImageTintColor =
@@ -83,8 +107,22 @@ namespace FitMeet.iOS
 
         public override void ReceivedRemoteNotification(UIApplication application,NSDictionary userInfo)
         {
+            if(UIApplication.SharedApplication.ApplicationState == UIApplicationState.Active)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        public override void OnActivated(UIApplication uiApplication)
+        {
+            base.OnActivated(uiApplication);
             UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
         }
     }
+
 
 }

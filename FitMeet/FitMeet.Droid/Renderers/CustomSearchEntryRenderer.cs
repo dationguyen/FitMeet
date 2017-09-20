@@ -17,12 +17,12 @@ namespace FitMeet.Droid.Renderers
 
             if(Control != null)
             {
-                var searchLogo = Resources.GetDrawable(Resource.Drawable.search, null);
+                var searchLogo = Resources.GetDrawable(Resource.Drawable.search_logo, null);
                 int h = searchLogo.IntrinsicHeight;
                 int w = searchLogo.IntrinsicWidth;
                 searchLogo.SetColorFilter(Resources.GetColor(Resource.Color.primary,null),PorterDuff.Mode.SrcIn);
                 searchLogo.SetBounds(0,0,w,h);
-                
+
                 Control.SetCompoundDrawables(searchLogo,null,null,null);
                 Control.SetPadding(20,0,120,0);
                 Control.SetTextSize(ComplexUnitType.Dip,14);

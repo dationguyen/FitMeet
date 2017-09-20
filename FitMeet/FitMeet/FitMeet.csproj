@@ -71,6 +71,7 @@
     <Compile Include="Models\ActivityKey.cs" />
     <Compile Include="Models\ActivityModel.cs" />
     <Compile Include="Models\BlockedFriend.cs" />
+    <Compile Include="Models\CloudaryResponseModel.cs" />
     <Compile Include="Models\FacebookProfile.cs" />
     <Compile Include="Models\Goal.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -87,11 +88,13 @@
     <Compile Include="Models\Trainplace.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Services\DependencyServices\IFacebookLoginService.cs" />
+    <Compile Include="Services\DependencyServices\IPicturePicker.cs" />
     <Compile Include="Services\DependencyServices\IPushNotificationSupportService.cs" />
     <Compile Include="Services\FacebookService.cs" />
     <Compile Include="Services\GoogleLocationService.cs" />
     <Compile Include="Services\IFacebookService.cs" />
     <Compile Include="Services\IGoogleLocationService.cs" />
+    <Compile Include="Services\ImageUploadHelper.cs" />
     <Compile Include="Services\ISettingServices.cs" />
     <Compile Include="Services\ITokenService.cs" />
     <Compile Include="Services\StaticDataService.cs" />

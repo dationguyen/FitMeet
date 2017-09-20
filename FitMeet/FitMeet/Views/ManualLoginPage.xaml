@@ -23,7 +23,9 @@
                    Source="fitmeet_logo.png"></Image>
             <StackLayout Grid.Row="1"
                          Grid.Column="1">
-                <Entry Placeholder="E-mail" Text="{Binding Id}">
+                <Entry Placeholder="E-mail"
+                       Text="{Binding Id}"
+                       Keyboard="Email">
                     <Entry.Behaviors>
                         <behaviors:EmailValidatorBehavior x:Name="emailValidator"
                                                           IsValid="{Binding BindingContext.IsEmailValidated,Mode=TwoWay,Source={x:Reference ManualLoginPage}}" />

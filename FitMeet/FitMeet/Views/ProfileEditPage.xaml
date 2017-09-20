@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMeet.Views.ProfileEditPage"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:controls="clr-namespace:FitMeet.Controls;assembly=FitMeet"
              xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
@@ -28,16 +29,17 @@
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Image WidthRequest="60"
-                               HeightRequest="60"
-                               Source="{Binding DataSource.UserPhoto}"
-                               Aspect="AspectFill"></Image>
+                        <ffimageloading:CachedImage DownsampleToViewSize="true"
+                                                    WidthRequest="60"
+                                                    HeightRequest="60"
+                                                    Source="{Binding ProfileImage}"
+                                                    Aspect="AspectFill" />
                         <Label Text="Change Profile Picture"
                                VerticalOptions="Center"
                                Grid.Column="1"
                                Margin="20,0,0,0" />
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding EditCommand}"
+                            <TapGestureRecognizer Command="{Binding EditImageCommand}"
                                                   NumberOfTapsRequired="1" />
                         </Grid.GestureRecognizers>
                     </Grid>
@@ -148,7 +150,7 @@
                                                                       CommandParameter="{Binding }"></TapGestureRecognizer>
                                             </Grid.GestureRecognizers>
                                         </Grid>
-                                      
+
                                     </Grid>
 
                                     <!--<controls:ImageButton WidthRequest="30"

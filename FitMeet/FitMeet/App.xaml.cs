@@ -1,7 +1,6 @@
 ﻿using FitMeet.Services;
 using FitMeet.Views;
 using Microsoft.Practices.Unity;
-using Prism.Navigation;
 using Prism.Unity;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -12,18 +11,13 @@ namespace FitMeet
 {
     public partial class App:PrismApplication
     {
-        private string _userId;
         private string _token;
-        private string _userName;
-
 
         public static Action<string> PostSuccessFacebookAction { get; set; }
 
-        public App(IPlatformInitializer initializer = null,string userId = null,string token = null,string userName = null) : base(initializer)
+        public App(IPlatformInitializer initializer = null,string token = null) : base(initializer)
         {
-            _userId = userId;
             _token = token;
-            _userName = userName;
             OnUpdateInitialized();
         }
 
@@ -34,15 +28,11 @@ namespace FitMeet
 
         private void OnUpdateInitialized()
         {
-            if(!String.IsNullOrEmpty(_userId) && !String.IsNullOrEmpty(_token) && !String.IsNullOrEmpty(_userName))
+            if(!String.IsNullOrEmpty(_token))
             {
-                var param = new NavigationParameters()
-                {
-                    {"id",_userId},
-                    { "name",_userName},
-                    { "token",_token}
-                };
-                NavigationService.NavigateAsync("app:///MainPage/NavigationPage/MainTabbedPage/ChatPage",param,false,true);
+                var restService = Container.Resolve<IFitMeetRestService>();
+                restService.SetToken(_token);
+                NavigationService.NavigateAsync("app:///MainPage/NavigationPage/MainTabbedPage/MessagePage",null,false,true);
             }
             else
             {

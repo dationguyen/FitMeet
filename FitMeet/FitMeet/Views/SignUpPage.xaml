@@ -7,84 +7,117 @@
              xmlns:behaviors="clr-namespace:FitMeet.Behaviors;assembly=FitMeet"
              x:Class="FitMeet.Views.SignUpPage"
              mvvm:ViewModelLocator.AutowireViewModel="True"
-             Title="Sign Up" NavigationPage.BarBackgroundColor="Red">
-	<ContentPage.Content>
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="*" />
-				<RowDefinition Height="3*" />
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="12*" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
-		    <StackLayout Orientation="Horizontal" Grid.ColumnSpan="2" Padding="10,10,0,10" VerticalOptions="Start" HorizontalOptions="End">
-		        <Label Text="Step" TextColor="{StaticResource MainColor}"></Label>
-		        <Image Source="step1.png" HeightRequest="12"></Image>
+             Title="Sign Up"
+             NavigationPage.BarBackgroundColor="Red">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="12*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackLayout Orientation="Horizontal"
+                         Grid.ColumnSpan="2"
+                         Padding="10,10,0,10"
+                         VerticalOptions="Start"
+                         HorizontalOptions="End">
+                <Label Text="Step"
+                       TextColor="{StaticResource MainColor}"></Label>
+                <Image Source="step1.png"
+                       HeightRequest="12"></Image>
 
-		    </StackLayout>
-            <Image Grid.ColumnSpan="3" Source="fitmeet_logo.png"></Image>
+            </StackLayout>
+            <Image Grid.ColumnSpan="3"
+                   Source="fitmeet_logo.png"></Image>
 
-			<StackLayout Grid.Row="1" Grid.Column="1">
-				<Grid>
-					<Entry Placeholder="E-mail" Text="{Binding Email}" Completed="Entry_OnCompleted" Unfocused="Entry_OnCompleted">
-						<Entry.Behaviors>
-							<behaviors:EmailValidatorBehavior x:Name="emailValidator" />
-						</Entry.Behaviors>
-					</Entry>
-					<Label Text="✓" HorizontalOptions="End" 
-					       Margin="0,0,6,0"
-					       FontSize="28"
-					       TextColor="{Binding  Source={x:Reference emailValidator},
+            <StackLayout Grid.Row="1"
+                         Grid.Column="1">
+                <Grid>
+                    <Entry Placeholder="E-mail"
+                           Text="{Binding Email}"
+                           Keyboard="Email"
+                           Completed="Entry_OnCompleted"
+                           Unfocused="Entry_OnCompleted">
+                        <Entry.Behaviors>
+                            <behaviors:EmailValidatorBehavior x:Name="emailValidator" />
+                        </Entry.Behaviors>
+                    </Entry>
+                    <Label Text="✓"
+                           HorizontalOptions="End"
+                           Margin="0,0,6,0"
+                           FontSize="28"
+                           TextColor="{Binding  Source={x:Reference emailValidator},
 												Path=IsValid,
-												Converter={StaticResource BoolToColorConverter}}" 
-					       VerticalOptions="Center"></Label>
-				</Grid>
-				<Grid>
-                    <Entry x:Name="entPassword" Text="{Binding Password}" Placeholder="New Password" Unfocused="Entry_OnCompleted"
-                            IsPassword="True" TextChanged="EntPassword_OnTextChanged" Completed="Entry_OnCompleted" >
-						<Entry.Behaviors>
-                            <behaviors:PasswordValidatorBehavior x:Name="passwordValidator"/>
-						</Entry.Behaviors>
-					</Entry>
-					<Label Text="✓" 
-					       HorizontalOptions="End" 
-					       Margin="0,0,6,0"
-					       FontSize="28"
-					       TextColor="{Binding  Source={x:Reference passwordValidator},
+												Converter={StaticResource BoolToColorConverter}}"
+                           VerticalOptions="Center"></Label>
+                </Grid>
+                <Grid>
+                    <Entry x:Name="entPassword"
+                           Text="{Binding Password}"
+                           Placeholder="New Password"
+                           Unfocused="Entry_OnCompleted"
+                           IsPassword="True"
+                           TextChanged="EntPassword_OnTextChanged"
+                           Completed="Entry_OnCompleted">
+                        <Entry.Behaviors>
+                            <behaviors:PasswordValidatorBehavior x:Name="passwordValidator" />
+                        </Entry.Behaviors>
+                    </Entry>
+                    <Label Text="✓"
+                           HorizontalOptions="End"
+                           Margin="0,0,6,0"
+                           FontSize="28"
+                           TextColor="{Binding  Source={x:Reference passwordValidator},
 												Path=IsValid,
-												Converter={StaticResource BoolToColorConverter}}" 
-					       VerticalOptions="Center"></Label>
-				</Grid>
-				<Grid>
-					<Entry x:Name="entRePassword" Placeholder="Retype New Password" Unfocused="Entry_OnCompleted"
-                            IsPassword="True" Completed="Entry_OnCompleted">
-						<Entry.Behaviors>
-							<behaviors:ConfirmPasswordBehavior CompareToEntry="{Binding Source={x:Reference entPassword}}" x:Name="confirmPasswordValidator" />
-						</Entry.Behaviors>
-					</Entry>
-					<Label Text="✓" HorizontalOptions="End" 
-					       Margin="0,0,6,0"
-					       FontSize="28"
-					       TextColor="{Binding  Source={x:Reference confirmPasswordValidator},
+												Converter={StaticResource BoolToColorConverter}}"
+                           VerticalOptions="Center"></Label>
+                </Grid>
+                <Grid>
+                    <Entry x:Name="entRePassword"
+                           Placeholder="Retype New Password"
+                           Unfocused="Entry_OnCompleted"
+                           IsPassword="True"
+                           Completed="Entry_OnCompleted">
+                        <Entry.Behaviors>
+                            <behaviors:ConfirmPasswordBehavior CompareToEntry="{Binding Source={x:Reference entPassword}}"
+                                                               x:Name="confirmPasswordValidator" />
+                        </Entry.Behaviors>
+                    </Entry>
+                    <Label Text="✓"
+                           HorizontalOptions="End"
+                           Margin="0,0,6,0"
+                           FontSize="28"
+                           TextColor="{Binding  Source={x:Reference confirmPasswordValidator},
 												Path=IsValid,
-												Converter={StaticResource BoolToColorConverter}}" 
-					       VerticalOptions="Center"></Label>
-				</Grid>
-				
-				
+												Converter={StaticResource BoolToColorConverter}}"
+                           VerticalOptions="Center"></Label>
+                </Grid>
 
-				<StackLayout Orientation="Vertical">
-					<controls:CheckBox Text="Sign up for emails to learn about lastest news, activities and special offers from Fitmeet."
-                            Checked="{Binding IsSubscrible}" Margin="0,8,0,0" />
-					<controls:CheckBox Text="I Understand that by connecting my accounts, Fitmeet may access my basic information from Facebook, and I will be able to share my Fitmeet activity to Facebook" 
-					                   Checked="True" Margin="0,8,0,0" CheckedChanged="ConfirmCheckBox_OnCheckedChanged"
+
+
+                <StackLayout Orientation="Vertical">
+                    <controls:CheckBox Text="Sign up for emails to learn about lastest news, activities and special offers from Fitmeet."
+                                       Checked="{Binding IsSubscrible}"
+                                       Margin="0,8,0,0" />
+                    <controls:CheckBox Text="I Understand that by connecting my accounts, Fitmeet may access my basic information from Facebook, and I will be able to share my Fitmeet activity to Facebook"
+                                       Checked="True"
+                                       Margin="0,8,0,0"
+                                       CheckedChanged="ConfirmCheckBox_OnCheckedChanged"
                                        x:Name="ConfirmCheckBox" />
-				</StackLayout>
-				<Button BackgroundColor="{StaticResource MainColor}" x:Name="SignUpButton" Command="{Binding SignUpCommand}"
-                        Margin="0,20,0,0" TextColor="White" IsEnabled="False" HeightRequest="50" Text="Build profile"></Button>
-			</StackLayout>
-		</Grid>
-	</ContentPage.Content>
+                </StackLayout>
+                <Button BackgroundColor="{StaticResource MainColor}"
+                        x:Name="SignUpButton"
+                        Command="{Binding SignUpCommand}"
+                        Margin="0,20,0,0"
+                        TextColor="White"
+                        IsEnabled="False"
+                        HeightRequest="50"
+                        Text="Build profile"></Button>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
 </ContentPage>

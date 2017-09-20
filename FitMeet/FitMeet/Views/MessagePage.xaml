@@ -33,7 +33,7 @@
                                                 </DataTrigger>
                                             </Frame.Triggers>
                                             <Label Text="{Binding Count}" FontSize="Micro" TextColor="White"
-                                                    Margin="0,2,0,0" VerticalTextAlignment="Center"
+                                                    Margin="0,0,0,0" VerticalTextAlignment="Center"
                                                     HorizontalTextAlignment="Center"></Label>
                                         </Frame>
                                     </Grid>

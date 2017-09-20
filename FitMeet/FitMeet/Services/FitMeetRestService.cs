@@ -152,7 +152,7 @@ namespace FitMeet.Services
 
             var param = new Dictionary<string,string>
             {
-                { "email",email },
+                { "email",email.Trim() },
                 { "password",password },
                 { "device_token",deviceToken },
                 { "newsletter",isSubscibleNews?"1":"0" },
@@ -338,7 +338,7 @@ namespace FitMeet.Services
                 { "device_token",deviceToken },
                 { "device_type",DeviceType() },
                 { "password",password },
-                { "email", id }
+                { "email", id.Trim() }
             };
             return await ApiPost<ResponseMessage<LoginModel>>(ManualLoginUri,param);
         }
@@ -518,7 +518,7 @@ namespace FitMeet.Services
         {
             var param = new Dictionary<string,string>
             {
-                {"email", email}
+                {"email", email.Trim()}
             };
             var result = await ApiPost<ResponseMessage<string>>(FindPasswordUri,param);
             return (result != null && result.Output?.Status == 1);

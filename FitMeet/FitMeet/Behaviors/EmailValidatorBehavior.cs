@@ -46,7 +46,7 @@ namespace FitMeet.Behaviors
         {
             if(!String.IsNullOrEmpty(e.NewTextValue))
             {
-                IsValid = (Regex.IsMatch(e.NewTextValue,emailRegex,RegexOptions.IgnoreCase,
+                IsValid = (Regex.IsMatch(e.NewTextValue.Trim(),emailRegex,RegexOptions.IgnoreCase,
                     TimeSpan.FromMilliseconds(250)));
                 ((Entry)sender).TextColor = IsValid ? Color.FromHex("#5a5a5a") : Color.FromHex("#f27062");
             }

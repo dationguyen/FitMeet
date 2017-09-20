@@ -7,6 +7,8 @@ using FFImageLoading.Forms.Droid;
 using FitMeet.Droid.IntentServices;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
+using System.IO;
+using System.Threading.Tasks;
 using Xamarin.Facebook;
 
 [assembly: MetaData("com.facebook.sdk.ApplicationId",Value = "@string/app_id")]
@@ -44,7 +46,7 @@ namespace FitMeet.Droid
             var token = Intent.GetStringExtra("token");
             var userName = Intent.GetStringExtra("userName");
 
-            LoadApplication(new App(new AndroidInitializer(),userId,token,userName));
+            LoadApplication(new App(new AndroidInitializer(),token));
 
         }
 
@@ -52,6 +54,21 @@ namespace FitMeet.Droid
         {
             base.OnActivityResult(requestCode,resultCode,data);
             callbackManager.OnActivityResult(requestCode,(int)resultCode,data);
+            if(requestCode == PickImageId)
+            {
+                if((resultCode == Result.Ok) && (data != null))
+                {
+                    Android.Net.Uri uri = data.Data;
+                    Stream stream = ContentResolver.OpenInputStream(uri);
+
+                    // Set the Stream as the completion of the Task
+                    PickImageTaskCompletionSource.SetResult(stream);
+                }
+                else
+                {
+                    PickImageTaskCompletionSource.SetResult(null);
+                }
+            }
         }
         public bool IsPlayServicesAvailable()
         {
@@ -74,19 +91,23 @@ namespace FitMeet.Droid
             }
         }
 
-
         protected override void OnPause()
         {
             base.OnPause();
             IsInForegroundMode = false;
         }
 
-
         protected override void OnResume()
         {
             base.OnResume();
             IsInForegroundMode = true;
         }
+
+        // Field, property, and method for Picture Picker
+        public static readonly int PickImageId = 1000;
+
+        public TaskCompletionSource<Stream> PickImageTaskCompletionSource { set; get; }
+
     }
 
     public class AndroidInitializer:IPlatformInitializer

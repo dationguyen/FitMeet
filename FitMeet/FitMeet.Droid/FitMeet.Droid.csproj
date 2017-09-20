@@ -216,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyServices\FacebookLoginService.cs" />
+    <Compile Include="DependencyServices\ImagePicker.cs" />
     <Compile Include="DependencyServices\PushNotificationSupportService.cs" />
     <Compile Include="Extensions\AlignmentExtensions.cs" />
     <Compile Include="Extensions\FontExtensions.cs" />
@@ -403,6 +404,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\message_logo_9plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\search_logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
