@@ -1,8 +1,8 @@
-﻿using Android.Text;
+﻿using Android.OS;
+using Android.Text;
 using Android.Widget;
 using FitMeet.Controls;
 using FitMeet.Droid.Renderers;
-using Foundation;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -29,7 +29,7 @@ namespace FitMeet.Droid.Renderers
                 var fontName = Element.FontFamily;
                 var fontSize = Element.FontSize;
                 var htmlContents = "<span style=\"font-family: '" + fontName + "'; color: " + textColor + "; font-size: " + fontSize + "\">" + Element.Text + "</span>";
-         
+
                 Control.SetSingleLine(false);
                 Control.SetText(Html.FromHtml(htmlContents,FromHtmlOptions.ModeLegacy),TextView.BufferType.Spannable);
             }
@@ -55,9 +55,17 @@ namespace FitMeet.Droid.Renderers
                     var fontSize = Element.FontSize;
                     var htmlContents = "<span style=\"font-family: '" + fontName + "'; color: " + textColor + "; font-size: " + fontSize + "\">" + Element.Text + "</span>";
 
+                    if(((int)Build.VERSION.SdkInt) >= 24)
+                    {
+                        Control.SetText(Html.FromHtml(htmlContents,FromHtmlOptions.ModeLegacy),TextView.BufferType.Spannable);
+                    }
+                    else
+                    {
+                        Control.SetText(Html.FromHtml(htmlContents),TextView.BufferType.Spannable);
+                    }
 
                     Control.SetSingleLine(false);
-                    Control.SetText(Html.FromHtml(htmlContents,FromHtmlOptions.ModeLegacy),TextView.BufferType.Spannable);
+
                 }
             }
         }

@@ -1,5 +1,4 @@
-﻿using Accelerate;
-using Android.Graphics;
+﻿using Android.Graphics;
 using Android.Util;
 using FitMeet.Controls;
 using FitMeet.Droid.Renderers;
