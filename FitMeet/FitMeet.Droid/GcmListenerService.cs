@@ -79,7 +79,7 @@ namespace FitMeet.Droid
             var pendingIntent = PendingIntent.GetActivity(this,0,intent,PendingIntentFlags.UpdateCurrent);
 
             var notificationBuilder = new Notification.Builder(this)
-                .SetSmallIcon(Resource.Drawable.ic_stat_ic_notification)
+                .SetSmallIcon(Resource.Drawable.Icon)
                 .SetContentText(message)
                 .SetStyle(new Notification.BigTextStyle().BigText(message))
                 .SetAutoCancel(true)

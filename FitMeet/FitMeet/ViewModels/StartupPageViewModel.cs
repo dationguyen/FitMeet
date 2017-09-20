@@ -19,11 +19,11 @@ namespace FitMeet.ViewModels
                     if(!String.IsNullOrEmpty(token) && await _fitMeetRestService.CheckTokenAsync(token))
                     {
                         _fitMeetRestService.SetToken(token);
-                        NavigateCommand.Execute("app:///MainPage/NavigationPage/MainTabbedPage");
+                        Navigate("app:///MainPage/NavigationPage/MainTabbedPage");
                     }
                     else
                     {
-                        NavigateCommand.Execute("app:///NavigationPage/LoginPage");
+                        Navigate("app:///NavigationPage/LoginPage");
                     }
                 });
             }

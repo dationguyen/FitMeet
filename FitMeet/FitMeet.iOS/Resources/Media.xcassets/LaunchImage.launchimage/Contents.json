@@ -6,7 +6,8 @@
       "minimum-system-version": "7.0",
       "scale": "2x",
       "size": "640x960",
-      "idiom": "iphone"
+      "idiom": "iphone",
+      "filename": "LauchImage@2x.png"
     },
     {
       "orientation": "portrait",
@@ -15,7 +16,8 @@
       "subtype": "retina4",
       "scale": "2x",
       "size": "640x1136",
-      "idiom": "iphone"
+      "idiom": "iphone",
+      "filename": "LauchScreen_Retina.png"
     },
     {
       "orientation": "portrait",

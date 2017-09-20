@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitMeet.Views.StartupPage"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms" 
              prism:ViewModelLocator.AutowireViewModel="True">
     <ContentPage.Behaviors>
         <behaviors:EventToCommandBehavior EventName="Appearing"
@@ -13,7 +13,7 @@
         <Grid BackgroundColor="#8CFFFFFF">
             <StackLayout VerticalOptions="Center">
                 <Image Source="fitmeet_logo.png"></Image>
-                <ActivityIndicator IsRunning="true"
+                <ActivityIndicator IsRunning="true" 
                                    HeightRequest="60"
                                    WidthRequest="60"
                                    Color="Black"></ActivityIndicator>
